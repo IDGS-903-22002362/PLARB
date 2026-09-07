@@ -290,7 +290,7 @@ export const studies: Study[] = [
     number: '02',
     title: 'La Guarida',
     kind: 'store',
-    category: 'COMMERCE / PAYMENTS / INVENTORY',
+    category: 'COMMERCE / PAYMENTS / INVENTORY / APPLIED AI',
     subtitle: c(
       'Del catálogo a una orden confirmada.',
       'From catalog to a confirmed order.',
@@ -299,20 +299,20 @@ export const studies: Study[] = [
     period: c('Club León · Actualidad', 'Club León · Current'),
     role: c('Desarrollo full stack', 'Full-stack development'),
     summary: c(
-      'La tienda oficial de Club León. Catálogo por talla, checkout con Stripe y Aplazo, reservas de inventario y gestión de pedidos.',
-      'Club León’s official store. Size-based catalog, Stripe and Aplazo checkout, inventory reservations and order management.',
+      'La tienda oficial de Club León. Catálogo por talla, checkout con Stripe y Aplazo, reservas de inventario, gestión de pedidos e IA integrada para comprar y administrar.',
+      'Club León’s official store. Size-based catalog, Stripe and Aplazo checkout, inventory reservations, order management and AI integrated into shopping and administration.',
     ),
     context: c(
-      'Una tienda de mercancía oficial tiene que coordinar variantes, descuentos, disponibilidad, cobro y entrega. La interfaz depende de reglas de negocio que deben mantenerse coherentes en el backend.',
-      'An official merchandise store coordinates variants, discounts, availability, payment and delivery. Its interface depends on business rules that must remain consistent in the backend.',
+      'Una tienda de mercancía oficial tiene que coordinar variantes, descuentos, disponibilidad, cobro y entrega. Sobre esa operación integré asistencia de compra, un probador virtual y analítica administrativa sin convertir la IA en la fuente de verdad.',
+      'An official merchandise store coordinates variants, discounts, availability, payment and delivery. On top of that operation I integrated shopping assistance, virtual try-on and administrative analytics without making AI the source of truth.',
     ),
     problem: c(
       'Dos compras pueden competir por la última talla. Un pago puede confirmarse más tarde o reenviar su evento. El precio y el inventario deben conservar su coherencia durante todo el recorrido.',
       'Two checkouts can compete for the last size. A payment can be confirmed later or resend its event. Pricing and inventory must stay consistent throughout the journey.',
     ),
     contribution: c(
-      'Frontend Next.js y TypeScript; APIs Express, lógica de checkout y servicios Firebase. Integración de pagos, reservas por variante y herramientas de administración.',
-      'Next.js and TypeScript frontend; Express APIs, checkout logic and Firebase services. Payment integration, variant reservations and administrative tools.',
+      'Frontend Next.js y TypeScript; APIs Express, lógica de checkout y servicios Firebase. Integración de pagos, reservas por variante, herramientas de administración y flujos de IA con Gemini y Vertex AI.',
+      'Next.js and TypeScript frontend; Express APIs, checkout logic and Firebase services. Payment integration, variant reservations, administrative tools and AI workflows with Gemini and Vertex AI.',
     ),
     requirements: [
       c(
@@ -336,6 +336,9 @@ export const studies: Study[] = [
       'Firebase',
       'Stripe',
       'Zod',
+      'Gemini',
+      'Vertex AI',
+      'Firebase Storage',
     ],
     links: [{ label: 'La Guarida', href: publicLinks.store }],
     architecture: c(
@@ -447,6 +450,32 @@ export const studies: Study[] = [
       },
       {
         title: c(
+          'La IA interpreta; el backend conserva la evidencia.',
+          'AI interprets; the backend preserves the evidence.',
+        ),
+        problem: c(
+          'Un asistente puede responder con contexto incompleto o inventar números si el contrato no delimita sus herramientas.',
+          'An assistant can answer from incomplete context or invent numbers when its tool contract is not bounded.',
+        ),
+        decision: c(
+          'Separar las superficies: herramientas autorizadas para catálogo y pedidos, un probador virtual con consentimiento explícito y analítica administrativa de solo lectura con Gemini.',
+          'Separate the surfaces: authorized tools for catalog and orders, a virtual try-on with explicit consent, and read-only administrative analytics with Gemini.',
+        ),
+        reason: c(
+          'La disponibilidad, los permisos y las métricas pertenecen a servicios verificables; el modelo ayuda a interpretar y presentar.',
+          'Availability, permissions and metrics belong to verifiable services; the model helps interpret and present them.',
+        ),
+        tradeoff: c(
+          'La reconciliación añade contratos y trabajo de backend, pero una gráfica sin evidencia compatible se omite en lugar de fabricarse.',
+          'Reconciliation adds backend contracts and work, but a chart without compatible evidence is omitted instead of fabricated.',
+        ),
+        outcome: c(
+          'Asistente de compra para productos, precios, tallas y stock; try-on de prendas con procesamiento asíncrono; reportes de ventas e inventario con KPIs, tablas y gráficas respaldadas por herramientas.',
+          'Shopping assistant for products, prices, sizes and stock; asynchronous apparel try-on; sales and inventory reports with KPIs, tables and tool-backed charts.',
+        ),
+      },
+      {
+        title: c(
           'El pago se confirma por un evento validado.',
           'Payment confirmation follows a validated event.',
         ),
@@ -511,6 +540,10 @@ export const studies: Study[] = [
         'Administración de pedidos, recepción de inventario y promociones.',
         'Order management, inventory reception and promotions.',
       ),
+      c(
+        'IA aplicada al comercio: asistente de compra, try-on con consentimiento y analítica administrativa con gráficas reconciliadas desde datos autorizados.',
+        'Applied AI for commerce: shopping assistant, consent-based try-on and administrative analytics with charts reconciled from authorized data.',
+      ),
     ],
     security: c(
       'Validación Zod, autorización de operaciones y verificación de eventos de pago. Las pruebas existentes cubren concurrencia por última unidad, carrito atómico, webhook duplicado y caducidad de reservas.',
@@ -529,10 +562,14 @@ export const studies: Study[] = [
         'Flujos de excepción definidos para reservas y eventos de pago.',
         'Defined exception flows for reservations and payment events.',
       ),
+      c(
+        'Las capacidades de IA quedan descritas como implementadas; la evidencia del backend, no el modelo, determina los datos visuales.',
+        'AI capabilities are described as implemented; backend evidence, not the model, determines visual data.',
+      ),
     ],
     lessons: c(
-      'El checkout también incluye reintentos, esperas y cancelaciones. Modelar esas transiciones es tan necesario como construir el flujo de compra exitoso.',
-      'Checkout includes retries, delays and cancellations. Modeling those transitions is as necessary as building the successful purchase flow.',
+      'El checkout también incluye reintentos, esperas y cancelaciones. La misma disciplina aplica a la IA: el modelo interpreta, pero permisos, inventario, pagos y métricas siguen siendo responsabilidad de servicios verificables.',
+      'Checkout includes retries, delays and cancellations. The same discipline applies to AI: the model interprets, but permissions, inventory, payments and metrics remain the responsibility of verifiable services.',
     ),
   },
   {

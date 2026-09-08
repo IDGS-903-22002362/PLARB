@@ -220,8 +220,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
       src: '/projects/media/store-general-01.webp',
       featured: true,
       thumbnail: '/projects/media/store-general-01-thumb.webp',
-      width: 1907,
-      height: 1047,
+      width: 1800,
+      height: 988,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 1',
@@ -232,8 +232,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
       src: '/projects/media/store-general-02.webp',
       featured: true,
       thumbnail: '/projects/media/store-general-02-thumb.webp',
-      width: 1917,
-      height: 1041,
+      width: 1800,
+      height: 977,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 2',
@@ -243,8 +243,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-general-03.webp',
       thumbnail: '/projects/media/store-general-03-thumb.webp',
-      width: 1917,
-      height: 1037,
+      width: 1800,
+      height: 974,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 3',
@@ -254,8 +254,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-general-04.webp',
       thumbnail: '/projects/media/store-general-04-thumb.webp',
-      width: 1917,
-      height: 1047,
+      width: 1800,
+      height: 983,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 4',
@@ -265,8 +265,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-general-05.webp',
       thumbnail: '/projects/media/store-general-05-thumb.webp',
-      width: 1917,
-      height: 1042,
+      width: 1800,
+      height: 978,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 5',
@@ -276,8 +276,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-general-06.webp',
       thumbnail: '/projects/media/store-general-06-thumb.webp',
-      width: 1917,
-      height: 1038,
+      width: 1800,
+      height: 975,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 6',
@@ -287,8 +287,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-general-07.webp',
       thumbnail: '/projects/media/store-general-07-thumb.webp',
-      width: 1917,
-      height: 1037,
+      width: 1800,
+      height: 974,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 7',
@@ -298,8 +298,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-general-08.webp',
       thumbnail: '/projects/media/store-general-08-thumb.webp',
-      width: 1917,
-      height: 1037,
+      width: 1800,
+      height: 974,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 8',
@@ -309,8 +309,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-general-09.webp',
       thumbnail: '/projects/media/store-general-09-thumb.webp',
-      width: 1897,
-      height: 1037,
+      width: 1800,
+      height: 984,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 9',
@@ -320,8 +320,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-general-10.webp',
       thumbnail: '/projects/media/store-general-10-thumb.webp',
-      width: 1917,
-      height: 1037,
+      width: 1800,
+      height: 974,
       section: 'general',
       caption: {
         es: 'La Guarida · tienda pública · vista 10',
@@ -331,8 +331,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-admin-01.webp',
       thumbnail: '/projects/media/store-admin-01-thumb.webp',
-      width: 1917,
-      height: 1032,
+      width: 1800,
+      height: 969,
       section: 'admin',
       caption: {
         es: 'La Guarida · administración · vista 1',
@@ -342,8 +342,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-admin-02.webp',
       thumbnail: '/projects/media/store-admin-02-thumb.webp',
-      width: 1917,
-      height: 1032,
+      width: 1800,
+      height: 969,
       section: 'admin',
       caption: {
         es: 'La Guarida · administración · vista 2',
@@ -353,8 +353,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-admin-03.webp',
       thumbnail: '/projects/media/store-admin-03-thumb.webp',
-      width: 1916,
-      height: 1032,
+      width: 1800,
+      height: 970,
       section: 'admin',
       caption: {
         es: 'La Guarida · administración · vista 3',
@@ -364,8 +364,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-admin-04.webp',
       thumbnail: '/projects/media/store-admin-04-thumb.webp',
-      width: 1917,
-      height: 1037,
+      width: 1800,
+      height: 974,
       section: 'admin',
       caption: {
         es: 'La Guarida · administración · vista 4',
@@ -375,8 +375,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-admin-05.webp',
       thumbnail: '/projects/media/store-admin-05-thumb.webp',
-      width: 1917,
-      height: 1042,
+      width: 1800,
+      height: 978,
       section: 'admin',
       caption: {
         es: 'La Guarida · administración · vista 5',
@@ -386,8 +386,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-admin-06.webp',
       thumbnail: '/projects/media/store-admin-06-thumb.webp',
-      width: 1917,
-      height: 1035,
+      width: 1800,
+      height: 972,
       section: 'admin',
       caption: {
         es: 'La Guarida · administración · vista 6',
@@ -397,8 +397,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/store-admin-07.webp',
       thumbnail: '/projects/media/store-admin-07-thumb.webp',
-      width: 1917,
-      height: 1037,
+      width: 1800,
+      height: 974,
       section: 'admin',
       caption: {
         es: 'La Guarida · administración · vista 7',
@@ -591,8 +591,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/iot-general-01.webp',
       thumbnail: '/projects/media/iot-general-01-thumb.webp',
-      width: 1919,
-      height: 1000,
+      width: 1800,
+      height: 938,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 1',
@@ -603,8 +603,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
       src: '/projects/media/iot-general-02.webp',
       featured: true,
       thumbnail: '/projects/media/iot-general-02-thumb.webp',
-      width: 1918,
-      height: 1006,
+      width: 1800,
+      height: 944,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 2',
@@ -614,8 +614,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/iot-general-03.webp',
       thumbnail: '/projects/media/iot-general-03-thumb.webp',
-      width: 1918,
-      height: 1005,
+      width: 1800,
+      height: 943,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 3',
@@ -625,8 +625,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/iot-general-04.webp',
       thumbnail: '/projects/media/iot-general-04-thumb.webp',
-      width: 1919,
-      height: 1006,
+      width: 1800,
+      height: 944,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 4',
@@ -636,8 +636,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/iot-general-05.webp',
       thumbnail: '/projects/media/iot-general-05-thumb.webp',
-      width: 1919,
-      height: 1004,
+      width: 1800,
+      height: 942,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 5',
@@ -646,10 +646,9 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     },
     {
       src: '/projects/media/iot-general-06.webp',
-      featured: true,
       thumbnail: '/projects/media/iot-general-06-thumb.webp',
-      width: 1916,
-      height: 1007,
+      width: 1800,
+      height: 946,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 6',
@@ -659,8 +658,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/iot-general-07.webp',
       thumbnail: '/projects/media/iot-general-07-thumb.webp',
-      width: 1897,
-      height: 1009,
+      width: 1800,
+      height: 957,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 7',
@@ -670,8 +669,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/iot-general-08.webp',
       thumbnail: '/projects/media/iot-general-08-thumb.webp',
-      width: 1919,
-      height: 1007,
+      width: 1800,
+      height: 945,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 8',
@@ -681,8 +680,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/iot-general-09.webp',
       thumbnail: '/projects/media/iot-general-09-thumb.webp',
-      width: 1916,
-      height: 1004,
+      width: 1800,
+      height: 943,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 9',
@@ -692,8 +691,8 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     {
       src: '/projects/media/iot-general-10.webp',
       thumbnail: '/projects/media/iot-general-10-thumb.webp',
-      width: 1896,
-      height: 1007,
+      width: 1800,
+      height: 956,
       section: 'general',
       caption: {
         es: 'Riego inteligente · producto conectado · vista 10',
@@ -713,6 +712,7 @@ export const projectMedia: Record<Study['kind'], ProjectMedia[]> = {
     },
     {
       src: '/projects/media/iot-general-12.webp',
+      featured: true,
       thumbnail: '/projects/media/iot-general-12-thumb.webp',
       width: 720,
       height: 1600,

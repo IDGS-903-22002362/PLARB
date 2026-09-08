@@ -2,6 +2,7 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import { c } from '@/lib/projects';
 import { usePreferences } from './preferences';
+import { uiCopy } from '@/lib/ui-copy';
 export default function CommerceSequence() {
   const { paused, t } = usePreferences();
   const ref = useRef<HTMLDivElement>(null);
@@ -46,7 +47,9 @@ export default function CommerceSequence() {
   }, [paused]);
   return (
     <figure className="commerce-sequence">
-      <span className="eyebrow">FROM PRODUCT TO ARCHITECTURE</span>
+      <span className="eyebrow">
+        {t(c('DEL PRODUCTO A LA ARQUITECTURA', 'FROM PRODUCT TO ARCHITECTURE'))}
+      </span>
       <div className="commerce-stages" ref={ref}>
         {[
           ['FRONTEND', 'Next.js / React'],
@@ -60,8 +63,8 @@ export default function CommerceSequence() {
             key={label}
             style={{ '--layer': index } as CSSProperties}
           >
-            <span>{label}</span>
-            <small>{detail}</small>
+            <span>{t(uiCopy(label))}</span>
+            <small>{t(uiCopy(detail))}</small>
           </div>
         ))}
       </div>

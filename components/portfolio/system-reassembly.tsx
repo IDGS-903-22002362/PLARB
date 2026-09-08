@@ -2,6 +2,7 @@
 import type { CSSProperties } from 'react';
 import { c } from '@/lib/projects';
 import { usePreferences } from './preferences';
+import { uiCopy } from '@/lib/ui-copy';
 const layers = [
   ['PRODUCT', 'INTERFACE'],
   ['SYSTEM', 'SERVICES'],
@@ -15,7 +16,14 @@ export default function SystemReassembly() {
       aria-label={t(c('Cierre del sistema', 'System closing'))}
     >
       <div className="reassembly-copy">
-        <span className="eyebrow">PRODUCT → SYSTEM → ARCHITECTURE → PRODUCT</span>
+        <span className="eyebrow">
+          {t(
+            c(
+              'PRODUCTO → SISTEMA → ARQUITECTURA → PRODUCTO',
+              'PRODUCT → SYSTEM → ARCHITECTURE → PRODUCT',
+            ),
+          )}
+        </span>
         <p>
           {t(
             c(
@@ -33,8 +41,8 @@ export default function SystemReassembly() {
             style={{ '--layer': index } as CSSProperties}
           >
             <span className="reassembly-index">0{index + 1}</span>
-            <span className="reassembly-title">{title}</span>
-            <small>{detail}</small>
+            <span className="reassembly-title">{t(uiCopy(title))}</span>
+            <small>{t(uiCopy(detail))}</small>
           </div>
         ))}
       </div>

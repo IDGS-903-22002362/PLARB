@@ -39,16 +39,23 @@ export function usePortfolioMotion(scope: RefObject<HTMLDivElement | null>) {
           scope
             .current!.querySelectorAll<HTMLElement>('.project-media-cover')
             .forEach((cover) => {
-              gsap.from(cover, {
-                clipPath: 'inset(12% 8% 12% 8%)',
-                duration: 1.05,
+              const planes = cover.querySelectorAll(
+                '.cover-primary, .cover-secondary',
+              );
+              gsap.from(planes, {
+                y: (index: number) => (index === 0 ? 28 : 48),
+                rotationY: (index: number) => (index === 0 ? -10 : 10),
+                duration: 1.15,
+                stagger: 0.09,
                 ease: 'power3.out',
-                clearProps: 'clip-path',
-                scrollTrigger: { trigger: cover, start: 'top 90%', once: true },
+                clearProps: 'transform',
+                scrollTrigger: { trigger: cover, start: 'top 88%', once: true },
               });
             });
           scope
-            .current!.querySelectorAll<HTMLElement>('.architecture, .graph-edges')
+            .current!.querySelectorAll<HTMLElement>(
+              '.architecture, .graph-edges',
+            )
             .forEach((diagram) => {
               gsap.from(diagram, {
                 opacity: 0.35,

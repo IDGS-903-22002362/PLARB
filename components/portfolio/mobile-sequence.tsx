@@ -2,6 +2,7 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import { c } from '@/lib/projects';
 import { usePreferences } from './preferences';
+import { uiCopy } from '@/lib/ui-copy';
 export default function MobileSequence() {
   const { paused, t } = usePreferences();
   const ref = useRef<HTMLDivElement>(null);
@@ -46,7 +47,9 @@ export default function MobileSequence() {
   }, [paused]);
   return (
     <figure className="commerce-sequence mobile-sequence">
-      <span className="eyebrow">FROM APP TO ARCHITECTURE</span>
+      <span className="eyebrow">
+        {t(c('DE LA APP A LA ARQUITECTURA', 'FROM APP TO ARCHITECTURE'))}
+      </span>
       <div className="commerce-stages" ref={ref}>
         {[
           ['APP', 'Flutter / Dart'],
@@ -60,8 +63,8 @@ export default function MobileSequence() {
             key={label}
             style={{ '--layer': index } as CSSProperties}
           >
-            <span>{label}</span>
-            <small>{detail}</small>
+            <span>{t(uiCopy(label))}</span>
+            <small>{t(uiCopy(detail))}</small>
           </div>
         ))}
       </div>

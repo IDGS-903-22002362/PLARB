@@ -13,8 +13,8 @@ import {
   Smartphone,
 } from 'lucide-react';
 import { c, studies, technologyGroups, type Copy } from '@/lib/projects';
-import { profile } from '@/lib/portfolio-data';
 import { usePreferences } from './preferences';
+import { uiCopy } from '@/lib/ui-copy';
 import { CVLink, ExternalLink } from './shell';
 import ProjectVisual from './project-visual';
 import Architecture from './architecture';
@@ -39,7 +39,7 @@ export function SectionHeading({
       <div>
         <span className="eyebrow">
           <span className="section-number">{index}</span>
-          {label}
+          {t(uiCopy(label))}
         </span>
         <h2>{t(title)}</h2>
       </div>
@@ -179,7 +179,7 @@ function EngineeringApproach() {
             tabIndex={0}
           >
             <span className="eyebrow">
-              LA GUARIDA / DECISION 0{selected + 1}
+              LA GUARIDA / {t(c('DECISIÓN', 'DECISION'))} 0{selected + 1}
             </span>
             <h3>{t(decision.title)}</h3>
             <dl>
@@ -190,14 +190,6 @@ function EngineeringApproach() {
               <div>
                 <dt>{t(c('Decisión', 'Decision'))}</dt>
                 <dd>{t(decision.decision)}</dd>
-              </div>
-              <div>
-                <dt>{t(c('Por qué', 'Why'))}</dt>
-                <dd>{t(decision.reason)}</dd>
-              </div>
-              <div>
-                <dt>{t(c('Compromiso', 'Trade-off'))}</dt>
-                <dd>{t(decision.tradeoff)}</dd>
               </div>
             </dl>
             <Link className="text-link" href="/projects/la-guarida#decisiones">
@@ -224,7 +216,7 @@ export default function Home() {
         </div>
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="hero-role">SOFTWARE ENGINEER</p>
+            <p className="hero-role">{t(uiCopy('SOFTWARE ENGINEER'))}</p>
             <h1>
               {t(c('Soluciones', 'Effective'))}
               <br />
@@ -260,7 +252,7 @@ export default function Home() {
             ].map(([label, Icon]) => {
               const Symbol = Icon as typeof Code2;
               return (
-                <span key={String(label)}>
+                <span key={t(uiCopy(String(label)))}>
                   <Symbol size={16} />
                   {String(label)}
                 </span>
@@ -268,7 +260,7 @@ export default function Home() {
             })}
           </div>
           <Link className="hero-scroll" href="#proyectos">
-            <span>SCROLL TO EXPLORE</span>
+            <span>{t(c('DESLIZA PARA EXPLORAR', 'SCROLL TO EXPLORE'))}</span>
             <ArrowDown size={16} />
           </Link>
         </div>
@@ -326,9 +318,9 @@ export default function Home() {
               <div className="project-copy">
                 <div className="project-meta">
                   <span className="project-index">/{project.number}</span>
-                  <span className="eyebrow">{project.category}</span>
+                  <span className="eyebrow">{t(uiCopy(project.category))}</span>
                 </div>
-                <h3>{project.title}</h3>
+                <h3>{t(uiCopy(project.title))}</h3>
                 <p className="project-subtitle">{t(project.subtitle)}</p>
                 <p>{t(project.summary)}</p>
                 <div className="project-role">
@@ -347,7 +339,7 @@ export default function Home() {
                 <TransitionLink
                   className="case-link"
                   href={`/projects/${project.slug}`}
-                  aria-label={`${t(c('Ver caso', 'View case'))}: ${project.title}`}
+                  aria-label={`${t(c('Ver caso', 'View case'))}: ${t(uiCopy(project.title))}`}
                 >
                   {t(c('Explorar caso de estudio', 'Explore case study'))}
                   <ArrowUpRight size={22} />
@@ -389,7 +381,7 @@ export default function Home() {
                 <Icon size={23} strokeWidth={1.5} />
                 <span>0{i + 1}</span>
               </div>
-              <h3>{typeof title === 'string' ? title : t(title)}</h3>
+              <h3>{typeof title === 'string' ? t(uiCopy(title)) : t(title)}</h3>
               <p>{t(text)}</p>
               <Link href={href}>
                 {typeof ref === 'string' ? ref : t(ref)}
@@ -416,7 +408,7 @@ export default function Home() {
             <div>
               <div className="timeline-title">
                 <h3>Club León</h3>
-                <span>Full stack / Mobile</span>
+                <span>{t(uiCopy('Full stack / Mobile'))}</span>
               </div>
               <p>
                 {t(
@@ -429,7 +421,7 @@ export default function Home() {
               <div className="timeline-links">
                 {studies.slice(0, 3).map((project) => (
                   <Link href={`/projects/${project.slug}`} key={project.slug}>
-                    {project.title}
+                    {t(uiCopy(project.title))}
                     <ArrowUpRight size={15} />
                   </Link>
                 ))}
@@ -506,44 +498,11 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section className="public-work shell">
-        <div>
-          <span className="eyebrow">PUBLIC WORK</span>
-          <h2>
-            {t(
-              c(
-                'Explora los productos publicados.',
-                'Explore the published products.',
-              ),
-            )}
-          </h2>
-          <p>
-            {t(
-              c(
-                'Los casos presentan arquitectura y decisiones técnicas. Los enlaces abren los productos disponibles al público.',
-                'The case studies present architecture and technical decisions. These links open the publicly available products.',
-              ),
-            )}
-          </p>
-        </div>
-        <div>
-          {studies
-            .slice(0, 2)
-            .flatMap((project) => project.links)
-            .map((link) => (
-              <ExternalLink key={link.href} href={link.href}>
-                {link.label}
-              </ExternalLink>
-            ))}
-          {profile.github && (
-            <ExternalLink href={profile.github}>GitHub</ExternalLink>
-          )}
-        </div>
-      </section>
       <section className="section about-section shell" id="sobre-mi">
         <div>
           <span className="eyebrow">
-            <span className="section-number">06</span>ABOUT
+            <span className="section-number">06</span>
+            {t(c('SOBRE MÍ', 'ABOUT'))}
           </span>
           <h2>
             Luis Alberto
@@ -563,14 +522,6 @@ export default function Home() {
               c(
                 'Trabajo de la pantalla al servicio. El backend calcula, reserva y confirma; la interfaz explica el estado. Si un modelo entra al producto, interpreta evidencia que ya existe. No inventa el total ni cierra la orden.',
                 'I work from the screen to the service. The backend calculates, reserves and confirms; the interface explains the state. If a model enters the product, it interprets evidence that already exists. It does not invent the total or close the order.',
-              ),
-            )}
-          </p>
-          <p>
-            {t(
-              c(
-                'Hoy eso ocurre en la app oficial de Club León, La Guarida y el POS de concesiones. Producto e ingeniería se revisan juntos: una decisión vale si sobrevive un reintento, un pago tardío o una gráfica sin datos.',
-                'Today that happens in Club León’s official app, La Guarida and the concessions POS. Product and engineering are reviewed together: a decision holds if it survives a retry, a late payment or a chart without data.',
               ),
             )}
           </p>
@@ -619,7 +570,8 @@ export default function Home() {
                 Scrum Developer Certified<small>TestingProgram · 2023</small>
               </p>
               <p>
-                Redes CCNA<small>Cisco NetAcad · 2022</small>
+                {t(c('Redes CCNA', 'CCNA networking'))}
+                <small>Cisco NetAcad · 2022</small>
               </p>
             </div>
           </div>

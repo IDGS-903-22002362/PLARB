@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { c, type Copy, type Study } from '@/lib/projects';
 import { usePreferences } from './preferences';
+import { uiCopy } from '@/lib/ui-copy';
 import { ExternalLink } from './shell';
 import Architecture from './architecture';
 import ProjectVisual from './project-visual';
@@ -30,7 +31,7 @@ function Heading({
   return (
     <div className="case-section-heading">
       <span className="eyebrow">
-        {index} / {label}
+        {index} / {t(uiCopy(label))}
       </span>
       <h2>{t(title)}</h2>
     </div>
@@ -40,7 +41,9 @@ function LoyaltyNote() {
   const { t } = usePreferences();
   return (
     <aside className="loyalty-section">
-      <span className="eyebrow">CONNECTED BACKEND / LOYALTY</span>
+      <span className="eyebrow">
+        {t(c('BACKEND CONECTADO / LEALTAD', 'CONNECTED BACKEND / LOYALTY'))}
+      </span>
       <h3>
         {t(
           c(
@@ -103,7 +106,8 @@ export default function CaseStudy({
           </Link>
           <div className="case-hero-line">
             <span className="eyebrow">
-              CASE STUDY / {project.number} / {project.category}
+              {t(c('CASO DE ESTUDIO', 'CASE STUDY'))} / {project.number} /{' '}
+              {t(uiCopy(project.category))}
             </span>
             <span
               className={`status ${project.kind === 'iot' ? 'historical' : ''}`}
@@ -112,7 +116,7 @@ export default function CaseStudy({
               {t(project.status)}
             </span>
           </div>
-          <h1>{project.title}</h1>
+          <h1>{t(uiCopy(project.title))}</h1>
           <p className="case-subtitle">{t(project.subtitle)}</p>
           <p className="case-summary">{t(project.summary)}</p>
           <dl className="case-meta">
@@ -204,7 +208,10 @@ export default function CaseStudy({
               [
                 [c('Producto', 'Product'), project.scope.product],
                 [c('Equipo y límites', 'Team and limits'), project.scope.team],
-                [c('Mi implementación', 'My implementation'), project.scope.mine],
+                [
+                  c('Mi implementación', 'My implementation'),
+                  project.scope.mine,
+                ],
                 [
                   c('Sistemas conectados', 'Connected systems'),
                   project.scope.connected,
@@ -246,7 +253,8 @@ export default function CaseStudy({
               <article className="challenge" key={decision.title.en}>
                 <div className="challenge-intro">
                   <span className="eyebrow">
-                    ENGINEERING DECISION / 0{index + 1}
+                    {t(c('DECISIÓN DE INGENIERÍA', 'ENGINEERING DECISION'))} / 0
+                    {index + 1}
                   </span>
                   <h3>{t(decision.title)}</h3>
                   <p>{t(decision.problem)}</p>
@@ -321,12 +329,15 @@ export default function CaseStudy({
             </div>
           </div>
         </section>
-        <TransitionLink className="next-project" href={`/projects/${next.slug}`}>
+        <TransitionLink
+          className="next-project"
+          href={`/projects/${next.slug}`}
+        >
           <div>
             <span className="eyebrow">
               {t(c('SIGUIENTE CASO', 'NEXT CASE'))} / {next.number}
             </span>
-            <h2>{next.title}</h2>
+            <h2>{t(uiCopy(next.title))}</h2>
           </div>
           <ArrowUpRight />
         </TransitionLink>

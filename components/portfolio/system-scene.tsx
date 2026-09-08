@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Braces, Code2, Database } from 'lucide-react';
 import { c } from '@/lib/projects';
 import { usePreferences } from './preferences';
+import { uiCopy } from '@/lib/ui-copy';
 import type { SceneController } from './system-scene-engine';
 export default function SystemScene() {
   const { paused, t } = usePreferences();
@@ -12,10 +13,10 @@ export default function SystemScene() {
   const [ready, setReady] = useState(false);
   const [stage, setStage] = useState(0);
   const stages = [
-    c('SYSTEM', 'SYSTEM'),
-    c('DECOMPOSITION', 'DECOMPOSITION'),
-    c('ARCHITECTURE', 'ARCHITECTURE'),
-    c('PRODUCT', 'PRODUCT'),
+    c('SISTEMA', 'SYSTEM'),
+    c('DESCOMPOSICIÓN', 'DECOMPOSITION'),
+    c('ARQUITECTURA', 'ARCHITECTURE'),
+    c('PRODUCTO', 'PRODUCT'),
   ];
   useEffect(() => {
     motion.current = !paused;
@@ -88,7 +89,7 @@ export default function SystemScene() {
         ].map(([name, Icon]) => {
           const Symbol = Icon as typeof Code2;
           return (
-            <div className="fallback-layer" key={String(name)}>
+            <div className="fallback-layer" key={t(uiCopy(String(name)))}>
               <Symbol size={23} />
               <span>{String(name)}</span>
             </div>
@@ -98,26 +99,29 @@ export default function SystemScene() {
       <div className="scene-label label-interface">
         <span>01</span>
         <div>
-          INTERFACE<small>React · Flutter</small>
+          {t(uiCopy('INTERFACE'))}
+          <small>React · Flutter</small>
         </div>
       </div>
       <div className="scene-label label-api">
         <span>02</span>
         <div>
-          SERVICES<small>Node.js · APIs</small>
+          {t(uiCopy('SERVICES'))}
+          <small>Node.js · APIs</small>
         </div>
       </div>
       <div className="scene-label label-data">
         <span>03</span>
         <div>
-          DATA<small>Firebase · SQL</small>
+          {t(uiCopy('DATA'))}
+          <small>Firebase · SQL</small>
         </div>
       </div>
       <figcaption>
         <span className="scene-caption-dot" />
         {t(
           c(
-            'PRODUCT → SYSTEM → ARCHITECTURE → PRODUCT.',
+            'PRODUCTO → SISTEMA → ARQUITECTURA → PRODUCTO.',
             'PRODUCT → SYSTEM → ARCHITECTURE → PRODUCT.',
           ),
         )}

@@ -3,6 +3,7 @@ import { useState, useId } from 'react';
 import { Box, ArrowUpRight } from 'lucide-react';
 import { c, type Study } from '@/lib/projects';
 import { usePreferences } from './preferences';
+import { uiCopy } from '@/lib/ui-copy';
 export default function Architecture({ project }: { project: Study }) {
   const { t } = usePreferences();
   const [active, setActive] = useState(project.nodes[0].id);
@@ -15,7 +16,9 @@ export default function Architecture({ project }: { project: Study }) {
   return (
     <div className="architecture">
       <div className="diagram-top">
-        <span className="eyebrow">SYSTEM MAP / {project.number}</span>
+        <span className="eyebrow">
+          {t(c('MAPA DEL SISTEMA', 'SYSTEM MAP'))} / {project.number}
+        </span>
         <span>
           {t(c('Explora los componentes', 'Explore the components'))}
           <ArrowUpRight size={15} />
@@ -49,12 +52,13 @@ export default function Architecture({ project }: { project: Study }) {
             style={{ left: `${node.x}%`, top: `${node.y}%` }}
             aria-pressed={node.id === active}
             aria-controls={`${uid}-detail`}
+            aria-label={`${t(uiCopy(node.title))} ${t(node.label)}`}
             onMouseEnter={() => setActive(node.id)}
             onFocus={() => setActive(node.id)}
             onClick={() => setActive(node.id)}
           >
             <Box size={18} aria-hidden="true" />
-            <strong>{node.title}</strong>
+            <strong>{t(uiCopy(node.title))}</strong>
             <span>{t(node.label)}</span>
           </button>
         ))}
@@ -62,7 +66,7 @@ export default function Architecture({ project }: { project: Study }) {
       <div className="graph-detail" id={`${uid}-detail`} aria-live="polite">
         <span className="node-indicator" />
         <div>
-          <strong>{selected.title}</strong>
+          <strong>{t(uiCopy(selected.title))}</strong>
           <p>{t(selected.detail)}</p>
         </div>
       </div>

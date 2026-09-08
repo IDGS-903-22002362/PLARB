@@ -1,88 +1,98 @@
-/* Product evidence is framed, never cropped into a decorative background. */
+/* The frame follows the evidence: portrait screens keep their full height. */
 .project-media-cover {
   height: 540px;
   background: radial-gradient(
-    ellipse at 45% 45%,
-    color-mix(in srgb, var(--cyan) 9%, transparent),
-    transparent 72%
+    ellipse at 48% 48%,
+    color-mix(in srgb, var(--cyan) 12%, transparent),
+    transparent 70%
   );
+  container-type: inline-size;
 }
 .cover-composition {
-  height: 100%;
+  height: calc(100% - 22px);
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 4cqi, 28px);
   margin: 0 auto;
   max-width: 740px;
+  padding: 24px 7%;
+  perspective: 1200px;
 }
 .cover-primary,
 .cover-secondary {
-  position: absolute;
+  min-width: 0;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--raised);
   border: 1px solid var(--line);
-  padding: 8px;
+  padding: 6px;
+  aspect-ratio: var(--media-ratio);
+  transform-origin: 50% 70%;
 }
 .cover-composition img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: 6px;
+}
+.portrait-composition .cover-primary,
+.portrait-composition .cover-secondary {
+  width: min(42%, 200px);
+  height: auto;
 }
 .portrait-composition .cover-primary {
-  height: 84%;
-  aspect-ratio: 0.45;
-  left: 12%;
-  top: 3%;
-  transform: rotate(-2.5deg);
+  transform: translateY(-14px) rotateY(9deg) rotate(-2deg);
 }
 .portrait-composition .cover-secondary {
-  height: 79%;
-  aspect-ratio: 0.45;
-  right: 12%;
-  top: 11%;
-  transform: rotate(2.5deg);
+  transform: translateY(14px) rotateY(-9deg) rotate(2deg);
+}
+.landscape-composition {
+  flex-direction: column;
+  gap: 16px;
 }
 .landscape-composition .cover-primary {
-  width: 90%;
-  aspect-ratio: 16 / 9;
-  top: 19%;
-  left: 4%;
-  transform: rotate(-3deg);
+  width: 94%;
+  transform: translateX(-3%) rotateY(5deg);
 }
 .landscape-composition .cover-secondary {
-  width: 66%;
-  aspect-ratio: 16 / 9;
-  right: 3%;
-  bottom: 15%;
-  transform: rotate(3deg);
+  width: 76%;
+  transform: translateX(8%) rotateY(-5deg);
 }
-.media-iot .cover-secondary {
-  width: auto;
-  height: 70%;
-  aspect-ratio: 0.45;
-  right: 8%;
-  bottom: 14%;
+.mixed-composition {
+  gap: 12px;
+  padding-inline: 4%;
+}
+.mixed-composition .landscape-cover {
+  width: 71%;
+  transform: translateY(-22px) rotateY(5deg);
+}
+.mixed-composition .portrait-cover {
+  width: 24%;
+  transform: translateY(22px) rotateY(-7deg);
 }
 .work-pos .project-media-cover,
 .work-iot .project-media-cover {
   height: 380px;
 }
-.media-pos .portrait-composition .cover-primary {
-  left: 19%;
-}
-.media-pos .portrait-composition .cover-secondary {
-  right: 18%;
+.work-pos .portrait-composition .cover-primary,
+.work-pos .portrait-composition .cover-secondary {
+  width: min(35%, 126px);
 }
 .project-media-cover figcaption {
   display: flex;
   justify-content: space-between;
-  text-align: left;
+  gap: 12px;
   font-size: 12px;
-  letter-spacing: 0;
   color: var(--muted);
+  letter-spacing: 0;
 }
 .project-gallery {
   padding: clamp(16px, 3vw, 34px);
+  min-width: 0;
+  container-type: inline-size;
 }
 .gallery-heading {
   display: flex;
@@ -93,33 +103,66 @@
   color: var(--muted);
   padding-bottom: 22px;
 }
-.gallery-heading > span:last-child {
+.gallery-heading > span:last-child,
+.lightbox-footer > span {
   font-variant-numeric: tabular-nums;
 }
 .gallery-stage {
-  height: clamp(240px, 44vw, 630px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--raised);
+  position: relative;
+  height: clamp(270px, 46vw, 650px);
+  display: grid;
+  place-items: center;
+  padding: 52px 24px 24px;
+  background:
+    radial-gradient(
+      ellipse at 50% 72%,
+      color-mix(in srgb, var(--cyan) 8%, transparent),
+      transparent 65%
+    ),
+    var(--raised);
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
+  perspective: 1400px;
+  isolation: isolate;
 }
 .gallery-stage.portrait-stage {
-  height: clamp(380px, 52vw, 640px);
+  height: clamp(440px, 62vw, 700px);
 }
-.gallery-stage img,
-.gallery-stage video {
+.gallery-format {
+  position: absolute;
+  inset: 16px 20px auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.gallery-format > span {
+  font-variant-numeric: tabular-nums;
+}
+.gallery-media {
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+}
+.gallery-media img,
+.gallery-media video {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-.gallery-stage.portrait-stage img,
-.gallery-stage.portrait-stage video {
+.portrait-stage .gallery-media {
   width: auto;
   max-width: 100%;
+  aspect-ratio: var(--media-ratio);
+  border-radius: 10px;
+  overflow: hidden;
+  outline: 1px solid var(--line);
+  outline-offset: 5px;
+  background: #07111a;
 }
 .gallery-caption {
   display: flex;
@@ -132,65 +175,83 @@
   margin: 0;
   font-size: 15px;
   color: var(--ink);
+  text-wrap: pretty;
 }
 .gallery-controls {
   display: flex;
   gap: 6px;
   flex-shrink: 0;
 }
-.gallery-controls .icon-button {
+.gallery-controls .icon-button,
+.lightbox-close {
   width: 44px;
   height: 44px;
   border: 1px solid var(--line);
   border-radius: 6px;
 }
-.gallery-thumbnails {
-  display: flex;
-  gap: 10px;
-  padding: 3px 3px 14px;
-  scrollbar-width: thin;
+.gallery-controls .icon-button {
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
 }
-.gallery-thumbnails.has-sections {
+.gallery-controls .icon-button:active {
+  transform: scale(0.94);
+}
+.gallery-thumbnails {
   display: grid;
-  gap: 14px;
+  gap: 16px;
+  min-width: 0;
 }
 .gallery-thumb-group {
   min-width: 0;
 }
 .gallery-thumb-heading {
   display: block;
-  margin: 0 0 7px;
-  color: var(--subtle);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 13px;
 }
 .gallery-thumb-list {
+  position: relative;
   display: flex;
-  gap: 10px;
+  align-items: end;
+  gap: 12px;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
-  padding: 0 1px 5px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+  padding: 4px 3px 12px;
 }
 .gallery-thumbnails button {
   position: relative;
-  flex: 0 0 112px;
-  height: 102px;
-  overflow: hidden;
+  flex: 0 0 156px;
+  height: 116px;
   padding: 6px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 7px;
   background: var(--raised);
   cursor: pointer;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+.gallery-thumbnails button.portrait-thumbnail {
+  flex-basis: 76px;
+  height: 156px;
 }
 .gallery-thumbnails button[aria-pressed='true'] {
   border-color: var(--blue);
   outline: 1px solid var(--blue);
+  background: color-mix(in srgb, var(--blue) 10%, var(--raised));
 }
 .gallery-thumbnails img {
+  display: block;
   width: 100%;
-  height: 65px;
+  height: calc(100% - 24px);
   object-fit: contain;
 }
 .gallery-thumbnails button > span {
@@ -199,11 +260,12 @@
   color: var(--muted);
   font-size: 12px;
   text-align: left;
+  font-variant-numeric: tabular-nums;
 }
 .thumbnail-play {
   position: absolute;
   left: 50%;
-  top: 30%;
+  top: 38%;
   transform: translateX(-50%);
   fill: white;
   color: #061521;
@@ -212,39 +274,45 @@
   width: min(1200px, calc(100vw - 32px));
   max-width: none;
   max-height: calc(100dvh - 32px);
-  padding: 24px;
+  padding: 22px;
+  gap: 14px;
+  overflow-y: auto;
 }
 .media-lightbox [data-slot='dialog-title'] {
-  padding-right: 44px;
+  padding-right: 48px;
   line-height: 1.4;
+  font-size: clamp(14px, 2vw, 18px);
 }
 .lightbox-close {
   position: absolute;
   right: 14px;
-  top: 14px;
+  top: 12px;
 }
 .lightbox-stage {
-  height: min(76dvh, 850px);
+  height: min(66dvh, 760px);
   min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  overflow: hidden;
+  perspective: 1400px;
+}
+.lightbox-footer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
 }
-.lightbox-stage img,
-.lightbox-stage video {
-  max-width: 100%;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.lightbox-footer a {
+  text-underline-offset: 4px;
+  text-decoration: underline;
 }
-/* GSAP owns entrances; avoid competing CSS animations on the same elements. */
+/* Visible defaults remain readable if motion libraries do not load. */
 :root[data-motion='playing'] .hero-copy,
 :root[data-motion='playing'] .case-hero h1 {
   animation: none;
-}
-:root[data-motion='paused'] .cover-primary,
-:root[data-motion='paused'] .cover-secondary {
-  transform: none;
 }
 .case-hero h1 {
   font-size: clamp(3rem, 8vw, 6rem);
@@ -253,43 +321,129 @@
 .project-copy h3 {
   letter-spacing: -0.04em;
 }
+.hero h1 {
+  max-width: 100%;
+  letter-spacing: -0.04em;
+}
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+.mobile-navigation {
+  max-height: calc(100dvh - 100px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+@media (hover: hover) and (pointer: fine) {
+  .gallery-thumbnails button:hover {
+    transform: translateY(-2px);
+    border-color: var(--blue);
+  }
+  .gallery-controls .icon-button:hover {
+    background: color-mix(in srgb, var(--blue) 12%, var(--raised));
+    border-color: var(--blue);
+  }
+}
+@media (min-width: 1600px) {
+  .hero h1 {
+    font-size: 96px;
+  }
+}
 @media (max-width: 600px) {
   .project-media-cover {
     height: 400px;
   }
-  .portrait-composition .cover-primary {
-    left: 9%;
+  .cover-composition {
+    padding-inline: 7%;
   }
+  .portrait-composition .cover-primary,
   .portrait-composition .cover-secondary {
-    right: 9%;
+    width: min(42%, 145px);
   }
   .work-pos .project-media-cover,
   .work-iot .project-media-cover {
     height: 320px;
   }
+  .landscape-composition .cover-primary {
+    width: 100%;
+  }
+  .landscape-composition .cover-secondary {
+    width: 84%;
+  }
   .gallery-caption {
     align-items: flex-start;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
-  .gallery-thumbnails button {
-    flex-basis: 92px;
+  .gallery-controls {
+    align-self: flex-end;
   }
   .gallery-heading {
     padding-bottom: 14px;
   }
-  .media-lightbox {
-    padding: 18px;
+  .gallery-stage {
+    padding: 44px 12px 16px;
   }
+  .gallery-stage.portrait-stage {
+    height: min(610px, 74svh);
+    min-height: 360px;
+  }
+  .gallery-format {
+    inset: 14px 12px auto;
+    font-size: 11px;
+  }
+  .gallery-thumbnails button {
+    flex-basis: 140px;
+  }
+  .gallery-thumbnails button.portrait-thumbnail {
+    flex-basis: 70px;
+    height: 144px;
+  }
+  .media-lightbox {
+    padding: 18px 12px;
+    width: calc(100vw - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+  .lightbox-footer {
+    flex-wrap: wrap;
+  }
+  .lightbox-footer a {
+    margin-left: auto;
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .lightbox-stage {
+    height: 48dvh;
+  }
+  .media-lightbox {
+    gap: 8px;
+    padding-block: 10px;
+  }
+}
+:root[data-motion='paused'] .project-gallery *,
+:root[data-motion='paused'] .project-media-cover *,
+:root[data-motion='paused'] .mobile-navigation {
+  transition: none !important;
+  animation: none !important;
 }
 @media (prefers-reduced-motion: reduce) {
   .cover-primary,
   .cover-secondary {
-    transform: none;
+    transform: none !important;
   }
   .project-gallery *,
-  .project-media-cover * {
+  .project-media-cover *,
+  .mobile-navigation {
     transition: none !important;
     animation: none !important;
+    scroll-behavior: auto !important;
   }
+}
+
+.site-header[aria-modal='true'] .header-inner {
+  position: relative;
+  z-index: 46;
+  background: var(--surface);
 }

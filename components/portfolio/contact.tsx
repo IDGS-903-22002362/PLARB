@@ -9,12 +9,23 @@ export function Contact() {
   return (
     <section className="contact-section shell" id="contacto">
       <div>
-        <span className="eyebrow">CONTACT / NEXT CONVERSATION</span>
-        <h2>{t(c('Si el sistema tiene que cerrar.', 'If the system has to close.'))}</h2>
+        <span className="eyebrow">
+          {t(
+            c(
+              'CONTACTO / SIGUIENTE CONVERSACIÓN',
+              'CONTACT / NEXT CONVERSATION',
+            ),
+          )}
+        </span>
+        <h2>
+          {t(
+            c('Si el sistema tiene que cerrar.', 'If the system has to close.'),
+          )}
+        </h2>
         <p>
           {t(
             c(
-              'Interfaces, servicios y datos que tienen que coincidir. Si eso es el problema, escribeme.',
+              'Interfaces, servicios y datos que tienen que coincidir. Si eso es el problema, escríbeme.',
               'Interfaces, services and data that have to agree. If that is the problem, write to me.',
             ),
           )}

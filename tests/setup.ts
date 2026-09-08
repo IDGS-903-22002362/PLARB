@@ -2,6 +2,7 @@ import { vi, afterEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn() }),
+  usePathname: () => window.location.pathname,
 }));
 afterEach(() => {
   cleanup();

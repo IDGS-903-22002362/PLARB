@@ -1,11 +1,114 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Portfolio from '../app/page';
+import { SiteShell } from '../components/portfolio/shell';
 vi.mock('../components/portfolio/system-scene', () => ({
   default: () => <div />,
 }));
 describe('Portfolio journeys', () => {
+  it('marks the section from the initial hash as active', () => {
+    const previousUrl = window.location.href;
+    window.history.replaceState({}, '', '/#sobre-mi');
+    const view = render(<Portfolio />);
+
+    expect(
+      screen
+        .getByRole('link', { name: 'Sobre mí' })
+        .getAttribute('aria-current'),
+    ).toBe('true');
+
+    view.unmount();
+    window.history.replaceState({}, '', previousUrl);
+  });
+
+  it('updates the active section from the latest intersection event', () => {
+    const callbacks: IntersectionObserverCallback[] = [];
+    const PreviousObserver = globalThis.IntersectionObserver;
+    class TestIntersectionObserver {
+      root = null;
+      rootMargin = '';
+      thresholds = [];
+      constructor(callback: IntersectionObserverCallback) {
+        callbacks.push(callback);
+      }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+      takeRecords() {
+        return [];
+      }
+    }
+    vi.stubGlobal('IntersectionObserver', TestIntersectionObserver);
+    const view = render(<Portfolio />);
+    const projects = document.getElementById('proyectos')!;
+    const experience = document.getElementById('experiencia')!;
+    const entry = (
+      target: Element,
+      ratio: number,
+      top: number,
+    ): IntersectionObserverEntry =>
+      ({
+        target,
+        isIntersecting: true,
+        intersectionRatio: ratio,
+        boundingClientRect: {
+          top,
+          bottom: top + 500,
+          height: 500,
+          width: 100,
+          left: 0,
+          right: 100,
+          x: 0,
+          y: top,
+          toJSON: () => ({}),
+        },
+        intersectionRect: {} as DOMRectReadOnly,
+        rootBounds: null,
+        time: 0,
+      }) as IntersectionObserverEntry;
+
+    act(() => {
+      callbacks[0]?.([entry(projects, 0.8, 120)], {} as IntersectionObserver);
+    });
+    expect(
+      screen
+        .getByRole('link', { name: 'Proyectos' })
+        .getAttribute('aria-current'),
+    ).toBe('true');
+
+    act(() => {
+      callbacks[0]?.([entry(experience, 0.9, 100)], {} as IntersectionObserver);
+    });
+    expect(
+      screen
+        .getByRole('link', { name: 'Experiencia' })
+        .getAttribute('aria-current'),
+    ).toBe('true');
+    expect(
+      screen
+        .getByRole('link', { name: 'Proyectos' })
+        .hasAttribute('aria-current'),
+    ).toBe(false);
+
+    view.unmount();
+    vi.stubGlobal('IntersectionObserver', PreviousObserver);
+  });
+
+  it('does not mark a section active on project routes', () => {
+    render(
+      <SiteShell>
+        <main />
+      </SiteShell>,
+    );
+
+    for (const link of within(
+      screen.getByRole('navigation', { name: 'Navegación principal' }),
+    ).getAllByRole('link')) {
+      expect(link.hasAttribute('aria-current')).toBe(false);
+    }
+  });
+
   it('preserves actual contacts and the original PDF', () => {
     render(<Portfolio />);
     expect(
@@ -84,8 +187,7 @@ describe('Portfolio journeys', () => {
     const user = userEvent.setup();
     render(<Portfolio />);
     expect(
-      screen
-        .getByRole('navigation', { name: 'Navegación principal' })
+      screen.getByRole('navigation', { name: 'Navegación principal' })
         .textContent,
     ).toContain('Experiencia');
     expect(screen.getByRole('tab', { name: /IA aplicada/ })).toBeTruthy();

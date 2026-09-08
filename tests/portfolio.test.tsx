@@ -80,6 +80,34 @@ describe('Portfolio journeys', () => {
     );
     expect(localStorage.getItem('luis-portfolio-motion')).toBe('paused');
   });
+  it('exposes Experience in navigation and four La Guarida decisions', async () => {
+    const user = userEvent.setup();
+    render(<Portfolio />);
+    expect(
+      screen
+        .getByRole('navigation', { name: 'Navegación principal' })
+        .textContent,
+    ).toContain('Experiencia');
+    expect(screen.getByRole('tab', { name: /IA aplicada/ })).toBeTruthy();
+    expect(screen.getAllByRole('tab')).toHaveLength(4);
+    await user.click(screen.getByRole('tab', { name: /IA aplicada/ }));
+    expect(
+      screen.getByRole('heading', {
+        name: 'La IA interpreta; el backend conserva la evidencia.',
+      }),
+    ).toBeTruthy();
+    expect(screen.getByText(/decision intelligence/i)).toBeTruthy();
+  });
+  it('keeps the hero readable when motion is paused', async () => {
+    render(<Portfolio />);
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Pausar animaciones' }),
+    );
+    expect(
+      screen.getByRole('heading', { level: 1, name: /Soluciones/ }),
+    ).toBeTruthy();
+    expect(document.documentElement.dataset.motion).toBe('paused');
+  });
   it('closes mobile navigation on Escape and selection', async () => {
     const user = userEvent.setup();
     render(<Portfolio />);

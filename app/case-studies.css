@@ -162,6 +162,30 @@
   font-size: 16px;
   line-height: 1.8;
 }
+.scope-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin: 42px 0 0 270px;
+}
+.scope-grid article {
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.scope-grid h3 {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  margin-bottom: 10px;
+}
+.scope-grid p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+}
 .requirements-list {
   padding: 0;
   margin: 28px 0 0;

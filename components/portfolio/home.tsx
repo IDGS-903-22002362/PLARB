@@ -20,6 +20,8 @@ import ProjectVisual from './project-visual';
 import Architecture from './architecture';
 import SystemScene from './system-scene';
 import { Contact } from './contact';
+import SystemReassembly from './system-reassembly';
+import TransitionLink from './transition-link';
 export function SectionHeading({
   index,
   label,
@@ -60,8 +62,8 @@ const capabilities = [
     icon: Braces,
     title: 'Backend',
     text: c(
-      'APIs Express, cálculo de precios, reservas de inventario y validación de eventos de pago.',
-      'Express APIs, price calculation, inventory reservations and payment event validation.',
+      'APIs Express, cálculo de precios, reservas de inventario, validación de pagos y contratos de IA: el modelo interpreta, el backend conserva la evidencia.',
+      'Express APIs, price calculation, inventory reservations, payment validation and AI contracts: the model interprets, the backend keeps the evidence.',
     ),
     ref: 'La Guarida',
     href: '/projects/la-guarida',
@@ -107,10 +109,18 @@ const capabilities = [
     href: '#stack',
   },
 ];
+const engineeringTabs = [
+  c('Inventario concurrente', 'Concurrent inventory'),
+  c('IA aplicada', 'Applied AI'),
+  c('Confirmación de pagos', 'Payment confirmation'),
+  c('Reglas de precio', 'Pricing rules'),
+];
 function EngineeringApproach() {
   const { t } = usePreferences();
   const [selected, setSelected] = useState(0);
-  const decision = studies[1].decisions[selected];
+  const decisions = studies[1].decisions;
+  const decision = decisions[selected];
+  const last = decisions.length - 1;
   return (
     <section className="section engineering-section" id="ingenieria">
       <div className="shell">
@@ -122,8 +132,8 @@ function EngineeringApproach() {
             'The decisions behind the product.',
           )}
           description={c(
-            'Un checkout se entiende mejor cuando también se explican sus excepciones.',
-            'A checkout is better understood when its exceptions are explained too.',
+            'Un checkout se entiende mejor cuando también se explican sus excepciones — incluida la IA.',
+            'A checkout is better understood when its exceptions are explained too — including AI.',
           )}
         />
         <div
@@ -131,11 +141,7 @@ function EngineeringApproach() {
           role="tablist"
           aria-label={t(c('Decisiones de La Guarida', 'La Guarida decisions'))}
         >
-          {[
-            c('Inventario concurrente', 'Concurrent inventory'),
-            c('Confirmación de pagos', 'Payment confirmation'),
-            c('Reglas de precio', 'Pricing rules'),
-          ].map((label, index) => (
+          {engineeringTabs.map((label, index) => (
             <button
               key={label.en}
               role="tab"
@@ -146,10 +152,12 @@ function EngineeringApproach() {
               onClick={() => setSelected(index)}
               onKeyDown={(event) => {
                 let next = selected;
-                if (event.key === 'ArrowRight') next = (selected + 1) % 3;
-                else if (event.key === 'ArrowLeft') next = (selected + 2) % 3;
+                if (event.key === 'ArrowRight')
+                  next = (selected + 1) % decisions.length;
+                else if (event.key === 'ArrowLeft')
+                  next = (selected + last) % decisions.length;
                 else if (event.key === 'Home') next = 0;
-                else if (event.key === 'End') next = 2;
+                else if (event.key === 'End') next = last;
                 else return;
                 event.preventDefault();
                 setSelected(next);
@@ -184,6 +192,10 @@ function EngineeringApproach() {
                 <dd>{t(decision.decision)}</dd>
               </div>
               <div>
+                <dt>{t(c('Por qué', 'Why'))}</dt>
+                <dd>{t(decision.reason)}</dd>
+              </div>
+              <div>
                 <dt>{t(c('Compromiso', 'Trade-off'))}</dt>
                 <dd>{t(decision.tradeoff)}</dd>
               </div>
@@ -214,11 +226,11 @@ export default function Home() {
           <div className="hero-copy">
             <p className="hero-role">SOFTWARE ENGINEER</p>
             <h1>
-              {t(c('Software que', 'Software that'))}
+              {t(c('Soluciones', 'Effective'))}
               <br />
-              <span>{t(c('conecta', 'connects'))}</span>
+              <span>{t(c('efectivas', 'and lasting'))}</span>
               <br />
-              {t(c('la operación.', 'operations.'))}
+              {t(c('y duraderas.', 'solutions.'))}
             </h1>
             <p className="hero-description">
               {t(
@@ -323,19 +335,23 @@ export default function Home() {
                   <span>{t(c('MI PARTICIPACIÓN', 'MY CONTRIBUTION'))}</span>
                   {t(project.role)}
                 </div>
+                <div className="project-systems">
+                  <span>{t(c('SISTEMAS', 'SYSTEMS'))}</span>
+                  {t(project.systems)}
+                </div>
                 <div className="tags">
                   {project.stack.slice(0, 4).map((tag) => (
                     <span key={tag}>{tag}</span>
                   ))}
                 </div>
-                <Link
+                <TransitionLink
                   className="case-link"
                   href={`/projects/${project.slug}`}
                   aria-label={`${t(c('Ver caso', 'View case'))}: ${project.title}`}
                 >
                   {t(c('Explorar caso de estudio', 'Explore case study'))}
                   <ArrowUpRight size={22} />
-                </Link>
+                </TransitionLink>
                 <div className="project-published">
                   <span
                     className={`status ${project.kind === 'iot' ? 'historical' : ''}`}
@@ -405,8 +421,8 @@ export default function Home() {
               <p>
                 {t(
                   c(
-                    'Desarrollo de productos digitales para la afición y la operación del club. Trabajo sobre interfaces, APIs, pagos, inventario e integraciones móviles.',
-                    'Digital product development for supporters and club operations. My work covers interfaces, APIs, payments, inventory and mobile integrations.',
+                    'Desarrollo de productos digitales para la afición y la operación del club. Interfaces, APIs, pagos, inventario, integraciones móviles y, en La Guarida, superficies de IA acotadas por el backend.',
+                    'Digital product development for supporters and club operations. Interfaces, APIs, payments, inventory, mobile integrations and, in La Guarida, AI surfaces bounded by the backend.',
                   ),
                 )}
               </p>
@@ -537,8 +553,24 @@ export default function Home() {
           <p>
             {t(
               c(
-                'Ingeniero en Desarrollo y Gestión de Software por la Universidad Tecnológica de León. Mi trabajo reúne desarrollo web, backend y móvil en productos de Club León.',
-                'Software Development and Management Engineer from Universidad Tecnológica de León. My work brings web, backend and mobile development together in Club León products.',
+                'Me interesa el software en el que la interfaz y la operación tienen que coincidir: una talla, un cobro, un inventario, una notificación que abre el destino correcto.',
+                'I care about software where the interface and the operation have to agree: a size, a charge, an inventory, a notification that opens the right destination.',
+              ),
+            )}
+          </p>
+          <p>
+            {t(
+              c(
+                'Trabajo de la pantalla al servicio. El backend calcula, reserva y confirma; la interfaz explica el estado. Si un modelo entra al producto, interpreta evidencia que ya existe. No inventa el total ni cierra la orden.',
+                'I work from the screen to the service. The backend calculates, reserves and confirms; the interface explains the state. If a model enters the product, it interprets evidence that already exists. It does not invent the total or close the order.',
+              ),
+            )}
+          </p>
+          <p>
+            {t(
+              c(
+                'Hoy eso ocurre en la app oficial de Club León, La Guarida y el POS de concesiones. Producto e ingeniería se revisan juntos: una decisión vale si sobrevive un reintento, un pago tardío o una gráfica sin datos.',
+                'Today that happens in Club León’s official app, La Guarida and the concessions POS. Product and engineering are reviewed together: a decision holds if it survives a retry, a late payment or a chart without data.',
               ),
             )}
           </p>
@@ -594,6 +626,7 @@ export default function Home() {
         </div>
       </section>
       <Contact />
+      <SystemReassembly />
     </main>
   );
 }

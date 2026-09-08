@@ -1,0 +1,295 @@
+/* Product evidence is framed, never cropped into a decorative background. */
+.project-media-cover {
+  height: 540px;
+  background: radial-gradient(
+    ellipse at 45% 45%,
+    color-mix(in srgb, var(--cyan) 9%, transparent),
+    transparent 72%
+  );
+}
+.cover-composition {
+  height: 100%;
+  position: relative;
+  margin: 0 auto;
+  max-width: 740px;
+}
+.cover-primary,
+.cover-secondary {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  padding: 8px;
+}
+.cover-composition img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.portrait-composition .cover-primary {
+  height: 84%;
+  aspect-ratio: 0.45;
+  left: 12%;
+  top: 3%;
+  transform: rotate(-2.5deg);
+}
+.portrait-composition .cover-secondary {
+  height: 79%;
+  aspect-ratio: 0.45;
+  right: 12%;
+  top: 11%;
+  transform: rotate(2.5deg);
+}
+.landscape-composition .cover-primary {
+  width: 90%;
+  aspect-ratio: 16 / 9;
+  top: 19%;
+  left: 4%;
+  transform: rotate(-3deg);
+}
+.landscape-composition .cover-secondary {
+  width: 66%;
+  aspect-ratio: 16 / 9;
+  right: 3%;
+  bottom: 15%;
+  transform: rotate(3deg);
+}
+.media-iot .cover-secondary {
+  width: auto;
+  height: 70%;
+  aspect-ratio: 0.45;
+  right: 8%;
+  bottom: 14%;
+}
+.work-pos .project-media-cover,
+.work-iot .project-media-cover {
+  height: 380px;
+}
+.media-pos .portrait-composition .cover-primary {
+  left: 19%;
+}
+.media-pos .portrait-composition .cover-secondary {
+  right: 18%;
+}
+.project-media-cover figcaption {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+.project-gallery {
+  padding: clamp(16px, 3vw, 34px);
+}
+.gallery-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--muted);
+  padding-bottom: 22px;
+}
+.gallery-heading > span:last-child {
+  font-variant-numeric: tabular-nums;
+}
+.gallery-stage {
+  height: clamp(240px, 44vw, 630px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.gallery-stage.portrait-stage {
+  height: clamp(380px, 52vw, 640px);
+}
+.gallery-stage img,
+.gallery-stage video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.gallery-stage.portrait-stage img,
+.gallery-stage.portrait-stage video {
+  width: auto;
+  max-width: 100%;
+}
+.gallery-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding-block: 20px;
+}
+.gallery-caption p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--ink);
+}
+.gallery-controls {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.gallery-controls .icon-button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.gallery-thumbnails {
+  display: flex;
+  gap: 10px;
+  padding: 3px 3px 14px;
+  scrollbar-width: thin;
+}
+.gallery-thumbnails.has-sections {
+  display: grid;
+  gap: 14px;
+}
+.gallery-thumb-group {
+  min-width: 0;
+}
+.gallery-thumb-heading {
+  display: block;
+  margin: 0 0 7px;
+  color: var(--subtle);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.gallery-thumb-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding: 0 1px 5px;
+}
+.gallery-thumbnails button {
+  position: relative;
+  flex: 0 0 112px;
+  height: 102px;
+  overflow: hidden;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--raised);
+  cursor: pointer;
+  scroll-snap-align: start;
+}
+.gallery-thumbnails button[aria-pressed='true'] {
+  border-color: var(--blue);
+  outline: 1px solid var(--blue);
+}
+.gallery-thumbnails img {
+  width: 100%;
+  height: 65px;
+  object-fit: contain;
+}
+.gallery-thumbnails button > span {
+  display: block;
+  padding-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: left;
+}
+.thumbnail-play {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  fill: white;
+  color: #061521;
+}
+.media-lightbox {
+  width: min(1200px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  padding: 24px;
+}
+.media-lightbox [data-slot='dialog-title'] {
+  padding-right: 44px;
+  line-height: 1.4;
+}
+.lightbox-close {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+}
+.lightbox-stage {
+  height: min(76dvh, 850px);
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-stage img,
+.lightbox-stage video {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* GSAP owns entrances; avoid competing CSS animations on the same elements. */
+:root[data-motion='playing'] .hero-copy,
+:root[data-motion='playing'] .case-hero h1 {
+  animation: none;
+}
+:root[data-motion='paused'] .cover-primary,
+:root[data-motion='paused'] .cover-secondary {
+  transform: none;
+}
+.case-hero h1 {
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: -0.04em;
+}
+.project-copy h3 {
+  letter-spacing: -0.04em;
+}
+@media (max-width: 600px) {
+  .project-media-cover {
+    height: 400px;
+  }
+  .portrait-composition .cover-primary {
+    left: 9%;
+  }
+  .portrait-composition .cover-secondary {
+    right: 9%;
+  }
+  .work-pos .project-media-cover,
+  .work-iot .project-media-cover {
+    height: 320px;
+  }
+  .gallery-caption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .gallery-thumbnails button {
+    flex-basis: 92px;
+  }
+  .gallery-heading {
+    padding-bottom: 14px;
+  }
+  .media-lightbox {
+    padding: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cover-primary,
+  .cover-secondary {
+    transform: none;
+  }
+  .project-gallery *,
+  .project-media-cover * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

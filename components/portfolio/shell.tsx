@@ -15,6 +15,7 @@ import {
 import { profile } from '@/lib/portfolio-data';
 import { c } from '@/lib/projects';
 import { PreferencesProvider, usePreferences } from './preferences';
+import { usePortfolioMotion } from './portfolio-motion';
 export function CVLink({
   className = 'button secondary',
 }: {
@@ -51,14 +52,56 @@ function Navigation({ home }: { home: boolean }) {
   const { locale, setLocale, theme, cycleTheme, paused, toggleMotion, t } =
     usePreferences();
   const [open, setOpen] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const [active, setActive] = useState('proyectos');
   const menuRef = useRef<HTMLButtonElement>(null);
   const prefix = home ? '' : '/';
   const links = [
-    { href: `${prefix}#proyectos`, label: c('Proyectos', 'Work') },
-    { href: `${prefix}#ingenieria`, label: c('Ingeniería', 'Engineering') },
-    { href: `${prefix}#sobre-mi`, label: c('Sobre mí', 'About') },
-    { href: `${prefix}#contacto`, label: c('Contacto', 'Contact') },
+    { id: 'proyectos', href: `${prefix}#proyectos`, label: c('Proyectos', 'Work') },
+    {
+      id: 'experiencia',
+      href: `${prefix}#experiencia`,
+      label: c('Experiencia', 'Experience'),
+    },
+    {
+      id: 'ingenieria',
+      href: `${prefix}#ingenieria`,
+      label: c('Ingeniería', 'Engineering'),
+    },
+    { id: 'sobre-mi', href: `${prefix}#sobre-mi`, label: c('Sobre mí', 'About') },
+    { id: 'contacto', href: `${prefix}#contacto`, label: c('Contacto', 'Contact') },
   ];
+  useEffect(() => {
+    const onScroll = () => setCompact(window.scrollY > 28);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  useEffect(() => {
+    if (!home) return;
+    const observed = [
+      'proyectos',
+      'experiencia',
+      'ingenieria',
+      'sobre-mi',
+      'contacto',
+    ]
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+    if (!observed.length) return;
+    const visibility = new Map<string, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries)
+          visibility.set(entry.target.id, entry.intersectionRatio);
+        const next = [...visibility.entries()].sort((a, b) => b[1] - a[1])[0];
+        if (next && next[1] > 0) setActive(next[0]);
+      },
+      { rootMargin: '-28% 0px -48% 0px', threshold: [0.15, 0.35, 0.6] },
+    );
+    observed.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [home]);
   useEffect(() => {
     if (!open) return;
     const close = (event: KeyboardEvent) => {
@@ -67,8 +110,12 @@ function Navigation({ home }: { home: boolean }) {
         menuRef.current?.focus();
       }
     };
+    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', close);
-    return () => window.removeEventListener('keydown', close);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', close);
+    };
   }, [open]);
   const themeNames = {
     system: c('sistema', 'system'),
@@ -76,7 +123,7 @@ function Navigation({ home }: { home: boolean }) {
     light: c('claro', 'light'),
   };
   return (
-    <header className="site-header">
+    <header className={`site-header ${compact ? 'header-compact' : ''}`}>
       <div className="header-inner">
         <a
           className="wordmark"
@@ -95,7 +142,11 @@ function Navigation({ home }: { home: boolean }) {
           aria-label={t(c('Navegación principal', 'Main navigation'))}
         >
           {links.map((link) => (
-            <a key={link.href} href={link.href}>
+            <a
+              key={link.href}
+              href={link.href}
+              aria-current={home && active === link.id ? 'true' : undefined}
+            >
               {t(link.label)}
             </a>
           ))}
@@ -160,49 +211,52 @@ function Navigation({ home }: { home: boolean }) {
         </div>
       </div>
       {open && (
-        <nav
-          className="mobile-navigation"
-          id="mobile-navigation"
-          aria-label={t(c('Navegación móvil', 'Mobile navigation'))}
-        >
-          {links.map((link) => (
-            <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
-              {t(link.label)}
-              <ArrowUpRight size={19} />
-            </a>
-          ))}
-        </nav>
+        <div className="mobile-nav-layer">
+          <button
+            type="button"
+            className="mobile-nav-backdrop"
+            aria-label={t(c('Cerrar menú', 'Close menu'))}
+            onClick={() => {
+              setOpen(false);
+              menuRef.current?.focus();
+            }}
+          />
+          <nav
+            className="mobile-navigation"
+            id="mobile-navigation"
+            aria-label={t(c('Navegación móvil', 'Mobile navigation'))}
+          >
+            <p className="mobile-nav-kicker">
+              {t(c('Recorrido', 'Sections'))}
+            </p>
+            {links.map((link, index) => (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={home && active === link.id ? 'true' : undefined}
+                onClick={() => setOpen(false)}
+              >
+                <span aria-hidden="true">0{index + 1}</span>
+                {t(link.label)}
+                <ArrowUpRight size={19} />
+              </a>
+            ))}
+          </nav>
+        </div>
       )}
     </header>
   );
 }
 function Frame({ children, home }: { children: ReactNode; home: boolean }) {
   const { t } = usePreferences();
-  const progressRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    let pending = 0;
-    const update = () => {
-      pending = 0;
-      const total = document.documentElement.scrollHeight - innerHeight;
-      if (progressRef.current)
-        progressRef.current.style.transform = `scaleX(${total > 0 ? scrollY / total : 0})`;
-    };
-    const scroll = () => {
-      if (!pending) pending = requestAnimationFrame(update);
-    };
-    window.addEventListener('scroll', scroll, { passive: true });
-    update();
-    return () => {
-      window.removeEventListener('scroll', scroll);
-      cancelAnimationFrame(pending);
-    };
-  }, []);
+  const scope = useRef<HTMLDivElement>(null);
+  usePortfolioMotion(scope);
   return (
-    <div className="portfolio" id="inicio">
+    <div className="portfolio" id="inicio" ref={scope}>
       <a className="skip-link" href="#contenido">
         {t(c('Saltar al contenido', 'Skip to content'))}
       </a>
-      <div className="reading-progress" ref={progressRef} aria-hidden="true" />
+      <div className="reading-progress" aria-hidden="true" />
       <Navigation home={home} />
       {children}
       <footer className="site-footer shell">

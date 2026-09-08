@@ -21,7 +21,9 @@ export default function Architecture({ project }: { project: Study }) {
           <ArrowUpRight size={15} />
         </span>
       </div>
-      <div className="graph-surface">
+      <div
+        className={`graph-surface ${project.nodes.length > 6 ? 'graph-dense' : ''}`}
+      >
         <svg
           className="graph-edges"
           viewBox="0 0 100 100"

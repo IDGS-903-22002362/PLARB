@@ -4,6 +4,7 @@ import '@fontsource-variable/space-grotesk';
 import './globals.css';
 import './portfolio.css';
 import './responsive.css';
+import './project-media.css';
 import { profile } from '@/lib/portfolio-data';
 import { personSchema, siteOrigin } from '@/lib/metadata';
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
   title: `${profile.name} — Software Engineer`,
   description:
-    'Luis Alberto Rosas Bocanegra. Ingeniero de software y desarrollador de La Guarida, el POS de concesiones y la app oficial de Club León. React, Flutter, Node.js y Firebase.',
+    'Luis Alberto Rosas Bocanegra. Software Engineer. App oficial de Club León, La Guarida —incluido el uso de IA acotada por el backend— y el POS de concesiones. React, Flutter, Node.js y Firebase.',
   robots: { index: false, follow: false },
   icons: { icon: '/favicon.svg' },
   alternates: { canonical: siteOrigin },

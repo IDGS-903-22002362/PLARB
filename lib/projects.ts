@@ -17,6 +17,12 @@ export type SystemNode = {
   x: number;
   y: number;
 };
+export type Scope = {
+  product: Copy;
+  team: Copy;
+  mine: Copy;
+  connected: Copy;
+};
 export type Study = {
   slug: string;
   number: string;
@@ -31,6 +37,8 @@ export type Study = {
   context: Copy;
   problem: Copy;
   contribution: Copy;
+  systems: Copy;
+  scope: Scope;
   requirements: Copy[];
   stack: string[];
   links: { label: string; href: string }[];
@@ -90,6 +98,28 @@ export const studies: Study[] = [
       'Desarrollo en Flutter y Dart; integración de notificaciones, navegación y tienda. Sincronización de Fiera Racha con widgets implementados en Swift/WidgetKit y Kotlin/RemoteViews.',
       'Flutter and Dart development; notification, navigation and store integration. Fiera Racha synchronization with Swift/WidgetKit and Kotlin/RemoteViews widgets.',
     ),
+    systems: c(
+      'App Flutter, widgets nativos, Firebase y acceso a La Guarida.',
+      'Flutter app, native widgets, Firebase and access to La Guarida.',
+    ),
+    scope: {
+      product: c(
+        'La app oficial de Club León para iOS y Android: calendarios, Fiera Racha, notificaciones y entrada a la tienda.',
+        'Club León’s official iOS and Android app: calendars, Fiera Racha, notifications and an entry to the store.',
+      ),
+      team: c(
+        'El producto vive en el ecosistema digital del club. No atribuyo diseño de marca, operación de contenidos ni el backend de lealtad como trabajo exclusivo de la app.',
+        'The product lives in the club’s digital ecosystem. I do not claim brand design, content operations or the loyalty backend as exclusive app work.',
+      ),
+      mine: c(
+        'Implementé la experiencia Flutter, el estado de calendarios, las rutas desde notificaciones y la sincronización de widgets de Fiera Racha en Swift y Kotlin.',
+        'I implemented the Flutter experience, calendar state, notification routes and Fiera Racha widget synchronization in Swift and Kotlin.',
+      ),
+      connected: c(
+        'La Guarida es un sistema de comercio aparte. El motor de puntos es un backend de ecosistema: no es una pantalla que yo haya presentado como feature de la app.',
+        'La Guarida is a separate commerce system. The points engine is an ecosystem backend: it is not a screen I present as an app feature I built.',
+      ),
+    },
     requirements: [
       c(
         'Calendarios masculino y femenil con estado independiente.',
@@ -314,6 +344,28 @@ export const studies: Study[] = [
       'Frontend Next.js y TypeScript; APIs Express, lógica de checkout y servicios Firebase. Integración de pagos, reservas por variante, herramientas de administración y flujos de IA con Gemini y Vertex AI.',
       'Next.js and TypeScript frontend; Express APIs, checkout logic and Firebase services. Payment integration, variant reservations, administrative tools and AI workflows with Gemini and Vertex AI.',
     ),
+    systems: c(
+      'Storefront, API, pagos, inventario y superficies de IA.',
+      'Storefront, API, payments, inventory and AI surfaces.',
+    ),
+    scope: {
+      product: c(
+        'La tienda oficial: catálogo, checkout, pedidos, inventario y asistencia de compra o administración.',
+        'The official store: catalog, checkout, orders, inventory and shopping or admin assistance.',
+      ),
+      team: c(
+        'Trabajo full stack sobre la tienda y su backend. No presento campaña, fotografía de producto ni operación comercial del club como implementación mía.',
+        'I work full stack on the store and its backend. I do not present campaign work, product photography or club commercial operations as my implementation.',
+      ),
+      mine: c(
+        'Implementé contratos de checkout, reservas, validación de pagos y las tres superficies de IA: asistente de compra, try-on y analítica administrativa con evidencia reconciliada.',
+        'I implemented checkout contracts, reservations, payment validation and the three AI surfaces: shopping assistant, try-on and administrative analytics with reconciled evidence.',
+      ),
+      connected: c(
+        'Stripe y Aplazo confirman cobros. Gemini y Vertex interpretan; no confirman órdenes. La app puede abrir la tienda, pero el pago y el inventario se resuelven aquí.',
+        'Stripe and Aplazo confirm charges. Gemini and Vertex interpret; they do not confirm orders. The app can open the store, but payment and inventory are resolved here.',
+      ),
+    },
     requirements: [
       c(
         'Calcular el importe final en el backend.',
@@ -327,6 +379,10 @@ export const studies: Study[] = [
         'Procesar reintentos de pago sin repetir efectos.',
         'Process payment retries without repeating effects.',
       ),
+      c(
+        'La IA interpreta catálogo, try-on y analítica; el backend conserva evidencia y no deja que el modelo confirme un cobro.',
+        'AI interprets catalog, try-on and analytics; the backend keeps evidence and does not let the model confirm a charge.',
+      ),
     ],
     stack: [
       'Next.js',
@@ -335,6 +391,7 @@ export const studies: Study[] = [
       'Node.js / Express',
       'Firebase',
       'Stripe',
+      'Aplazo',
       'Zod',
       'Gemini',
       'Vertex AI',
@@ -342,8 +399,8 @@ export const studies: Study[] = [
     ],
     links: [{ label: 'La Guarida', href: publicLinks.store }],
     architecture: c(
-      'El frontend solicita el checkout. La API calcula el precio y reserva inventario. Los eventos de pago validados llevan la orden a su siguiente estado; el stock se confirma o se libera según el resultado.',
-      'The frontend requests checkout. The API calculates pricing and reserves inventory. Validated payment events advance the order; stock is confirmed or released according to the outcome.',
+      'El frontend solicita el checkout. La API calcula el precio y reserva inventario. Los eventos de pago validados llevan la orden a su siguiente estado; el stock se confirma o se libera según el resultado. Gemini y Vertex se conectan desde la API como un lado de interpretación, no como confirmación de cobro.',
+      'The frontend requests checkout. The API calculates pricing and reserves inventory. Validated payment events advance the order; stock is confirmed or released according to the outcome. Gemini and Vertex connect from the API as an interpretation side path, not as payment confirmation.',
     ),
     nodes: [
       node(
@@ -354,8 +411,8 @@ export const studies: Study[] = [
           'Interfaz de productos, variantes, carrito y opciones de entrega.',
           'Products, variants, cart and delivery options.',
         ),
-        50,
-        13,
+        22,
+        15,
       ),
       node(
         'api',
@@ -365,8 +422,8 @@ export const studies: Study[] = [
           'Valida entradas y construye el precio y los snapshots del checkout en servidor.',
           'Validates inputs and builds checkout pricing and snapshots on the server.',
         ),
-        26,
-        43,
+        22,
+        50,
       ),
       node(
         'pay',
@@ -376,8 +433,8 @@ export const studies: Study[] = [
           'Los proveedores envían eventos; el backend comprueba firma o validación del proveedor e importes.',
           'Providers send events; the backend checks signatures or provider validation and amounts.',
         ),
-        74,
-        43,
+        78,
+        50,
       ),
       node(
         'stock',
@@ -387,8 +444,8 @@ export const studies: Study[] = [
           'Transacciones para reservar, confirmar, liberar y caducar existencias.',
           'Transactions to reserve, confirm, release and expire stock.',
         ),
-        17,
-        77,
+        16,
+        85,
       ),
       node(
         'orders',
@@ -399,7 +456,7 @@ export const studies: Study[] = [
           'Orders retain their relationship to payment and reserved items.',
         ),
         50,
-        77,
+        85,
       ),
       node(
         'events',
@@ -409,8 +466,19 @@ export const studies: Study[] = [
           'Comprueba importes e identifica eventos repetidos antes de aplicar su resultado.',
           'Checks amounts and identifies repeated events before applying their result.',
         ),
-        83,
-        77,
+        84,
+        85,
+      ),
+      node(
+        'ai',
+        'Gemini · Vertex',
+        c('IA aplicada', 'Applied AI'),
+        c(
+          'Asistente de compra, try-on y analítica administrativa. El modelo interpreta; no confirma pagos ni altera inventario.',
+          'Shopping assistant, try-on and administrative analytics. The model interprets; it does not confirm payments or change inventory.',
+        ),
+        78,
+        15,
       ),
     ],
     edges: [
@@ -418,6 +486,7 @@ export const studies: Study[] = [
       ['api', 'pay'],
       ['api', 'stock'],
       ['api', 'orders'],
+      ['api', 'ai'],
       ['pay', 'events'],
       ['events', 'orders'],
     ],
@@ -454,24 +523,24 @@ export const studies: Study[] = [
           'AI interprets; the backend preserves the evidence.',
         ),
         problem: c(
-          'Un asistente puede responder con contexto incompleto o inventar números si el contrato no delimita sus herramientas.',
-          'An assistant can answer from incomplete context or invent numbers when its tool contract is not bounded.',
+          'Un asistente puede completar huecos, inventar un KPI o tratar un cobro como si lo hubiera confirmado si sus herramientas no están acotadas.',
+          'An assistant can fill gaps, invent a KPI or treat a charge as confirmed when its tools are not bounded.',
         ),
         decision: c(
-          'Separar las superficies: herramientas autorizadas para catálogo y pedidos, un probador virtual con consentimiento explícito y analítica administrativa de solo lectura con Gemini.',
-          'Separate the surfaces: authorized tools for catalog and orders, a virtual try-on with explicit consent, and read-only administrative analytics with Gemini.',
+          'Tres superficies separadas: asistente de compra con herramientas de catálogo y pedidos; try-on en Vertex con consentimiento, jobs asíncronos y borrado de la foto; analítica administrativa de solo lectura con Gemini, gráficas reconciliadas y decision intelligence (cohortes, segmentos, afinidad y escenarios) calificada por el backend.',
+          'Three separate surfaces: a shopping assistant with catalog and order tools; Vertex try-on with consent, async jobs and photo deletion; read-only administrative analytics with Gemini, reconciled charts and decision intelligence (cohorts, segments, affinity and scenarios) graded by the backend.',
         ),
         reason: c(
-          'La disponibilidad, los permisos y las métricas pertenecen a servicios verificables; el modelo ayuda a interpretar y presentar.',
-          'Availability, permissions and metrics belong to verifiable services; the model helps interpret and present them.',
+          'Disponibilidad, permisos y métricas pertenecen a servicios verificables. El modelo interpreta y presenta; no es fuente de verdad ni parte del camino que confirma una orden.',
+          'Availability, permissions and metrics belong to verifiable services. The model interprets and presents; it is not the source of truth and it is not on the path that confirms an order.',
         ),
         tradeoff: c(
-          'La reconciliación añade contratos y trabajo de backend, pero una gráfica sin evidencia compatible se omite en lugar de fabricarse.',
-          'Reconciliation adds backend contracts and work, but a chart without compatible evidence is omitted instead of fabricated.',
+          'Hay más contratos y reconciliación. A cambio, una gráfica sin evidencia compatible se omite; el informe no fabrica números ni ejecuta escrituras.',
+          'There are more contracts and more reconciliation. In exchange, a chart without compatible evidence is omitted; the report does not fabricate numbers or perform writes.',
         ),
         outcome: c(
-          'Asistente de compra para productos, precios, tallas y stock; try-on de prendas con procesamiento asíncrono; reportes de ventas e inventario con KPIs, tablas y gráficas respaldadas por herramientas.',
-          'Shopping assistant for products, prices, sizes and stock; asynchronous apparel try-on; sales and inventory reports with KPIs, tables and tool-backed charts.',
+          'Asistente de compra para productos, precios, tallas y stock; try-on asíncrono con consentimiento; reportes admin con KPIs, tablas y gráficas respaldadas por tools; bloques de decisión solo cuando la evidencia alcanza el umbral del backend.',
+          'Shopping assistant for products, prices, sizes and stock; async consent-based try-on; admin reports with KPIs, tables and tool-backed charts; decision blocks only when backend evidence meets its threshold.',
         ),
       },
       {
@@ -541,8 +610,8 @@ export const studies: Study[] = [
         'Order management, inventory reception and promotions.',
       ),
       c(
-        'IA aplicada al comercio: asistente de compra, try-on con consentimiento y analítica administrativa con gráficas reconciliadas desde datos autorizados.',
-        'Applied AI for commerce: shopping assistant, consent-based try-on and administrative analytics with charts reconciled from authorized data.',
+        'IA aplicada al comercio: asistente de compra, try-on con consentimiento, analítica administrativa con gráficas reconciliadas y decision intelligence de solo lectura.',
+        'Applied AI for commerce: shopping assistant, consent-based try-on, administrative analytics with reconciled charts and read-only decision intelligence.',
       ),
     ],
     security: c(
@@ -563,8 +632,8 @@ export const studies: Study[] = [
         'Defined exception flows for reservations and payment events.',
       ),
       c(
-        'Las capacidades de IA quedan descritas como implementadas; la evidencia del backend, no el modelo, determina los datos visuales.',
-        'AI capabilities are described as implemented; backend evidence, not the model, determines visual data.',
+        'Las tres superficies de IA están implementadas; la evidencia del backend, no el modelo, determina KPIs, gráficas y bloques de decisión.',
+        'The three AI surfaces are implemented; backend evidence, not the model, determines KPIs, charts and decision blocks.',
       ),
     ],
     lessons: c(
@@ -604,6 +673,28 @@ export const studies: Study[] = [
       'Interfaces Next.js/React, APIs Express y servicios Firebase para ventas, productos, inventario y cortes. Integración del módulo VIP con pago y estados de pedido.',
       'Next.js/React interfaces, Express APIs and Firebase services for sales, products, inventory and reconciliation. VIP module integration with payment and order states.',
     ),
+    systems: c(
+      'POS web, API con roles, inventario, cortes y canal VIP.',
+      'POS web, role-based API, inventory, cash closing and VIP channel.',
+    ),
+    scope: {
+      product: c(
+        'Punto de venta interno de concesiones: ventas, existencias, cortes y pedidos VIP.',
+        'Internal concessions point of sale: sales, stock, cash closing and VIP orders.',
+      ),
+      team: c(
+        'El personal de concesiones opera el sistema. No presento este POS como el punto de venta Flask de 2024 ni como la tienda pública.',
+        'Concession staff operate the system. I do not present this POS as the 2024 Flask point of sale or as the public store.',
+      ),
+      mine: c(
+        'Implementé la operación de ventas, productos, combos, inventario, cortes por conteo y el módulo VIP con estados de pedido.',
+        'I implemented sales, products, combos, inventory, count-based cash closing and the VIP module with order states.',
+      ),
+      connected: c(
+        'Stripe confirma el cobro VIP. El inventario del POS es el que decide si el pedido puede continuar. La lealtad de la tienda no se atribuye a este sistema.',
+        'Stripe confirms the VIP charge. POS inventory decides whether the order can continue. Store loyalty is not attributed to this system.',
+      ),
+    },
     requirements: [
       c(
         'Separar acceso por rol y responsabilidad operativa.',
@@ -710,6 +801,32 @@ export const studies: Study[] = [
     decisions: [
       {
         title: c(
+          'Roles y módulos para no mezclar la operación.',
+          'Roles and modules so operations stay separate.',
+        ),
+        problem: c(
+          'Ventas, existencias y cortes tienen responsables distintos; un acceso plano mezcla permisos y estados.',
+          'Sales, stock and cash closing have different owners; a flat access model mixes permissions and states.',
+        ),
+        decision: c(
+          'Separar la operación en ventas, inventario y cortes, y restringir cada acción por rol validado en la API.',
+          'Separate operations into sales, inventory and cash closing, and restrict each action by a role validated in the API.',
+        ),
+        reason: c(
+          'El corte y el inventario no deben depender de lo que una pantalla permita pulsar.',
+          'Cash closing and inventory should not depend on what a screen allows someone to tap.',
+        ),
+        tradeoff: c(
+          'Hay más contratos y pantallas. A cambio, un operador no concentra permisos de toda la concesión.',
+          'There are more contracts and screens. In exchange, one operator does not hold every concession permission.',
+        ),
+        outcome: c(
+          'Ventas, existencias y cortes quedan como módulos con acceso explícito, no como un único formulario.',
+          'Sales, stock and cash closing remain modules with explicit access, not a single form.',
+        ),
+      },
+      {
+        title: c(
           'Pago recibido no siempre significa pedido despachable.',
           'A received payment does not always mean a dispatchable order.',
         ),
@@ -797,6 +914,28 @@ export const studies: Study[] = [
       'Backend .NET con Entity Framework y JWT, frontend Angular, SQL Server y aplicación Kotlin para riego, telemetría y alertas con Firebase.',
       '.NET backend with Entity Framework and JWT, Angular frontend, SQL Server and a Kotlin application for irrigation, telemetry and alerts with Firebase.',
     ),
+    systems: c(
+      'Comercio .NET/Angular y control móvil Kotlin/Firebase.',
+      '.NET/Angular commerce and Kotlin/Firebase mobile control.',
+    ),
+    scope: {
+      product: c(
+        'Dos dominios documentados en el CV de 2025: comercio web y control de riego en Android.',
+        'Two domains documented in the 2025 CV: web commerce and Android irrigation control.',
+      ),
+      team: c(
+        'El alcance proviene del CV. No atribuyo un equipo, un protocolo IoT ni un despliegue de producción no verificado.',
+        'The scope comes from the CV. I do not attribute a team, an IoT protocol or an unverified production deployment.',
+      ),
+      mine: c(
+        'Implementé los módulos de comercio (catálogo, carrito, checkout, órdenes) y la app Android de riego, telemetría y alertas según lo documentado.',
+        'I implemented the commerce modules (catalog, cart, checkout, orders) and the Android irrigation, telemetry and alerts app as documented.',
+      ),
+      connected: c(
+        'El comercio usa SQL Server; el móvil usa Firebase. No se afirma un bus compartido ni métricas de uso.',
+        'Commerce uses SQL Server; mobile uses Firebase. No shared bus or usage metrics are claimed.',
+      ),
+    },
     requirements: [
       c(
         'Catálogo, carrito, checkout y panel de órdenes.',
@@ -988,6 +1127,8 @@ export const technologyGroups = [
       'MySQL',
       'MongoDB',
       'Firebase',
+      'Gemini',
+      'Vertex AI',
     ],
   },
   {

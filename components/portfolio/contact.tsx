@@ -10,12 +10,12 @@ export function Contact() {
     <section className="contact-section shell" id="contacto">
       <div>
         <span className="eyebrow">CONTACT / NEXT CONVERSATION</span>
-        <h2>{t(c('Hablemos de software.', 'Let’s talk software.'))}</h2>
+        <h2>{t(c('Si el sistema tiene que cerrar.', 'If the system has to close.'))}</h2>
         <p>
           {t(
             c(
-              'Interfaces, servicios y aplicaciones que necesitan trabajar juntos.',
-              'Interfaces, services and applications that need to work together.',
+              'Interfaces, servicios y datos que tienen que coincidir. Si eso es el problema, escribeme.',
+              'Interfaces, services and data that have to agree. If that is the problem, write to me.',
             ),
           )}
         </p>

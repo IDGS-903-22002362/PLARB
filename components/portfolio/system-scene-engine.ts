@@ -67,6 +67,10 @@ export function createSystemScene(
     opacity: 0.7,
   });
   resources.push(borderMaterial);
+  const interfaceLayer = new THREE.Group();
+  const servicesLayer = new THREE.Group();
+  const dataLayer = new THREE.Group();
+  assembly.add(interfaceLayer, servicesLayer, dataLayer);
   const box = (
     w: number,
     h: number,
@@ -76,12 +80,13 @@ export function createSystemScene(
     y: number,
     z: number,
     outline = false,
+    parent: THREE.Object3D = assembly,
   ) => {
     const geometry = new THREE.BoxGeometry(w, h, d);
     resources.push(geometry);
     const mesh = new THREE.Mesh(geometry, mat);
     mesh.position.set(x, y, z);
-    assembly.add(mesh);
+    parent.add(mesh);
     if (outline) {
       const edge = new THREE.EdgesGeometry(geometry);
       resources.push(edge);
@@ -89,9 +94,11 @@ export function createSystemScene(
     }
     return mesh;
   };
+  const planes = [dataLayer, servicesLayer, interfaceLayer];
   [-1.55, 0, 1.55].forEach((y, layer) => {
-    box(4.1, 0.13, 2.9, panelMaterial, 0, y, 0, true);
-    box(3.95, 0.035, 0.025, cyanMaterial, 0, y + 0.08, 1.45);
+    const parent = planes[layer];
+    box(4.1, 0.13, 2.9, panelMaterial, 0, y, 0, true, parent);
+    box(3.95, 0.035, 0.025, cyanMaterial, 0, y + 0.08, 1.45, false, parent);
     for (let i = 0; i < 5; i++)
       box(
         0.055,
@@ -101,24 +108,26 @@ export function createSystemScene(
         -1.7 + i * 0.14,
         y + 0.105,
         1.24,
+        false,
+        parent,
       );
     for (const x of [-1.85, 1.85])
       for (const z of [-1.25, 1.25])
-        box(0.085, 0.04, 0.085, silverMaterial, x, y + 0.095, z);
+        box(0.085, 0.04, 0.085, silverMaterial, x, y + 0.095, z, false, parent);
   });
   // Frontend surface: a browser-like frame and intentional content regions.
-  box(3.45, 0.055, 2.22, darkMaterial, 0, 1.66, -0.02);
-  box(3.3, 0.035, 0.16, silverMaterial, 0, 1.71, -0.99);
-  box(1.2, 0.09, 1.6, blueMaterial, -0.98, 1.72, 0.04, true);
-  box(1.66, 0.05, 0.16, silverMaterial, 0.63, 1.73, -0.56);
-  box(1.66, 0.05, 0.1, silverMaterial, 0.63, 1.73, -0.29);
-  box(1.14, 0.05, 0.1, silverMaterial, 0.37, 1.73, -0.05);
-  box(0.65, 0.08, 0.32, cyanMaterial, 0.12, 1.74, 0.52, true);
+  box(3.45, 0.055, 2.22, darkMaterial, 0, 1.66, -0.02, false, interfaceLayer);
+  box(3.3, 0.035, 0.16, silverMaterial, 0, 1.71, -0.99, false, interfaceLayer);
+  box(1.2, 0.09, 1.6, blueMaterial, -0.98, 1.72, 0.04, true, interfaceLayer);
+  box(1.66, 0.05, 0.16, silverMaterial, 0.63, 1.73, -0.56, false, interfaceLayer);
+  box(1.66, 0.05, 0.1, silverMaterial, 0.63, 1.73, -0.29, false, interfaceLayer);
+  box(1.14, 0.05, 0.1, silverMaterial, 0.37, 1.73, -0.05, false, interfaceLayer);
+  box(0.65, 0.08, 0.32, cyanMaterial, 0.12, 1.74, 0.52, true, interfaceLayer);
   // Backend nodes share one geometric vocabulary.
   for (const x of [-1.2, 0, 1.2]) {
-    box(0.8, 0.28, 0.94, darkMaterial, x, 0.23, 0, true);
-    box(0.57, 0.06, 0.57, blueMaterial, x, 0.41, 0);
-    box(0.21, 0.06, 0.21, cyanMaterial, x, 0.47, 0);
+    box(0.8, 0.28, 0.94, darkMaterial, x, 0.23, 0, true, servicesLayer);
+    box(0.57, 0.06, 0.57, blueMaterial, x, 0.41, 0, false, servicesLayer);
+    box(0.21, 0.06, 0.21, cyanMaterial, x, 0.47, 0, false, servicesLayer);
   }
   // Database canisters, without high polygon geometry.
   for (const x of [-1.1, 1.1]) {
@@ -130,13 +139,13 @@ export function createSystemScene(
         tier === 2 ? blueMaterial : darkMaterial,
       );
       mesh.position.set(x, -1.35 + tier * 0.23, 0);
-      assembly.add(mesh);
+      dataLayer.add(mesh);
       const ring = new THREE.TorusGeometry(0.53, 0.018, 5, 24);
       resources.push(ring);
       const ringMesh = new THREE.Mesh(ring, cyanMaterial);
       ringMesh.rotation.x = Math.PI / 2;
       ringMesh.position.set(x, -1.25 + tier * 0.23, 0);
-      assembly.add(ringMesh);
+      dataLayer.add(ringMesh);
     }
   }
   // Vertical buses communicate the relationship between the three planes.
@@ -202,10 +211,16 @@ export function createSystemScene(
   const scroll = () => {
     if (!motion || !active) return;
     const bounds = container.getBoundingClientRect();
-    targetX = Math.max(
-      -0.1,
-      Math.min(0.16, (-bounds.top / innerHeight) * 0.17),
+    const progress = Math.max(
+      0,
+      Math.min(1, -bounds.top / Math.max(innerHeight * 0.72, 1)),
     );
+    const spread =
+      progress < 0.58 ? progress / 0.58 : 1 - (progress - 0.58) / 0.42;
+    interfaceLayer.position.y = spread * 0.42;
+    dataLayer.position.y = -spread * 0.38;
+    servicesLayer.position.y = spread * 0.04;
+    targetX = Math.max(-0.1, Math.min(0.16, progress * 0.14));
     schedule();
   };
   const lost = (event: Event) => {

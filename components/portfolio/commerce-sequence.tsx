@@ -12,30 +12,36 @@ export default function CommerceSequence() {
       element.style.setProperty('--separation', '1');
       return;
     }
-    let frame = 0;
-    let visible = false;
-    const update = () => {
-      frame = 0;
-      const rect = element.getBoundingClientRect();
-      const progress = Math.max(
-        0,
-        Math.min(1, (innerHeight * 0.8 - rect.top) / (innerHeight * 0.55)),
-      );
-      element.style.setProperty('--separation', progress.toFixed(3));
-    };
-    const schedule = () => {
-      if (visible && !frame) frame = requestAnimationFrame(update);
-    };
-    const observer = new IntersectionObserver((entries) => {
-      visible = entries.some((entry) => entry.isIntersecting);
-      schedule();
-    });
-    observer.observe(element);
-    window.addEventListener('scroll', schedule, { passive: true });
+    let disposed = false;
+    let revert: (() => void) | undefined;
+    void Promise.all([import('gsap'), import('gsap/ScrollTrigger')])
+      .then(([{ gsap }, { ScrollTrigger }]) => {
+        if (disposed) return;
+        gsap.registerPlugin(ScrollTrigger);
+        const context = gsap.context(() => {
+          gsap.fromTo(
+            element,
+            { '--separation': 0 },
+            {
+              '--separation': 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: element,
+                start: 'top 80%',
+                end: 'top 25%',
+                scrub: 0.5,
+              },
+            },
+          );
+        }, element);
+        revert = () => context.revert();
+      })
+      .catch(() => {
+        if (!disposed) element.style.setProperty('--separation', '1');
+      });
     return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', schedule);
-      cancelAnimationFrame(frame);
+      disposed = true;
+      revert?.();
     };
   }, [paused]);
   return (

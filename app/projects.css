@@ -55,12 +55,18 @@
   color: var(--muted);
   margin-top: 23px;
 }
-.project-role > span {
+.project-role > span,
+.project-systems > span {
   display: block;
   letter-spacing: 0.09em;
   font-size: 9px;
   margin-bottom: 3px;
   color: var(--subtle);
+}
+.project-systems {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 14px;
 }
 .tags {
   display: flex;

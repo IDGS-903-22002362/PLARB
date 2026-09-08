@@ -36,3 +36,6 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# Uncurated originals may include customer details; publish curated derivatives only.
+/public/img/

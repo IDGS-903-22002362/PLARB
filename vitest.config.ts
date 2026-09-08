@@ -6,6 +6,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('.', import.meta.url)),
       'next/image': 'vinext/shims/image',
       'next/link': 'vinext/shims/link',
+      'next/navigation': fileURLToPath(
+        new URL('./tests/next-navigation-mock.ts', import.meta.url),
+      ),
     },
   },
   test: {

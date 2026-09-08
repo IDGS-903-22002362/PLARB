@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import TransitionLink from './transition-link';
 import {
   ArrowLeft,
   ArrowRight,
@@ -13,7 +14,9 @@ import { ExternalLink } from './shell';
 import Architecture from './architecture';
 import ProjectVisual from './project-visual';
 import CommerceSequence from './commerce-sequence';
+import MobileSequence from './mobile-sequence';
 import { Contact } from './contact';
+import SystemReassembly from './system-reassembly';
 function Heading({
   index,
   label,
@@ -149,7 +152,10 @@ export default function CaseStudy({
             </div>
           </dl>
         </section>
-        <div className="case-hero-visual">
+        <div
+          className="case-hero-visual"
+          style={{ viewTransitionName: `project-${project.kind}` }}
+        >
           <ProjectVisual kind={project.kind} expanded />
         </div>
         <nav
@@ -193,6 +199,24 @@ export default function CaseStudy({
               </ul>
             </div>
           </div>
+          <div className="scope-grid">
+            {(
+              [
+                [c('Producto', 'Product'), project.scope.product],
+                [c('Equipo y límites', 'Team and limits'), project.scope.team],
+                [c('Mi implementación', 'My implementation'), project.scope.mine],
+                [
+                  c('Sistemas conectados', 'Connected systems'),
+                  project.scope.connected,
+                ],
+              ] as const
+            ).map(([label, text]) => (
+              <article key={label.en}>
+                <h3>{t(label)}</h3>
+                <p>{t(text)}</p>
+              </article>
+            ))}
+          </div>
         </section>
         <section className="case-section" id="arquitectura">
           <Heading
@@ -201,6 +225,7 @@ export default function CaseStudy({
             title={c('Cómo se conectan las piezas.', 'How the pieces connect.')}
           />
           {project.kind === 'store' && <CommerceSequence />}
+          {project.kind === 'app' && <MobileSequence />}
           <div className="case-architecture">
             <Architecture project={project} />
             <p>{t(project.architecture)}</p>
@@ -296,7 +321,7 @@ export default function CaseStudy({
             </div>
           </div>
         </section>
-        <Link className="next-project" href={`/projects/${next.slug}`}>
+        <TransitionLink className="next-project" href={`/projects/${next.slug}`}>
           <div>
             <span className="eyebrow">
               {t(c('SIGUIENTE CASO', 'NEXT CASE'))} / {next.number}
@@ -304,9 +329,10 @@ export default function CaseStudy({
             <h2>{next.title}</h2>
           </div>
           <ArrowUpRight />
-        </Link>
+        </TransitionLink>
       </div>
       <Contact />
+      <SystemReassembly />
     </main>
   );
 }

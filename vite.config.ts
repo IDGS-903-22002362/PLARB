@@ -2,6 +2,8 @@ import { sites } from '@openai/sites-vite-plugin';
 import tailwindcss from '@tailwindcss/postcss';
 import vinext from 'vinext';
 import { defineConfig } from 'vite';
+import { cpSync, mkdirSync, mkdtempSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import hostingConfig from './.openai/hosting.json' with { type: 'json' };
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
@@ -34,7 +36,7 @@ const localBindingConfig = {
     : [],
 };
 
-export default defineConfig(async () => {
+export default defineConfig(async ({ command }) => {
   // Keep Wrangler and Miniflare state project-local. These are non-secret tool
   // settings; application environment belongs in ignored `.env*` files.
   process.env.WRANGLER_WRITE_LOGS ??= 'false';
@@ -44,7 +46,22 @@ export default defineConfig(async () => {
   // Wrangler snapshots its log path while the Cloudflare plugin is imported.
   const { cloudflare } = await import('@cloudflare/vite-plugin');
 
+  // Keep the source collection in place, but publish only generated derivatives
+  // and the explicitly selected video; this avoids duplicating the raw collection.
+  let publicDir = resolve('public');
+  if (command === 'build') {
+    mkdirSync(resolve('.vinext'), { recursive: true });
+    publicDir = mkdtempSync(resolve('.vinext/public-'));
+    for (const entry of readdirSync(resolve('public'))) {
+      if (entry === 'img') continue;
+      cpSync(resolve('public', entry), resolve(publicDir, entry), {
+        recursive: true,
+      });
+    }
+  }
+
   return {
+    publicDir,
     css: { postcss: { plugins: [tailwindcss()] } },
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }

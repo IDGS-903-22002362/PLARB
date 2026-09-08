@@ -40,6 +40,19 @@ describe('Case studies', () => {
         siteOrigin + '/projects/' + project.slug,
       );
       expect(studySchema(project).creator['@id']).toBe(siteOrigin + '/#person');
+      expect(projectMetadata(project).openGraph?.images).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            url: `${siteOrigin}/social/${project.slug}.png`,
+          }),
+        ]),
+      );
+      expect(
+        screen.getByRole('heading', { name: 'Mi implementación' }),
+      ).toBeTruthy();
+      expect(
+        screen.getByRole('heading', { name: 'Sistemas conectados' }),
+      ).toBeTruthy();
     },
   );
   it('updates architecture detail by keyboard activation', async () => {
@@ -55,6 +68,13 @@ describe('Case studies', () => {
     expect(node.getAttribute('aria-pressed')).toBe('true');
     const panel = document.getElementById(node.getAttribute('aria-controls')!);
     expect(panel?.textContent).toContain('Comprueba importes');
+    const ai = screen.getByRole('button', { name: /Gemini/ });
+    await act(async () => ai.focus());
+    await user.keyboard('{Enter}');
+    expect(ai.getAttribute('aria-pressed')).toBe('true');
+    expect(
+      document.getElementById(ai.getAttribute('aria-controls')!)?.textContent,
+    ).toContain('interpreta');
   });
   it('translates case content and navigation together', async () => {
     render(

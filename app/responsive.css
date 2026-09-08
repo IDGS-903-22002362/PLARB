@@ -110,8 +110,17 @@
   .contact-section h2 {
     font-size: 40px;
   }
-  .case-prose-grid {
+  .case-prose-grid,
+  .scope-grid {
     margin-left: 0;
+  }
+  .system-reassembly {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .reassembly-stack {
+    padding: 8px 4% 0 0;
+    transform: perspective(900px) rotateX(10deg) rotateY(-10deg);
   }
   .case-section-heading {
     grid-template-columns: 180px 1fr;
@@ -124,6 +133,21 @@
   }
   .menu-control {
     display: grid;
+  }
+  .mobile-nav-layer {
+    display: block;
+    position: relative;
+  }
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    border: 0;
+    background: color-mix(in srgb, #041018 46%, transparent);
+    z-index: 40;
+  }
+  .mobile-navigation {
+    position: relative;
+    z-index: 45;
   }
   .hero-topline .hero-location {
     display: none;
@@ -378,6 +402,9 @@
   .graph-surface {
     height: 360px;
   }
+  .graph-dense {
+    height: 440px;
+  }
   .graph-node > strong {
     font-size: 14px;
   }
@@ -498,10 +525,14 @@
   .shell {
     width: calc(100% - 40px);
   }
-  .header-inner {
+  .header-inner,
+  .header-compact .header-inner {
     width: calc(100% - 32px);
     height: 72px;
     gap: 7px;
+  }
+  .header-compact .header-inner {
+    height: 60px;
   }
   .wordmark {
     font-size: 16px;
@@ -933,10 +964,17 @@
     height: 310px;
     margin-top: 28px;
   }
+  .graph-dense {
+    height: 400px;
+  }
   .graph-node {
     width: 29%;
     padding: 10px 4px;
     min-height: 77px;
+  }
+  .graph-dense .graph-node {
+    width: 24%;
+    min-height: 72px;
   }
   .graph-node > strong {
     font-size: 11px;
@@ -1181,7 +1219,8 @@
   .case-section-heading h2 {
     font-size: 30px;
   }
-  .case-prose-grid {
+  .case-prose-grid,
+  .scope-grid {
     grid-template-columns: 1fr;
     gap: 28px;
   }
@@ -1202,6 +1241,9 @@
   }
   .case-architecture .graph-surface {
     height: 310px;
+  }
+  .case-architecture .graph-dense {
+    height: 400px;
   }
   .challenge-intro,
   .challenge-body {
@@ -1398,6 +1440,11 @@
   .commerce-stages {
     height: auto;
   }
+  .reassembly-stack,
+  .reassembly-layer,
+  .fallback-layer {
+    transform: none !important;
+  }
 }
 .graph-node > strong {
   font-size: 14px;
@@ -1457,9 +1504,17 @@
   .case-architecture .graph-surface {
     height: 380px;
   }
+  .graph-dense,
+  .case-architecture .graph-dense {
+    height: 460px;
+  }
   .graph-node {
     min-height: 96px;
     padding: 9px 5px;
+  }
+  .graph-dense .graph-node {
+    width: 26%;
+    min-height: 86px;
   }
   .graph-node > strong {
     font-size: 12px;

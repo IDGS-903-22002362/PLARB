@@ -3,33 +3,37 @@ import { profile } from './portfolio-data';
 import type { Study } from './projects';
 // Intentionally local. Configure a real origin only when deployment is requested.
 export const siteOrigin = 'http://localhost:4317';
+export function projectOgImage(project: Study) {
+  return `/social/${project.slug}.png`;
+}
 export function projectMetadata(project: Study): Metadata {
-  const title = `${project.title} — Caso de estudio | Luis Rosas`;
+  const titleEs = `${project.title} — Caso de estudio | Luis Rosas`;
+  const titleEn = `${project.title} — Case study | Luis Rosas`;
   const url = `${siteOrigin}/projects/${project.slug}`;
+  const image = {
+    url: `${siteOrigin}${projectOgImage(project)}`,
+    width: 1536,
+    height: 1024,
+    alt: `${project.title} — Luis Alberto Rosas`,
+  };
   return {
-    title,
-    description: project.summary.es,
+    title: titleEs,
+    description: `${project.summary.es} ${project.summary.en}`,
     alternates: { canonical: url },
     openGraph: {
       type: 'article',
-      title,
+      title: titleEs,
       description: project.summary.es,
       url,
       locale: 'es_MX',
-      images: [
-        {
-          url: `${siteOrigin}/social-preview.png`,
-          width: 1733,
-          height: 907,
-          alt: 'Luis Alberto Rosas — Software Engineer',
-        },
-      ],
+      alternateLocale: ['en_US'],
+      images: [image],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description: project.summary.es,
-      images: [`${siteOrigin}/social-preview.png`],
+      title: titleEn,
+      description: project.summary.en,
+      images: [image.url],
     },
   };
 }

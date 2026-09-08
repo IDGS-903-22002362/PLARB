@@ -10,6 +10,13 @@ export default function SystemScene() {
   const controller = useRef<SceneController | null>(null);
   const motion = useRef(!paused);
   const [ready, setReady] = useState(false);
+  const [stage, setStage] = useState(0);
+  const stages = [
+    c('SYSTEM', 'SYSTEM'),
+    c('DECOMPOSITION', 'DECOMPOSITION'),
+    c('ARCHITECTURE', 'ARCHITECTURE'),
+    c('PRODUCT', 'PRODUCT'),
+  ];
   useEffect(() => {
     motion.current = !paused;
     controller.current?.setMotion(!paused);
@@ -44,12 +51,24 @@ export default function SystemScene() {
       },
       { rootMargin: '80px' },
     );
+    const onScroll = () => {
+      const bounds = element.getBoundingClientRect();
+      const progress = Math.max(
+        0,
+        Math.min(1, -bounds.top / Math.max(window.innerHeight * 0.72, 1)),
+      );
+      setStage(
+        progress < 0.18 ? 0 : progress < 0.45 ? 1 : progress < 0.72 ? 2 : 3,
+      );
+    };
     observer.observe(element);
     document.addEventListener('visibilitychange', visibility);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       disposed = true;
       observer.disconnect();
       document.removeEventListener('visibilitychange', visibility);
+      window.removeEventListener('scroll', onScroll);
       controller.current?.dispose();
       controller.current = null;
     };
@@ -57,7 +76,7 @@ export default function SystemScene() {
   return (
     <figure className={`system-scene ${ready ? 'scene-ready' : ''}`}>
       <div className="scene-heading">
-        <span>FIG. 01 / SOFTWARE SYSTEM</span>
+        <span>FIG. 01 / {t(stages[stage])}</span>
         <ArrowUpRight size={17} />
       </div>
       <div className="scene-viewport" ref={container} aria-hidden="true" />
@@ -98,8 +117,8 @@ export default function SystemScene() {
         <span className="scene-caption-dot" />
         {t(
           c(
-            'Interfaz, servicios y datos conectados.',
-            'Connected interface, services and data.',
+            'PRODUCT → SYSTEM → ARCHITECTURE → PRODUCT.',
+            'PRODUCT → SYSTEM → ARCHITECTURE → PRODUCT.',
           ),
         )}
         <span className="scene-motion-label">

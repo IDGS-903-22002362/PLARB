@@ -1,17 +1,93 @@
 'use client';
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, Expand, Play, X } from 'lucide-react';
 import {
-  ArrowRight,
-  Check,
-  Database,
-  Droplets,
-  Layers3,
-  LockKeyhole,
-  Radio,
-  ShoppingBag,
-} from 'lucide-react';
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { c, type Study } from '@/lib/projects';
+import { projectMedia, type ProjectMedia } from '@/lib/project-media';
 import { usePreferences } from './preferences';
+
+function MediaImage({
+  item,
+  thumbnail = false,
+  eager = false,
+}: {
+  item: ProjectMedia;
+  thumbnail?: boolean;
+  eager?: boolean;
+}) {
+  const { t } = usePreferences();
+  return (
+    <Image
+      unoptimized
+      src={thumbnail ? item.thumbnail : item.src}
+      alt={thumbnail ? '' : t(item.caption)}
+      width={item.width}
+      height={item.height}
+      loading={eager ? 'eager' : 'lazy'}
+      priority={eager}
+      decoding="async"
+    />
+  );
+}
+
+function MediaPlayer({ item }: { item: ProjectMedia }) {
+  const { t, paused } = usePreferences();
+  const video = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const player = video.current;
+    if (!player) return;
+    const stop = () => {
+      if (!player.paused) player.pause();
+    };
+    const onVisibility = () => {
+      if (document.hidden) stop();
+    };
+    if (paused) stop();
+    document.addEventListener('visibilitychange', onVisibility);
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) stop();
+    });
+    observer.observe(player);
+    return () => {
+      stop();
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [paused]);
+  if (!item.video) return <MediaImage item={item} />;
+  return (
+    <video
+      ref={video}
+      controls
+      playsInline
+      preload="none"
+      poster={item.src}
+      width={item.width}
+      height={item.height}
+      aria-label={t(item.caption)}
+    >
+      <source src={item.video} type="video/mp4" />
+      <track
+        kind="captions"
+        src="/projects/media/pos-demo.vtt"
+        srcLang="es"
+        label="Español"
+      />
+      <a href={item.video}>
+        {t(c('Abrir demostración en video', 'Open video demonstration'))}
+      </a>
+    </video>
+  );
+}
+
 export default function ProjectVisual({
   kind,
   expanded = false,
@@ -19,207 +95,195 @@ export default function ProjectVisual({
   kind: Study['kind'];
   expanded?: boolean;
 }) {
-  const { t } = usePreferences();
-  if (kind === 'app')
+  const { t, paused } = usePreferences();
+  const items = projectMedia[kind];
+  const coverItems = items.filter((media) => media.featured).slice(0, 2);
+  const coverPrimary = coverItems[0] ?? items[0];
+  const coverSecondary = coverItems[1] ?? items[1] ?? items[0];
+  const [selected, setSelected] = useState(0);
+  const [open, setOpen] = useState(false);
+  const stage = useRef<HTMLDivElement>(null);
+  const item = items[selected] ?? items[0];
+  const sections = items.reduce<
+    Array<{
+      section: ProjectMedia['section'];
+      entries: Array<{ media: ProjectMedia; index: number }>;
+    }>
+  >((groups, media, index) => {
+    const group = groups.find((entry) => entry.section === media.section);
+    if (group) group.entries.push({ media, index });
+    else groups.push({ section: media.section, entries: [{ media, index }] });
+    return groups;
+  }, []);
+  const showSections = sections.length > 1;
+  const change = (offset: number) =>
+    setSelected((value) => (value + offset + items.length) % items.length);
+  useEffect(() => {
+    if (paused || !expanded || !stage.current) return;
+    let disposed = false;
+    let revert: (() => void) | undefined;
+    void import('gsap')
+      .then(({ gsap }) => {
+        if (disposed || !stage.current) return;
+        const context = gsap.context(() => {
+          gsap.from(stage.current, {
+            y: 9,
+            duration: 0.32,
+            ease: 'power2.out',
+            clearProps: 'transform',
+          });
+        });
+        revert = () => context.revert();
+      })
+      .catch(() => {});
+    return () => {
+      disposed = true;
+      revert?.();
+    };
+  }, [selected, paused, expanded]);
+
+  if (!expanded)
     return (
       <figure
-        className={`product-visual app-visual ${expanded ? 'expanded' : ''}`}
+        className={`product-visual project-media-cover media-${kind}`}
+        style={{ viewTransitionName: `project-${kind}` }}
       >
-        <div className="app-orbit" aria-hidden="true" />
-        <div className="app-screens">
-          <Image
-            unoptimized
-            src="/projects/app-home.webp"
-            alt={t(
-              c(
-                'Captura oficial: inicio de Club León FC con noticias y Fiera Racha',
-                'Official screenshot: Club León FC home with news and Fiera Racha',
-              ),
-            )}
-            width="333"
-            height="592"
-            loading="lazy"
-            decoding="async"
-          />
-          <Image
-            unoptimized
-            src="/projects/app-calendar.webp"
-            alt={t(
-              c(
-                'Captura oficial: calendario masculino y femenil',
-                'Official screenshot: men’s and women’s calendar',
-              ),
-            )}
-            width="333"
-            height="592"
-            loading="lazy"
-            decoding="async"
-          />
-          {expanded && (
-            <Image
-              unoptimized
-              src="/projects/app-rewards.webp"
-              alt={t(
-                c(
-                  'Captura oficial: bonus diario de Fiera Racha',
-                  'Official screenshot: Fiera Racha daily bonus',
-                ),
-              )}
-              width="333"
-              height="592"
-              loading="lazy"
-              decoding="async"
-            />
-          )}
+        <div
+          className={`cover-composition ${coverPrimary.width < coverPrimary.height ? 'portrait-composition' : 'landscape-composition'}`}
+        >
+          <div className="cover-primary">
+            <MediaImage item={coverPrimary} eager />
+          </div>
+          <div className="cover-secondary">
+            <MediaImage item={coverSecondary} />
+          </div>
         </div>
         <figcaption>
-          {t(
-            c(
-              'Capturas oficiales · Google Play',
-              'Official screenshots · Google Play',
-            ),
-          )}
-        </figcaption>
-      </figure>
-    );
-  if (kind === 'store')
-    return (
-      <figure className="product-visual store-visual">
-        <div className="browser-device">
-          <div className="browser-bar">
-            <span className="browser-dots" aria-hidden="true">
-              <i />
-              <i />
-              <i />
-            </span>
-            <span>
-              <LockKeyhole size={11} />
-              tiendalaguarida.com
-            </span>
-            <ArrowRight size={12} />
-          </div>
-          <div className="store-campaign">
-            <Image
-              unoptimized
-              src="/projects/jersey-campaign.webp"
-              width="1920"
-              height="1080"
-              loading="lazy"
-              decoding="async"
-              alt={t(
-                c(
-                  'Campaña oficial de camisetas de La Guarida',
-                  'Official La Guarida jersey campaign',
-                ),
-              )}
-            />
-            <div className="store-brand">
-              LA GUARIDA
-              <span>
-                {t(
-                  c('TIENDA OFICIAL · CLUB LEÓN', 'OFFICIAL STORE · CLUB LEÓN'),
-                )}
-              </span>
-            </div>
-          </div>
-          <div className="store-modules">
-            <span>CATALOG</span>
-            <span>PAYMENTS</span>
-            <span>INVENTORY</span>
-          </div>
-        </div>
-        <div className="store-layer layer-one">
-          <Layers3 size={16} />
-          API / ORDERS
-        </div>
-        <div className="store-layer layer-two">
-          <Database size={16} />
-          INVENTORY / DATA
-        </div>
-        <figcaption>
-          {t(
-            c(
-              'Composición con campaña oficial de la tienda',
-              'Composition using the official store campaign',
-            ),
-          )}
-        </figcaption>
-      </figure>
-    );
-  if (kind === 'pos')
-    return (
-      <figure className="product-visual pos-visual">
-        <div className="operation-top">
-          <span>CL / OPERATIONS</span>
-          <span className="operation-live">
-            <i />
-            {t(c('Punto de venta', 'Point of sale'))}
+          <span>{t(c('Producto en pantalla', 'Product in focus'))}</span>
+          <span>
+            {items.length} {t(c('vistas', 'views'))}
           </span>
-        </div>
-        <div className="operation-route">
-          <div className="operation-main">
-            <ShoppingBag size={30} />
-            <span>{t(c('Venta', 'Sale'))}</span>
-          </div>
-          <ArrowRight className="operation-arrow" />
-          <div className="operation-main">
-            <Database size={30} />
-            <span>{t(c('Inventario', 'Inventory'))}</span>
-          </div>
-        </div>
-        <div className="operation-receipt">
-          <span>{t(c('REGISTRO DE OPERACIÓN', 'OPERATION RECORD'))}</span>
-          {[
-            c('Productos y combos', 'Products & combos'),
-            c('Disponibilidad por concesión', 'Stock per concession'),
-            c('Corte y conciliación', 'Cash reconciliation'),
-          ].map((item) => (
-            <div key={item.en}>
-              {t(item)}
-              <Check size={17} />
-            </div>
-          ))}
-        </div>
-        <figcaption>
-          {t(
-            c(
-              'Mapa de operación · Sistema interno',
-              'Operational map · Internal system',
-            ),
-          )}
         </figcaption>
       </figure>
     );
+
   return (
-    <figure className="product-visual iot-visual">
-      <span className="eyebrow">CONNECTED SYSTEMS / 2025</span>
-      <div className="iot-orbit">
-        <div className="iot-core">
-          <Droplets size={38} />
-          <span>IoT</span>
-        </div>
-        <span className="iot-node node-web">
-          WEB<span>Angular / .NET</span>
+    <section
+      className={`project-gallery gallery-${kind}`}
+      aria-label={t(c('Galería del proyecto', 'Project gallery'))}
+    >
+      <div className="gallery-heading">
+        <span>{t(c('Dentro del producto', 'Inside the product'))}</span>
+        <span>
+          {String(selected + 1).padStart(2, '0')} /{' '}
+          {String(items.length).padStart(2, '0')}
         </span>
-        <span className="iot-node node-cloud">
-          <Radio size={20} />
-          FIREBASE
-        </span>
-        <span className="iot-node node-mobile">
-          ANDROID<span>Kotlin</span>
-        </span>
-        <svg viewBox="0 0 400 300" aria-hidden="true">
-          <path d="M80 70 L200 150 L320 75 M200 150 L200 270" />
-        </svg>
       </div>
-      <figcaption>
-        {t(
-          c(
-            'Mapa funcional de comercio y riego conectado',
-            'Functional map of commerce and connected irrigation',
-          ),
-        )}
-      </figcaption>
-    </figure>
+      <div
+        className={`gallery-stage ${item.width < item.height ? 'portrait-stage' : ''}`}
+        ref={stage}
+      >
+        {!open && <MediaPlayer item={item} key={item.src} />}
+      </div>
+      <div className="gallery-caption">
+        <p aria-live="polite" aria-atomic="true">
+          {t(item.caption)}
+        </p>
+        <div className="gallery-controls">
+          <button
+            className="icon-button"
+            type="button"
+            onClick={() => change(-1)}
+            aria-label={t(c('Vista anterior', 'Previous view'))}
+          >
+            <ArrowLeft size={18} />
+          </button>
+          <button
+            className="icon-button"
+            type="button"
+            onClick={() => change(1)}
+            aria-label={t(c('Vista siguiente', 'Next view'))}
+          >
+            <ArrowRight size={18} />
+          </button>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger
+              className="icon-button"
+              aria-label={t(c('Ampliar vista', 'Enlarge view'))}
+            >
+              <Expand size={18} />
+            </DialogTrigger>
+            <DialogContent className="media-lightbox" showCloseButton={false}>
+              <DialogTitle>{t(item.caption)}</DialogTitle>
+              <DialogDescription className="sr-only">
+                {t(
+                  c(
+                    'Captura del proyecto. Pulsa Escape para cerrar.',
+                    'Project capture. Press Escape to close.',
+                  ),
+                )}
+              </DialogDescription>
+              <DialogClose
+                className="icon-button lightbox-close"
+                aria-label={t(c('Cerrar vista', 'Close view'))}
+              >
+                <X size={20} />
+              </DialogClose>
+              <div className="lightbox-stage">
+                <MediaPlayer item={item} />
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
+      <div
+        className={`gallery-thumbnails ${showSections ? 'has-sections' : ''}`}
+        aria-label={t(c('Seleccionar una vista', 'Select a view'))}
+      >
+        {(showSections
+          ? sections
+          : [
+              {
+                section: items[0].section,
+                entries: items.map((media, index) => ({ media, index })),
+              },
+            ]
+        ).map((group) => (
+          <div className="gallery-thumb-group" key={group.section}>
+            {showSections && (
+              <span className="gallery-thumb-heading">
+                {group.section === 'admin'
+                  ? t(c('Administración', 'Admin'))
+                  : t(c('General', 'General'))}
+              </span>
+            )}
+            <div className="gallery-thumb-list">
+              {group.entries.map(({ media, index }) => (
+                <button
+                  type="button"
+                  key={media.src}
+                  aria-pressed={selected === index}
+                  aria-label={`${index + 1}. ${t(media.caption)}`}
+                  onClick={() => setSelected(index)}
+                >
+                  <MediaImage item={media} thumbnail />
+                  {media.video && (
+                    <Play
+                      className="thumbnail-play"
+                      size={20}
+                      aria-hidden="true"
+                    />
+                  )}
+                  <span>
+                    {String(index + 1).padStart(2, '0')}
+                    {media.video ? ' / VIDEO' : ''}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

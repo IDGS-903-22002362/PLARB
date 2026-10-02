@@ -1,3 +1,105 @@
+.case-study-page {
+  position: relative;
+  isolation: isolate;
+}
+.case-study-page .shell {
+  position: relative;
+  z-index: 1;
+}
+.project-ascii-background {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.case-study-page .case-hero {
+  padding: 38px 42px 46px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+  margin-top: 24px;
+}
+.case-study-page .case-hero .case-back {
+  margin-bottom: 28px;
+}
+.case-study-page .case-hero-visual {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  backdrop-filter: blur(16px);
+  margin-top: 36px;
+}
+.case-study-page .gallery-stage {
+  background:
+    radial-gradient(
+      ellipse at 50% 72%,
+      color-mix(in srgb, var(--cyan) 14%, transparent),
+      transparent 70%
+    ),
+    color-mix(in srgb, var(--raised) 30%, transparent);
+  backdrop-filter: blur(6px);
+}
+.case-study-page .case-section-heading {
+  padding: 22px 28px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+  margin-bottom: 28px;
+}
+.case-study-page .case-prose-grid {
+  padding: clamp(28px, 3.5vw, 42px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+.case-study-page .scope-grid article {
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+.case-study-page .case-architecture > p {
+  padding: 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+.case-study-page .loyalty-section {
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+.case-study-page .challenge {
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+.case-study-page .implementation-steps > div {
+  padding: 24px 26px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+.case-study-page .reliability {
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--cyan);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+.case-study-page .case-results > ul,
+.case-study-page .case-results > div {
+  padding: 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
 .case-hero {
   padding-block: 38px 55px;
 }

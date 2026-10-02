@@ -1,5 +1,124 @@
 @import './projects.css';
 @import './case-studies.css';
+
+/* The hero companion is a live illustration, not an additional content card. */
+.hero-face {
+  min-width: 0;
+  width: 100%;
+  max-width: 570px;
+  margin: 0 auto;
+  text-align: center;
+  --look-x: 0px;
+  --look-y: 0px;
+  --head-turn: 0deg;
+  --head-nod: 0deg;
+}
+.face-intro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.face-presence {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+.face-stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 4px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--blue);
+  cursor: pointer;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+.face-stage:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+.face-art { display: block; width: 100%; height: auto; overflow: visible; }
+.face-head {
+  transform-origin: 240px 220px;
+  transform: perspective(800px) rotateY(var(--head-turn)) rotateX(var(--head-nod));
+}
+.face-features { transform: translate(calc(var(--look-x) * 0.22), calc(var(--look-y) * 0.22)); }
+.face-pupil { transform: translate(var(--look-x), var(--look-y)); }
+.face-aperture { transform: scaleY(1); }
+.face-lid { opacity: 0; }
+.face-gesture { transform-origin: 240px 260px; }
+.face-brow { transform-box: fill-box; transform-origin: center; }
+.face-grin, .face-gasp { opacity: 0; }
+.hero-face[data-playing='true'] :is(.face-brow, .face-smile, .face-grin, .face-gasp, .face-touch, .face-aperture, .face-lid) {
+  transition: transform 220ms var(--ease-out), opacity 180ms var(--ease-out);
+}
+.hero-face[data-playing='true'][data-expression='rest'] .face-aperture { animation: face-blink 6.4s infinite; }
+.hero-face[data-playing='true'][data-expression='rest'] .face-lid { animation: face-lid-blink 6.4s infinite; }
+.hero-face[data-playing='true'][data-expression='rest'] .face-gesture { animation: face-breathe 7s ease-in-out infinite; }
+.hero-face[data-playing='true'][data-expression='wink'] .face-gesture { animation: face-wink 950ms var(--ease-out); }
+.hero-face[data-playing='true'][data-expression='wink'] .face-aperture-0 { animation: face-wink-aperture 950ms var(--ease-out) both; }
+.hero-face[data-playing='true'][data-expression='wink'] .face-lid-0 { animation: face-wink-crease 950ms var(--ease-out) both; }
+.hero-face[data-playing='true'][data-expression='surprised'] .face-gesture { animation: face-surprise 1400ms var(--ease-out); }
+.hero-face[data-playing='true'][data-expression='happy'] .face-gesture { animation: face-happy 1900ms var(--ease-out); }
+.hero-face[data-expression='wink'] .face-aperture-0 { transform: scaleY(0); }
+.hero-face[data-expression='wink'] .face-lid-0 { opacity: 1; }
+.hero-face[data-expression='wink'] .face-brow-right { transform: translateY(-10px) rotate(-8deg); }
+.hero-face[data-expression='surprised'] .face-brow { transform: translateY(-12px); }
+.hero-face[data-expression='surprised'] .face-gasp { opacity: 1; }
+.hero-face[data-expression='surprised'] :is(.face-smile, .face-grin) { opacity: 0; }
+.hero-face[data-expression='happy'] .face-grin,
+.hero-face[data-expression='wink'] .face-grin { opacity: 1; }
+.hero-face[data-expression='happy'] .face-smile,
+.hero-face[data-expression='wink'] .face-smile { opacity: 0; }
+.face-touch {
+  position: absolute;
+  right: 9%;
+  bottom: 12%;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--blue);
+  background: var(--bg);
+  font-size: 21px;
+}
+.face-stage:is(:hover, :focus-visible) .face-touch { transform: rotate(45deg); }
+.hero-face figcaption { margin-top: -8px; padding-inline: 10px; }
+.face-caption { display: block; margin: 0; color: var(--ink); font-size: 15px; font-weight: 500; }
+@keyframes face-blink {
+  0%, 43%, 47%, 100% { transform: scaleY(1); }
+  44.5%, 45% { transform: scaleY(0); }
+}
+@keyframes face-lid-blink {
+  0%, 43%, 47%, 100% { opacity: 0; }
+  44.5%, 45% { opacity: 1; }
+}
+@keyframes face-wink-aperture {
+  0%, 95%, 100% { transform: scaleY(1); }
+  14%, 65% { transform: scaleY(0); }
+}
+@keyframes face-wink-crease {
+  0%, 95%, 100% { opacity: 0; }
+  14%, 65% { opacity: 1; }
+}
+@keyframes face-breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes face-wink { 0%, 100% { transform: rotate(0); } 25%, 60% { transform: rotate(-3deg); } }
+@keyframes face-surprise { 0%, 100% { transform: translateY(0) scale(1); } 20%, 50% { transform: translateY(-5px) scale(1.025); } }
+@keyframes face-happy { 0%, 100% { transform: translateY(0); } 20%, 60% { transform: translateY(-4px); } }
+@media (max-width: 640px) {
+  .hero-face { max-width: 380px; margin-top: 28px; }
+  .hero-face figcaption { padding-bottom: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-face *, .hero-face[data-playing='true'] * { animation: none !important; transition: none !important; }
+}
 :root {
   --bg: #07111f;
   --surface: #0d1b2a;
@@ -342,11 +461,11 @@ p {
   color: var(--blue);
 }
 .hero {
-  padding-top: 37px;
+  padding-top: 22px;
 }
 .hero-topline {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 24px;
 }
 .hero-topline .eyebrow {
@@ -357,7 +476,7 @@ p {
   grid-template-columns: 1.06fr 1fr;
   gap: 12px;
   align-items: center;
-  padding-block: 56px 35px;
+  padding-block: 18px 35px;
 }
 .hero-copy {
   position: relative;
@@ -371,13 +490,34 @@ p {
   font-weight: 600;
   margin-bottom: 18px;
 }
-.hero h1 {
-  font-size: clamp(3.2rem, 6.25vw, 5.8rem);
-  line-height: 1.035;
-  letter-spacing: -0.065em;
+.hero h1,
+.hero-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  overflow: visible;
+  margin: 0;
 }
-.hero h1 > span {
+.hero-kicker {
+  display: inline-block;
+  font-size: clamp(12px, 1.15vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--blue);
+  line-height: 1.15;
+  margin: 0;
+}
+.hero-headline {
+  display: block;
+  font-size: clamp(1.75rem, 4.8vw, 3.85rem);
+  line-height: 1.0;
+  letter-spacing: -0.055em;
+  color: var(--ink);
+  font-weight: 500;
+  white-space: nowrap;
+  margin-top: 0;
 }
 .hero-description {
   font-size: 17px;
@@ -1189,7 +1329,9 @@ p {
   font-size: 10px;
   white-space: nowrap;
 }
-.hero-copy h1,
+.hero-copy h1 {
+  overflow: visible;
+}
 .case-hero h1 {
   overflow: hidden;
 }

@@ -5,8 +5,9 @@
   .system-scene {
     height: 630px;
   }
-  .hero h1 {
-    font-size: 104px;
+  .hero-headline {
+    font-size: 64px;
+    white-space: nowrap;
   }
   .hero-description {
     font-size: 18px;
@@ -34,8 +35,9 @@
   .system-scene {
     height: 520px;
   }
-  .hero h1 {
-    font-size: clamp(3.3rem, 6.4vw, 5rem);
+  .hero-headline {
+    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    white-space: nowrap;
   }
   .hero-description {
     font-size: 16px;
@@ -150,15 +152,16 @@
     z-index: 45;
   }
   .hero-topline .hero-location {
-    display: none;
+    display: inline-flex;
   }
   .hero-grid {
     grid-template-columns: 1fr 1fr;
     gap: 0;
     padding-block: 45px 40px;
   }
-  .hero h1 {
-    font-size: clamp(2.7rem, 6.35vw, 4.2rem);
+  .hero-headline {
+    font-size: clamp(1.85rem, 4.6vw, 3rem);
+    white-space: nowrap;
   }
   .hero-description {
     font-size: 15px;
@@ -565,7 +568,7 @@
     padding: 15px 22px;
   }
   .hero {
-    padding-top: 27px;
+    padding-top: 18px;
   }
   .hero-topline .eyebrow {
     font-size: 9px;
@@ -574,15 +577,25 @@
   }
   .hero-grid {
     grid-template-columns: 1fr;
-    padding-block: 36px 18px;
+    padding-block: 16px 18px;
   }
   .hero-role {
     font-size: 10px;
     margin-bottom: 16px;
   }
-  .hero h1 {
-    font-size: clamp(2.65rem, 11.3vw, 4.5rem);
-    line-height: 1.055;
+  .hero-heading {
+    gap: 2px;
+  }
+  .hero-kicker {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    line-height: 1.15;
+  }
+  .hero-headline {
+    font-size: clamp(1.65rem, 7.8vw, 2.4rem);
+    line-height: 1.0;
+    white-space: nowrap;
+    margin-top: 0;
   }
   .hero-description {
     font-size: 16px;
@@ -1353,8 +1366,9 @@
   .header-inner {
     width: calc(100% - 24px);
   }
-  .hero h1 {
-    font-size: 40px;
+  .hero-headline {
+    font-size: clamp(1.45rem, 7.5vw, 1.95rem);
+    white-space: nowrap;
   }
   .hero-actions .button {
     padding: 12px 14px;

@@ -206,7 +206,7 @@ describe('Portfolio journeys', () => {
       screen.getByRole('button', { name: 'Pausar animaciones' }),
     );
     expect(
-      screen.getByRole('heading', { level: 1, name: /Soluciones/ }),
+      screen.getByRole('heading', { level: 1, name: /Hola.*Beto/i }),
     ).toBeTruthy();
     expect(document.documentElement.dataset.motion).toBe('paused');
   });

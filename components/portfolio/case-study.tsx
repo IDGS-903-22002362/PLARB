@@ -18,6 +18,7 @@ import CommerceSequence from './commerce-sequence';
 import MobileSequence from './mobile-sequence';
 import { Contact } from './contact';
 import SystemReassembly from './system-reassembly';
+import ProjectAsciiBackground from './project-ascii-background';
 function Heading({
   index,
   label,
@@ -97,7 +98,8 @@ export default function CaseStudy({
     ['resultados', c('Resultados', 'Results')],
   ] as const;
   return (
-    <main id="contenido">
+    <main id="contenido" className="case-study-page">
+      <ProjectAsciiBackground project={project} />
       <div className="shell">
         <section className="case-hero">
           <Link className="case-back" href="/#proyectos">

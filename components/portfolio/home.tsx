@@ -18,10 +18,11 @@ import { uiCopy } from '@/lib/ui-copy';
 import { CVLink, ExternalLink } from './shell';
 import ProjectVisual from './project-visual';
 import Architecture from './architecture';
-import SystemScene from './system-scene';
+import HeroFace from './hero-face';
 import { Contact } from './contact';
 import SystemReassembly from './system-reassembly';
 import TransitionLink from './transition-link';
+import TextScatter from '@/components/text-scatter';
 export function SectionHeading({
   index,
   label,
@@ -208,21 +209,30 @@ export default function Home() {
     <main id="contenido">
       <section className="hero shell">
         <div className="hero-topline">
-          <span className="eyebrow">
+          <span className="eyebrow hero-location">
             <span className="live-dot" />
-            LUIS ALBERTO ROSAS BOCANEGRA
+            LEÓN, MÉXICO / 2026
           </span>
-          <span className="eyebrow hero-location">LEÓN, MÉXICO / 2026</span>
         </div>
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="hero-role">{t(uiCopy('SOFTWARE ENGINEER'))}</p>
-            <h1>
-              {t(c('Soluciones', 'Effective'))}
-              <br />
-              <span>{t(c('efectivas', 'and lasting'))}</span>
-              <br />
-              {t(c('y duraderas.', 'solutions.'))}
+            <h1 className="hero-heading">
+              <span className="hero-kicker">
+                <TextScatter
+                  text={t(c('HOLA, MI NOMBRE ES BETO', 'HELLO, MY NAME IS BETO'))}
+                  as="span"
+                  className="hero-scatter-kicker"
+                  velocity={90}
+                />
+              </span>
+              <span className="hero-headline">
+                <TextScatter
+                  text={t(c('Yo hago software', 'I make software'))}
+                  as="span"
+                  className="hero-scatter-headline"
+                  velocity={220}
+                />
+              </span>
             </h1>
             <p className="hero-description">
               {t(
@@ -240,7 +250,7 @@ export default function Home() {
               <CVLink />
             </div>
           </div>
-          <SystemScene />
+          <HeroFace />
         </div>
         <div className="hero-bottom">
           <div className="domain-strip">

@@ -13,6 +13,17 @@ import {
   Smartphone,
 } from 'lucide-react';
 import { c, studies, technologyGroups, type Copy } from '@/lib/projects';
+import {
+  TechArrowDown,
+  TechArrowUpRight,
+  WebGlyph,
+  MobileGlyph,
+  BackendGlyph,
+  CloudGlyph,
+  ScrollCueGlyph,
+} from './custom-icons';
+import { ThinkingOrbWrapper } from './thinking-orb-wrapper';
+import type { OrbState } from 'thinking-orbs';
 import { usePreferences } from './preferences';
 import { uiCopy } from '@/lib/ui-copy';
 import { CVLink, ExternalLink } from './shell';
@@ -53,8 +64,8 @@ const capabilities = [
     icon: Code2,
     title: 'Frontend',
     text: c(
-      'Catálogo, checkout y paneles de operación con React y Next.js. Angular en el proyecto de comercio e IoT.',
-      'Catalog, checkout and operational panels with React and Next.js. Angular in the commerce and IoT project.',
+      'Interfaces SPA/SSR con React y Next.js para checkout, catálogos reactivos y paneles operativos. Consumo modular de servicios REST.',
+      'SPA/SSR interfaces with React and Next.js for checkout, reactive catalogs, and operational panels. Modular REST service consumption.',
     ),
     ref: 'La Guarida / POS',
     href: '/projects/la-guarida',
@@ -63,8 +74,8 @@ const capabilities = [
     icon: Braces,
     title: 'Backend',
     text: c(
-      'APIs Express, cálculo de precios, reservas de inventario, validación de pagos y contratos de IA: el modelo interpreta, el backend conserva la evidencia.',
-      'Express APIs, price calculation, inventory reservations, payment validation and AI contracts: the model interprets, the backend keeps the evidence.',
+      'APIs REST en Node.js y Express: cálculo de precios server-side, reservas transaccionales de inventario, webhooks criptográficos y guardrails para LLMs.',
+      'REST APIs in Node.js and Express: server-side pricing, transactional inventory reservations, cryptographic webhooks, and LLM guardrails.',
     ),
     ref: 'La Guarida',
     href: '/projects/la-guarida',
@@ -73,8 +84,8 @@ const capabilities = [
     icon: Smartphone,
     title: 'Mobile',
     text: c(
-      'App Flutter con calendarios y notificaciones. Widgets de Fiera Racha en Swift y Kotlin.',
-      'Flutter app with calendars and notifications. Fiera Racha widgets in Swift and Kotlin.',
+      'Aplicaciones multiplataforma en Flutter/Dart con sincronización de estado. Extensiones nativas de widgets en Swift (WidgetKit) y Kotlin (RemoteViews).',
+      'Cross-platform Flutter/Dart apps with state synchronization. Native widget extensions built in Swift (WidgetKit) and Kotlin (RemoteViews).',
     ),
     ref: 'Club León FC',
     href: '/projects/club-leon-app',
@@ -83,8 +94,8 @@ const capabilities = [
     icon: Database,
     title: c('Datos', 'Data'),
     text: c(
-      'Reservas transaccionales en Firebase; SQL Server con Entity Framework y MySQL con SQLAlchemy.',
-      'Transactional reservations in Firebase; SQL Server with Entity Framework and MySQL with SQLAlchemy.',
+      'Modelado transaccional y relacional: Firestore para concurrencia en tiempo real, SQL Server con Entity Framework y MySQL con SQLAlchemy.',
+      'Transactional and relational data modeling: Firestore for real-time concurrency, SQL Server with Entity Framework, and MySQL with SQLAlchemy.',
     ),
     ref: 'Commerce & IoT / POS',
     href: '/projects/commerce-iot',
@@ -93,8 +104,8 @@ const capabilities = [
     icon: Cloud,
     title: 'Cloud',
     text: c(
-      'Cloud Functions, autenticación Firebase y servicios que conectan tienda, app y operación.',
-      'Cloud Functions, Firebase authentication and services connecting store, app and operations.',
+      'Servicios serverless con Firebase Cloud Functions, autenticación OAuth/JWT y mensajería FCM para sincronización de eventos entre plataformas.',
+      'Serverless services with Firebase Cloud Functions, OAuth/JWT auth, and FCM messaging for cross-platform event synchronization.',
     ),
     ref: 'Club León',
     href: '/projects/club-leon-app',
@@ -103,8 +114,8 @@ const capabilities = [
     icon: GitBranch,
     title: c('Entrega', 'Delivery'),
     text: c(
-      'Git/GitHub para versionado, GitHub Actions para automatización y Postman para comprobar contratos de APIs.',
-      'Git/GitHub for versioning, GitHub Actions for automation and Postman to check API contracts.',
+      'Integración continua con GitHub Actions, versionado Git estricto y pruebas automatizadas de contratos de API en Postman y Vitest.',
+      'CI workflows with GitHub Actions, strict Git versioning, and automated API contract testing via Postman and Vitest.',
     ),
     ref: c('Herramientas de trabajo', 'Working tools'),
     href: '#stack',
@@ -115,6 +126,12 @@ const engineeringTabs = [
   c('IA aplicada', 'Applied AI'),
   c('Confirmación de pagos', 'Payment confirmation'),
   c('Reglas de precio', 'Pricing rules'),
+];
+const tabOrbStates: OrbState[] = [
+  'solving',
+  'searching',
+  'connecting',
+  'shaping',
 ];
 function EngineeringApproach() {
   const { t } = usePreferences();
@@ -129,12 +146,12 @@ function EngineeringApproach() {
           index="04"
           label="ENGINEERING APPROACH"
           title={c(
-            'Las decisiones detrás del producto.',
-            'The decisions behind the product.',
+            'Decisiones de arquitectura y manejo de fallos.',
+            'Architectural decisions and failure handling.',
           )}
           description={c(
-            'Un checkout se entiende mejor cuando también se explican sus excepciones — incluida la IA.',
-            'A checkout is better understood when its exceptions are explained too — including AI.',
+            'Resolución de concurrencia, idempotencia en pagos y acotamiento determinista de modelos de lenguaje.',
+            'Concurrency resolution, payment idempotency, and deterministic guardrails for language models.',
           )}
         />
         <div
@@ -166,6 +183,18 @@ function EngineeringApproach() {
               }}
             >
               <span>0{index + 1}</span>
+              <ThinkingOrbWrapper
+                size={20}
+                state={tabOrbStates[index]}
+                color={
+                  selected === index
+                    ? index === 1
+                      ? '#39d0c8'
+                      : '#72a7ff'
+                    : 'rgba(130, 150, 172, 0.45)'
+                }
+                className="tab-orb"
+              />
               {t(label)}
             </button>
           ))}
@@ -210,7 +239,12 @@ export default function Home() {
       <section className="hero shell">
         <div className="hero-topline">
           <span className="eyebrow hero-location">
-            <span className="live-dot" />
+            <ThinkingOrbWrapper
+              size={20}
+              state="breathing"
+              color="#39d0c8"
+              className="hero-orb-live"
+            />
             LEÓN, MÉXICO / 2026
           </span>
         </div>
@@ -235,17 +269,22 @@ export default function Home() {
               </span>
             </h1>
             <p className="hero-description">
-              {t(
-                c(
-                  'Desarrollo la app oficial de Club León, La Guarida y el punto de venta de concesiones. De la interfaz a los servicios que sostienen cada producto.',
-                  'I develop Club León’s official app, La Guarida and the concessions POS. From the interface to the services behind each product.',
-                ),
-              )}
+              <TextScatter
+                text={t(
+                  c(
+                    'Soy ingeniero de software full stack, actualmente uno de los desarrolladores principales de Fuerza Deportiva del Club León.',
+                    'I am a full stack software engineer, currently one of the core developers at Fuerza Deportiva del Club León.',
+                  ),
+                )}
+                as="span"
+                className="hero-scatter-description"
+                velocity={110}
+              />
             </p>
             <div className="hero-actions">
               <Link className="button primary" href="#proyectos">
-                {t(c('Ver proyectos', 'View work'))}
-                <ArrowDown size={18} />
+                <span>{t(c('Ver proyectos', 'View work'))}</span>
+                <TechArrowDown size={17} aria-hidden="true" />
               </Link>
               <CVLink />
             </div>
@@ -253,25 +292,37 @@ export default function Home() {
           <HeroFace />
         </div>
         <div className="hero-bottom">
-          <div className="domain-strip">
+          <div
+            className="domain-strip"
+            role="list"
+            aria-label={t(c('Especialidades de ingeniería', 'Engineering specialties'))}
+          >
             {[
-              ['WEB', Code2],
-              ['MOBILE', Smartphone],
-              ['BACKEND', Braces],
-              ['CLOUD', Cloud],
-            ].map(([label, Icon]) => {
-              const Symbol = Icon as typeof Code2;
+              ['WEB', WebGlyph],
+              ['MOBILE', MobileGlyph],
+              ['BACKEND', BackendGlyph],
+              ['CLOUD', CloudGlyph],
+            ].map(([label, Glyph]) => {
+              const Symbol = Glyph as typeof WebGlyph;
               return (
-                <span key={t(uiCopy(String(label)))}>
-                  <Symbol size={16} />
-                  {String(label)}
+                <span
+                  key={t(uiCopy(String(label)))}
+                  className="domain-badge"
+                  role="listitem"
+                >
+                  <Symbol size={15} aria-hidden="true" />
+                  <span>{String(label)}</span>
                 </span>
               );
             })}
           </div>
-          <Link className="hero-scroll" href="#proyectos">
+          <Link
+            className="hero-scroll"
+            href="#proyectos"
+            aria-label={t(c('Desliza para explorar proyectos', 'Scroll to explore projects'))}
+          >
             <span>{t(c('DESLIZA PARA EXPLORAR', 'SCROLL TO EXPLORE'))}</span>
-            <ArrowDown size={16} />
+            <ScrollCueGlyph size={16} />
           </Link>
         </div>
       </section>
@@ -311,12 +362,12 @@ export default function Home() {
           index="01"
           label="SELECTED WORK"
           title={c(
-            'Aplicaciones, comercio y operación.',
-            'Applications, commerce and operations.',
+            'Sistemas distribuidos, comercio y plataformas móviles.',
+            'Distributed systems, e-commerce, and mobile platforms.',
           )}
           description={c(
-            'Tres sistemas de Club León y un proyecto previo de integración. Cada caso muestra mi participación y sus decisiones técnicas.',
-            'Three Club León systems and a previous integration project. Each case explains my contribution and its technical decisions.',
+            'Tres sistemas en producción para Club León y un proyecto de integración de hardware y servicios. Arquitectura, decisiones y alcance de implementación.',
+            'Three production systems for Club León and one hardware-service integration project. Architecture, trade-offs, and implementation scope.',
           )}
         />
         <div className="selected-projects">
@@ -351,16 +402,48 @@ export default function Home() {
                   href={`/projects/${project.slug}`}
                   aria-label={`${t(c('Ver caso', 'View case'))}: ${t(uiCopy(project.title))}`}
                 >
-                  {t(c('Explorar caso de estudio', 'Explore case study'))}
-                  <ArrowUpRight size={22} />
+                  <span>{t(c('Explorar caso de estudio', 'Explore case study'))}</span>
+                  <TechArrowUpRight size={20} className="case-arrow" aria-hidden="true" />
                 </TransitionLink>
                 <div className="project-published">
-                  <span
-                    className={`status ${project.kind === 'iot' ? 'historical' : ''}`}
-                  >
-                    <i />
-                    {t(project.status)}
-                  </span>
+                  <div className="project-status-group">
+                    <span
+                      className={`status ${project.kind === 'iot' ? 'historical' : ''}`}
+                    >
+                      <i />
+                      {t(project.status)}
+                    </span>
+                    {project.slug === 'la-guarida' && (
+                      <span className="project-badge project-badge-ai">
+                        <ThinkingOrbWrapper
+                          size={20}
+                          state="composing"
+                          color="#39d0c8"
+                        />
+                        <span>{t(c('IA acotada', 'Bounded AI'))}</span>
+                      </span>
+                    )}
+                    {project.slug === 'club-leon-app' && (
+                      <span className="project-badge project-badge-sync">
+                        <ThinkingOrbWrapper
+                          size={20}
+                          state="connecting"
+                          color="#72a7ff"
+                        />
+                        <span>{t(c('Sync en vivo', 'Live sync'))}</span>
+                      </span>
+                    )}
+                    {project.slug === 'pos-concesiones' && (
+                      <span className="project-badge project-badge-ledger">
+                        <ThinkingOrbWrapper
+                          size={20}
+                          state="solving"
+                          color="#39d0c8"
+                        />
+                        <span>{t(c('Ledger offline', 'Offline ledger'))}</span>
+                      </span>
+                    )}
+                  </div>
                   <div className="live-links">
                     {project.links.map((link) => (
                       <ExternalLink key={link.href} href={link.href}>
@@ -380,8 +463,8 @@ export default function Home() {
           index="02"
           label="ENGINEERING CAPABILITIES"
           title={c(
-            'Una mirada al sistema completo.',
-            'A view of the whole system.',
+            'Dominio técnico de extremo a extremo.',
+            'End-to-end technical scope.',
           )}
         />
         <div className="capability-grid">
@@ -406,8 +489,8 @@ export default function Home() {
           index="03"
           label="EXPERIENCE"
           title={c(
-            'Experiencia que construye criterio.',
-            'Experience that shapes judgment.',
+            'Trayectoria técnica y sistemas en producción.',
+            'Technical track record and production systems.',
           )}
         />
         <div className="timeline">
@@ -423,8 +506,8 @@ export default function Home() {
               <p>
                 {t(
                   c(
-                    'Desarrollo de productos digitales para la afición y la operación del club. Interfaces, APIs, pagos, inventario, integraciones móviles y, en La Guarida, superficies de IA acotadas por el backend.',
-                    'Digital product development for supporters and club operations. Interfaces, APIs, payments, inventory, mobile integrations and, in La Guarida, AI surfaces bounded by the backend.',
+                    'Ingeniería full stack para el ecosistema del club: app móvil en Flutter con extensiones en Swift/Kotlin, storefront y panel POS en Next.js, APIs en Node.js/Express, procesamiento con Stripe/Aplazo e integración determinista de modelos generativos.',
+                    'Full stack engineering for the club’s digital ecosystem: Flutter mobile app with Swift/Kotlin native extensions, Next.js storefront and POS panel, Node.js/Express APIs, Stripe/Aplazo transaction processing, and deterministic integration of generative models.',
                   ),
                 )}
               </p>
@@ -448,8 +531,8 @@ export default function Home() {
               <p>
                 {t(
                   c(
-                    'Comercio con .NET y Angular, más una aplicación Kotlin para riego, telemetría y alertas.',
-                    'Commerce with .NET and Angular, plus a Kotlin app for irrigation, telemetry and alerts.',
+                    'Desarrollo de plataforma e-commerce en Angular y backend .NET Core con Entity Framework y SQL Server, junto a una app Android nativa en Kotlin para telemetría y control de actuadores IoT vía Firebase.',
+                    'Developed an e-commerce platform with Angular and .NET Core backend using Entity Framework and SQL Server, alongside a native Android app in Kotlin for telemetry and IoT actuator control via Firebase.',
                   ),
                 )}
               </p>
@@ -469,8 +552,8 @@ export default function Home() {
               <p>
                 {t(
                   c(
-                    'Flask, MySQL y SQLAlchemy para ventas, inventario y cortes. Acceso por roles, transacciones ORM y reportes diarios, semanales y mensuales exportables a CSV/PDF.',
-                    'Flask, MySQL and SQLAlchemy for sales, inventory and cash reconciliation. Role-based access, ORM transactions and daily, weekly and monthly reports exportable to CSV/PDF.',
+                    'Punto de venta desarrollado con Flask, MySQL y SQLAlchemy: transacciones ACID para control de existencias, autorización RBAC y generación de balances de caja y reportes contables en CSV/PDF.',
+                    'Web POS built with Flask, MySQL, and SQLAlchemy: ACID transactions for stock management, RBAC authorization, and exportable CSV/PDF cash reconciliation reports.',
                   ),
                 )}
               </p>
@@ -491,7 +574,7 @@ export default function Home() {
         <SectionHeading
           index="05"
           label="TECHNOLOGIES"
-          title={c('Herramientas con contexto.', 'Tools with context.')}
+          title={c('Stack tecnológico y herramientas.', 'Technology stack and tools.')}
         />
         <div className="stack-groups">
           {technologyGroups.map((group) => (
@@ -522,16 +605,16 @@ export default function Home() {
           <p>
             {t(
               c(
-                'Me interesa el software en el que la interfaz y la operación tienen que coincidir: una talla, un cobro, un inventario, una notificación que abre el destino correcto.',
-                'I care about software where the interface and the operation have to agree: a size, a charge, an inventory, a notification that opens the right destination.',
+                'Diseño e implemento software donde la consistencia transaccional y la experiencia de usuario son críticas: inventario concurrente, conciliación de pagos, sincronización offline y ruteo nativo.',
+                'I build software where transactional consistency and user experience are critical: concurrent inventory, payment reconciliation, offline synchronization, and native deep linking.',
               ),
             )}
           </p>
           <p>
             {t(
               c(
-                'Trabajo de la pantalla al servicio. El backend calcula, reserva y confirma; la interfaz explica el estado. Si un modelo entra al producto, interpreta evidencia que ya existe. No inventa el total ni cierra la orden.',
-                'I work from the screen to the service. The backend calculates, reserves and confirms; the interface explains the state. If a model enters the product, it interprets evidence that already exists. It does not invent the total or close the order.',
+                'Mi enfoque abarca desde componentes de interfaz hasta servicios de backend: APIs deterministas que calculan y reservan estados, e integraciones de IA acotadas a interpretar datos estructurados sin atribuirse ejecución de cobros ni órdenes.',
+                'My scope spans from UI components to backend services: deterministic APIs that compute and reserve state, and AI integrations bounded to interpreting structured data without charge or order authorization.',
               ),
             )}
           </p>

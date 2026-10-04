@@ -35,16 +35,13 @@ export default function ProjectAsciiBackground({
   }, [project]);
 
   return (
-    <div
-      className="project-ascii-background"
-      aria-hidden="true"
-    >
+    <div className="project-ascii-background" aria-hidden="true">
       <AsciiRipple
         ref={rippleRef}
         text={text}
         textColor={isDark ? '#475569' : '#94a3b8'}
-        rippleColor={isDark ? '#38bdf8' : '#0284c7'}
-        troughColor={isDark ? '#818cf8' : '#6366f1'}
+        rippleColor={isDark ? '#72a7ff' : '#1e5aaa'}
+        troughColor={isDark ? '#4c8dff' : '#2a6bc8'}
         textOpacity={isDark ? 0.16 : 0.2}
         fontSize={15}
         lineHeight={1.25}

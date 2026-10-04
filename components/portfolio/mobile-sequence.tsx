@@ -9,10 +9,7 @@ export default function MobileSequence() {
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-    if (paused) {
-      element.style.setProperty('--separation', '1');
-      return;
-    }
+    if (paused) return;
     let disposed = false;
     let revert: (() => void) | undefined;
     void Promise.all([import('gsap'), import('gsap/ScrollTrigger')])
@@ -20,26 +17,19 @@ export default function MobileSequence() {
         if (disposed) return;
         gsap.registerPlugin(ScrollTrigger);
         const context = gsap.context(() => {
-          gsap.fromTo(
-            element,
-            { '--separation': 0 },
-            {
-              '--separation': 1,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: element,
-                start: 'top 80%',
-                end: 'top 25%',
-                scrub: 0.5,
-              },
-            },
-          );
+          gsap.from(element.querySelectorAll('.commerce-plane'), {
+            transform: 'translateY(8px)',
+            opacity: 0.7,
+            duration: 0.24,
+            stagger: 0.04,
+            ease: 'power3.out',
+            clearProps: 'transform,opacity',
+            scrollTrigger: { trigger: element, start: 'top 85%', once: true },
+          });
         }, element);
         revert = () => context.revert();
       })
-      .catch(() => {
-        if (!disposed) element.style.setProperty('--separation', '1');
-      });
+      .catch(() => {});
     return () => {
       disposed = true;
       revert?.();

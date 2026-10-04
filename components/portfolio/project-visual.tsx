@@ -113,39 +113,31 @@ function MediaStage({
   item,
   direction,
   lightbox = false,
+  instant = false,
 }: {
   item: ProjectMedia;
   direction: number;
   lightbox?: boolean;
+  instant?: boolean;
 }) {
   const { paused, t } = usePreferences();
   const media = useRef<HTMLDivElement>(null);
   const portrait = item.width < item.height;
   useEffect(() => {
-    if (paused || !media.current) return;
-    let disposed = false;
-    let revert: (() => void) | undefined;
-    void import('gsap')
-      .then(({ gsap }) => {
-        if (disposed || !media.current) return;
-        const context = gsap.context(() => {
-          gsap.from(media.current, {
-            x: direction * 32,
-            scale: 0.97,
-            rotationY: direction * 3,
-            duration: 0.48,
-            ease: 'power3.out',
-            clearProps: 'transform',
-          });
-        }, media);
-        revert = () => context.revert();
-      })
-      .catch(() => {});
-    return () => {
-      disposed = true;
-      revert?.();
-    };
-  }, [item.src, direction, paused]);
+    const element = media.current;
+    if (paused || instant || !element?.animate) return;
+    const animation = element.animate(
+      [
+        {
+          transform: `translateX(${direction * 8}px) scale(0.99)`,
+          opacity: 0.7,
+        },
+        { transform: 'translateX(0) scale(1)', opacity: 1 },
+      ],
+      { duration: 200, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' },
+    );
+    return () => animation.cancel();
+  }, [item.src, direction, paused, instant]);
   return (
     <div
       className={`${lightbox ? 'lightbox-stage' : 'gallery-stage'} ${portrait ? 'portrait-stage' : 'landscape-stage'}`}
@@ -181,17 +173,30 @@ export default function ProjectVisual({
   const { t, paused } = usePreferences();
   const items = projectMedia[kind];
   const covers = items.filter((media) => media.featured).slice(0, 2);
-  const [selection, setSelection] = useState({ index: 0, direction: 1 });
+  const [selection, setSelection] = useState({
+    index: 0,
+    direction: 1,
+    instant: true,
+  });
   const [open, setOpen] = useState(false);
   const thumbnails = useRef<HTMLDivElement>(null);
   const selected = selection.index;
   const item = items[selected] ?? items[0];
-  const select = (index: number, direction = index >= selected ? 1 : -1) =>
-    setSelection({ index: (index + items.length) % items.length, direction });
-  const change = (offset: number) =>
+  const select = (
+    index: number,
+    direction = index >= selected ? 1 : -1,
+    instant = false,
+  ) =>
+    setSelection({
+      index: (index + items.length) % items.length,
+      direction,
+      instant,
+    });
+  const change = (offset: number, instant = false) =>
     setSelection((current) => ({
       index: (current.index + offset + items.length) % items.length,
       direction: offset,
+      instant,
     }));
   const keyboard = (event: KeyboardEvent<HTMLElement>) => {
     // Keep native playback and thumbnail scrolling shortcuts intact.
@@ -203,19 +208,19 @@ export default function ProjectVisual({
     if (event.key === 'ArrowLeft') {
       event.stopPropagation();
       event.preventDefault();
-      change(-1);
+      change(-1, true);
     } else if (event.key === 'ArrowRight') {
       event.stopPropagation();
       event.preventDefault();
-      change(1);
+      change(1, true);
     } else if (event.key === 'Home') {
       event.stopPropagation();
       event.preventDefault();
-      select(0, -1);
+      select(0, -1, true);
     } else if (event.key === 'End') {
       event.stopPropagation();
       event.preventDefault();
-      select(items.length - 1, 1);
+      select(items.length - 1, 1, true);
     }
   };
   useEffect(() => {
@@ -232,9 +237,9 @@ export default function ProjectVisual({
     if (typeof rail.scrollTo === 'function')
       rail.scrollTo({
         left: Math.max(0, left),
-        behavior: paused ? 'instant' : 'smooth',
+        behavior: paused || selection.instant ? 'instant' : 'smooth',
       });
-  }, [selected, paused]);
+  }, [selected, paused, selection.instant]);
   const sections = items.reduce<
     Array<{
       section: ProjectMedia['section'];
@@ -252,7 +257,7 @@ export default function ProjectVisual({
         className="icon-button"
         type="button"
         onKeyDown={keyboard}
-        onClick={() => change(-1)}
+        onClick={(event) => change(-1, event.detail === 0)}
         aria-label={t(c('Vista anterior', 'Previous view'))}
       >
         <ArrowLeft size={18} />
@@ -261,7 +266,7 @@ export default function ProjectVisual({
         className="icon-button"
         type="button"
         onKeyDown={keyboard}
-        onClick={() => change(1)}
+        onClick={(event) => change(1, event.detail === 0)}
         aria-label={t(c('Vista siguiente', 'Next view'))}
       >
         <ArrowRight size={18} />
@@ -310,7 +315,11 @@ export default function ProjectVisual({
         </span>
       </div>
       {!open ? (
-        <MediaStage item={item} direction={selection.direction} />
+        <MediaStage
+          item={item}
+          direction={selection.direction}
+          instant={selection.instant}
+        />
       ) : (
         <div
           className={`gallery-stage ${item.width < item.height ? 'portrait-stage' : 'landscape-stage'}`}
@@ -354,6 +363,7 @@ export default function ProjectVisual({
               <MediaStage
                 item={item}
                 direction={selection.direction}
+                instant={selection.instant}
                 lightbox
               />
               <div className="lightbox-footer">
@@ -398,7 +408,13 @@ export default function ProjectVisual({
                   }
                   aria-pressed={selected === index}
                   aria-label={`${index + 1}. ${t(media.caption)}`}
-                  onClick={() => select(index)}
+                  onClick={(event) =>
+                    select(
+                      index,
+                      index >= selected ? 1 : -1,
+                      event.detail === 0,
+                    )
+                  }
                 >
                   <MediaImage item={media} thumbnail />
                   {media.video && (

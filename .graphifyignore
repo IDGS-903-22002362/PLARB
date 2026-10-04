@@ -1,0 +1,9 @@
+.agents/
+graphify-out/
+.git/
+.next/
+.vinext/
+node_modules/
+.vercel/
+.wrangler/
+public/projects/

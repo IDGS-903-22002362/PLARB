@@ -9,6 +9,8 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { c, type Copy, type Study } from '@/lib/projects';
+import { TechArrowUpRight } from './custom-icons';
+import { ThinkingOrbWrapper } from './thinking-orb-wrapper';
 import { usePreferences } from './preferences';
 import { uiCopy } from '@/lib/ui-copy';
 import { ExternalLink } from './shell';
@@ -19,6 +21,7 @@ import MobileSequence from './mobile-sequence';
 import { Contact } from './contact';
 import SystemReassembly from './system-reassembly';
 import ProjectAsciiBackground from './project-ascii-background';
+import CaseContents from './case-contents';
 function Heading({
   index,
   label,
@@ -74,8 +77,8 @@ function LoyaltyNote() {
       <p>
         {t(
           c(
-            'El movimiento original conserva metadatos de reversión; no es un registro estrictamente inmutable. Las capacidades de acumulación, canje y reversión se habilitan por fases en el backend.',
-            'The original movement retains reversal metadata; it is not a strictly immutable record. Earning, redemption and reversal capabilities are enabled in phases in the backend.',
+            'Las transacciones de reversión preservan identificadores correlativos hacia la operación original para trazabilidad contable. Los contratos de acumulación, canje y reversión se ejecutan de manera atómica en el backend.',
+            'Reversal transactions preserve correlation identifiers back to the original operation for auditability. Earning, redemption, and reversal contracts are atomically executed on the backend.',
           ),
         )}
       </p>
@@ -90,18 +93,11 @@ export default function CaseStudy({
   next: Study;
 }) {
   const { t } = usePreferences();
-  const sections = [
-    ['contexto', c('Contexto', 'Context')],
-    ['arquitectura', c('Arquitectura', 'Architecture')],
-    ['decisiones', c('Decisiones', 'Decisions')],
-    ['implementacion', c('Implementación', 'Implementation')],
-    ['resultados', c('Resultados', 'Results')],
-  ] as const;
   return (
     <main id="contenido" className="case-study-page">
-      <ProjectAsciiBackground project={project} />
       <div className="shell">
         <section className="case-hero">
+          <ProjectAsciiBackground project={project} />
           <Link className="case-back" href="/#proyectos">
             <ArrowLeft size={16} />
             {t(c('Volver a proyectos', 'Back to work'))}
@@ -118,9 +114,11 @@ export default function CaseStudy({
               {t(project.status)}
             </span>
           </div>
-          <h1>{t(uiCopy(project.title))}</h1>
-          <p className="case-subtitle">{t(project.subtitle)}</p>
-          <p className="case-summary">{t(project.summary)}</p>
+          <div className="case-hero-content">
+            <h1>{t(uiCopy(project.title))}</h1>
+            <p className="case-subtitle">{t(project.subtitle)}</p>
+            <p className="case-summary">{t(project.summary)}</p>
+          </div>
           <dl className="case-meta">
             <div>
               <dt>{t(c('Mi participación', 'My contribution'))}</dt>
@@ -158,22 +156,13 @@ export default function CaseStudy({
             </div>
           </dl>
         </section>
+        <CaseContents />
         <div
           className="case-hero-visual"
           style={{ viewTransitionName: `project-${project.kind}` }}
         >
           <ProjectVisual kind={project.kind} expanded />
         </div>
-        <nav
-          className="case-toc"
-          aria-label={t(c('Contenido del caso', 'Case contents'))}
-        >
-          {sections.map(([id, label]) => (
-            <Link href={`#${id}`} key={id}>
-              {t(label)}
-            </Link>
-          ))}
-        </nav>
         <section className="case-section" id="contexto">
           <Heading
             index="01"
@@ -231,7 +220,7 @@ export default function CaseStudy({
           <Heading
             index="02"
             label="SYSTEM ARCHITECTURE"
-            title={c('Cómo se conectan las piezas.', 'How the pieces connect.')}
+            title={c('Arquitectura y flujo de datos.', 'Architecture and data flow.')}
           />
           {project.kind === 'store' && <CommerceSequence />}
           {project.kind === 'app' && <MobileSequence />}
@@ -246,8 +235,8 @@ export default function CaseStudy({
             index="03"
             label="ENGINEERING CHALLENGES"
             title={c(
-              'Problemas concretos. Decisiones explícitas.',
-              'Concrete problems. Explicit decisions.',
+              'Retos de ingeniería y decisiones técnicas.',
+              'Engineering challenges and technical trade-offs.',
             )}
           />
           <div className="challenge-grid">
@@ -287,7 +276,7 @@ export default function CaseStudy({
           <Heading
             index="04"
             label="IMPLEMENTATION"
-            title={c('De las decisiones al código.', 'From decisions to code.')}
+            title={c('Implementación y confiabilidad.', 'Implementation and reliability.')}
           />
           <div className="tags">
             {project.stack.map((tag) => (
@@ -306,6 +295,12 @@ export default function CaseStudy({
             <h3>
               <ShieldCheck size={20} />
               {t(c('Seguridad y confiabilidad', 'Security and reliability'))}
+              <ThinkingOrbWrapper
+                size={20}
+                state="solving"
+                color="#39d0c8"
+                className="reliability-orb"
+              />
             </h3>
             <p>{t(project.security)}</p>
           </div>
@@ -314,7 +309,7 @@ export default function CaseStudy({
           <Heading
             index="05"
             label="RESULTS / LESSONS"
-            title={c('Qué entrega el sistema.', 'What the system delivers.')}
+            title={c('Impacto del sistema y lecciones aprendidas.', 'System impact and lessons learned.')}
           />
           <div className="case-results">
             <ul className="result-list">
@@ -332,6 +327,7 @@ export default function CaseStudy({
           </div>
         </section>
         <TransitionLink
+          internal
           className="next-project"
           href={`/projects/${next.slug}`}
         >
@@ -341,7 +337,7 @@ export default function CaseStudy({
             </span>
             <h2>{t(uiCopy(next.title))}</h2>
           </div>
-          <ArrowUpRight />
+          <TechArrowUpRight size={22} aria-hidden="true" />
         </TransitionLink>
       </div>
       <Contact />

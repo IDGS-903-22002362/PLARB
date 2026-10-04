@@ -13,6 +13,14 @@ import {
   X,
 } from 'lucide-react';
 import { profile } from '@/lib/portfolio-data';
+import {
+  AppleStoreGlyph,
+  GooglePlayGlyph,
+  StoreFrontGlyph,
+  PalcosGlyph,
+  DocDownloadGlyph,
+  TechArrowUpRight,
+} from './custom-icons';
 import { c } from '@/lib/projects';
 import { uiCopy } from '@/lib/ui-copy';
 import { PreferencesProvider, usePreferences } from './preferences';
@@ -26,7 +34,7 @@ export function CVLink({
   return (
     <a className={className} href={profile.cv} download>
       {t(c('Descargar CV', 'Download CV'))}
-      <Download size={18} aria-hidden="true" />
+      <DocDownloadGlyph size={18} aria-hidden="true" />
     </a>
   );
 }
@@ -38,16 +46,33 @@ export function ExternalLink({
   children: ReactNode;
 }) {
   const { t } = usePreferences();
+  const isApple =
+    (typeof children === 'string' && children.includes('App Store')) ||
+    href.includes('apps.apple.com');
+  const isPlay =
+    (typeof children === 'string' && children.includes('Google Play')) ||
+    href.includes('play.google.com');
+  const isStore =
+    (typeof children === 'string' && children.includes('La Guarida')) ||
+    href.includes('tiendalaguarida.com');
+  const isPalcos =
+    (typeof children === 'string' &&
+      (children.includes('Palcos') || children.includes('Food Market'))) ||
+    href.includes('foodmarket.clubleon.mx');
   return (
     <a
       title={t(c('Se abre en una pestaña nueva', 'Opens in a new tab'))}
-      className="external-link"
+      className={`external-link ${isApple ? 'link-apple' : ''} ${isPlay ? 'link-play' : ''} ${isStore ? 'link-store' : ''} ${isPalcos ? 'link-palcos' : ''}`}
       href={href}
       target="_blank"
       rel="noopener noreferrer"
     >
+      {isApple && <AppleStoreGlyph size={13} aria-hidden="true" />}
+      {isPlay && <GooglePlayGlyph size={13} aria-hidden="true" />}
+      {isStore && <StoreFrontGlyph size={13} aria-hidden="true" />}
+      {isPalcos && <PalcosGlyph size={13} aria-hidden="true" />}
       {children}
-      <ArrowUpRight size={17} aria-hidden="true" />
+      <TechArrowUpRight size={13} aria-hidden="true" />
     </a>
   );
 }
@@ -411,9 +436,9 @@ function Navigation({ home }: { home: boolean }) {
 function Frame({ children, home }: { children: ReactNode; home: boolean }) {
   const { t } = usePreferences();
   const scope = useRef<HTMLDivElement>(null);
-  usePortfolioMotion(scope);
+  usePortfolioMotion(scope, home);
   return (
-    <div className="portfolio" id="inicio" ref={scope}>
+    <div className={home ? 'portfolio' : 'portfolio portfolio-internal'} id="inicio" ref={scope}>
       <a className="skip-link" href="#contenido">
         {t(c('Saltar al contenido', 'Skip to content'))}
       </a>

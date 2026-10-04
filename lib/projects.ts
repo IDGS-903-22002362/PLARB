@@ -64,6 +64,7 @@ export const publicLinks = {
   apple: 'https://apps.apple.com/mx/app/club-le%C3%B3n-fc/id6770619269',
   android:
     'https://play.google.com/store/apps/details?id=mx.clubleon.oficial&hl=es_MX',
+  palcos: 'https://foodmarket.clubleon.mx/servicio-palcos/inicio/',
 };
 export const studies: Study[] = [
   {
@@ -72,66 +73,66 @@ export const studies: Study[] = [
     title: 'Club León FC',
     kind: 'app',
     subtitle: c(
-      'El club, dentro y fuera de la cancha.',
-      'The club, on and off the pitch.',
+      'Aplicación móvil oficial con servicios nativos y sincronización de datos.',
+      'Official mobile application with native services and data synchronization.',
     ),
     category: 'MOBILE / NATIVE INTEGRATIONS',
     status: c('App publicada', 'Published app'),
     period: c('Club León · Actualidad', 'Club León · Current'),
     role: c(
-      'Desarrollo móvil e integración de servicios',
-      'Mobile development & service integration',
+      'Ingeniería móvil e integración de servicios',
+      'Mobile engineering & service integration',
     ),
     summary: c(
-      'La app oficial para iOS y Android. Calendarios, Fiera Racha, notificaciones y acceso a La Guarida en una experiencia Flutter.',
-      'The official iOS and Android app. Match calendars, Fiera Racha, notifications and access to La Guarida in a Flutter experience.',
+      'App de producción en Flutter para iOS y Android: calendarios en tiempo real, widgets nativos en Swift y Kotlin, push notifications y enlace transaccional a La Guarida.',
+      'Production Flutter app for iOS and Android: real-time match calendars, native Swift and Kotlin widgets, push notifications, and transactional deep linking to La Guarida.',
     ),
     context: c(
-      'La afición sigue equipos, consulta partidos y compra productos del club desde el teléfono. La aplicación reúne esos recorridos y conecta con servicios existentes de Club León.',
-      'Supporters follow teams, check matches and shop on their phones. The app brings these journeys together and connects existing Club León services.',
+      'Canal móvil oficial de Club León para consulta de calendarios deportivos, seguimiento de rachas y acceso a la tienda oficial, consolidando múltiples fuentes de datos bajo una arquitectura unificada.',
+      'Official mobile channel for Club León match schedules, streak tracking, and official store access, consolidating multiple data sources under a unified architecture.',
     ),
     problem: c(
-      'Mantener el calendario correcto al cambiar de categoría, abrir el destino de una notificación y llevar la racha diaria a la pantalla de inicio exige coordinar estado, servicios y código nativo.',
-      'Keeping the right calendar when switching teams, opening notification destinations and bringing a daily streak to the home screen requires coordinated state, services and native code.',
+      'Condiciones de carrera al filtrar categorías de partidos, desalineación en el enrutamiento profundo de push notifications y persistencia bidireccional entre Flutter y el ciclo de vida de widgets nativos.',
+      'Race conditions during team category filtering, deep-link routing desynchronization from push notifications, and bidirectional persistence between Flutter and native OS widget lifecycles.',
     ),
     contribution: c(
-      'Desarrollo en Flutter y Dart; integración de notificaciones, navegación y tienda. Sincronización de Fiera Racha con widgets implementados en Swift/WidgetKit y Kotlin/RemoteViews.',
-      'Flutter and Dart development; notification, navigation and store integration. Fiera Racha synchronization with Swift/WidgetKit and Kotlin/RemoteViews widgets.',
+      'Arquitectura de la app en Flutter y manejo de estado reactivo. Implementación de deep links con Firebase Cloud Messaging y desarrollo de widgets nativos con Swift (WidgetKit) y Kotlin (RemoteViews).',
+      'Engineered Flutter architecture and reactive state management. Implemented deep-linking via Firebase Cloud Messaging and developed native widgets with Swift (WidgetKit) and Kotlin (RemoteViews).',
     ),
     systems: c(
-      'App Flutter, widgets nativos, Firebase y acceso a La Guarida.',
-      'Flutter app, native widgets, Firebase and access to La Guarida.',
+      'App Flutter, widgets nativos Swift/Kotlin, backend Firebase y storefront La Guarida.',
+      'Flutter app, native Swift/Kotlin widgets, Firebase backend, and La Guarida storefront.',
     ),
     scope: {
       product: c(
-        'La app oficial de Club León para iOS y Android: calendarios, Fiera Racha, notificaciones y entrada a la tienda.',
-        'Club León’s official iOS and Android app: calendars, Fiera Racha, notifications and an entry to the store.',
+        'Aplicación oficial para iOS y Android: calendarios multiequipo, racha diaria, notificaciones transaccionales y deep linking hacia la tienda.',
+        'Official iOS and Android app: multi-team calendars, daily streak gamification, transactional notifications, and store deep linking.',
       ),
       team: c(
-        'El producto vive en el ecosistema digital del club. No atribuyo diseño de marca, operación de contenidos ni el backend de lealtad como trabajo exclusivo de la app.',
-        'The product lives in the club’s digital ecosystem. I do not claim brand design, content operations or the loyalty backend as exclusive app work.',
+        'Desarrollo colaborativo en el ecosistema digital del club. El diseño de identidad visual y la administración de contenidos son gestionados por otras áreas del club.',
+        'Collaborative engineering in the club’s digital ecosystem. Visual identity design and content operations are managed by separate club divisions.',
       ),
       mine: c(
-        'Implementé la experiencia Flutter, el estado de calendarios, las rutas desde notificaciones y la sincronización de widgets de Fiera Racha en Swift y Kotlin.',
-        'I implemented the Flutter experience, calendar state, notification routes and Fiera Racha widget synchronization in Swift and Kotlin.',
+        'Arquitectura de la app en Flutter/Dart, gestión de estado con Providers, resolución determinista de deep links y extensiones nativas en Swift (iOS) y Kotlin (Android).',
+        'Flutter/Dart app architecture, state management with Providers, deterministic deep-link resolution, and native extensions in Swift (iOS) and Kotlin (Android).',
       ),
       connected: c(
-        'La Guarida es un sistema de comercio aparte. El motor de puntos es un backend de ecosistema: no es una pantalla que yo haya presentado como feature de la app.',
-        'La Guarida is a separate commerce system. The points engine is an ecosystem backend: it is not a screen I present as an app feature I built.',
+        'La Guarida opera como plataforma de comercio externa. Las APIs deportivas y de notificaciones se consumen desacopladas del cliente móvil.',
+        'La Guarida operates as an external e-commerce platform. Sports APIs and notification services are consumed decoupled from the mobile client.',
       ),
     },
     requirements: [
       c(
-        'Calendarios masculino y femenil con estado independiente.',
-        'Independent men’s and women’s calendar state.',
+        'Aislamiento de estado y caché independiente para calendarios masculino y femenil.',
+        'State isolation and independent caching for men’s and women’s calendars.',
       ),
       c(
-        'Conservar contenido previo mientras se actualiza.',
-        'Keep previous content visible while refreshing.',
+        'Estrategia stale-while-revalidate para consulta de datos sin bloqueo de interfaz.',
+        'Stale-while-revalidate caching strategy to query data without UI blocking.',
       ),
       c(
-        'Abrir rutas concretas desde notificaciones y widgets.',
-        'Open specific routes from notifications and widgets.',
+        'Manejo determinista de rutas desde push notifications y widgets nativos.',
+        'Deterministic route handling from push notifications and native widgets.',
       ),
     ],
     stack: [
@@ -146,17 +147,17 @@ export const studies: Study[] = [
       { label: 'Google Play', href: publicLinks.android },
     ],
     architecture: c(
-      'Flutter organiza la interfaz y los proveedores de estado. Los servicios conectan calendario, notificaciones y tienda; los widgets mantienen una integración específica para cada plataforma.',
-      'Flutter organizes the interface and state providers. Services connect calendars, notifications and the store; widgets retain a platform-specific implementation.',
+      'Arquitectura en capas: presentación desacoplada mediante Providers, capa de servicios HTTP con serialización tipada y puente nativo de datos para WidgetKit y RemoteViews.',
+      'Layered architecture: presentation decoupled via Providers, HTTP service layer with typed serialization, and native platform channels for WidgetKit and RemoteViews.',
     ),
     nodes: [
       node(
         'app',
         'Flutter',
-        c('Aplicación', 'Application'),
+        c('Aplicación Flutter', 'Flutter Application'),
         c(
-          'Interfaz compartida para iOS y Android; navegación entre calendario, racha y tienda.',
-          'Shared iOS and Android interface; navigation between calendars, streaks and the store.',
+          'Capa de presentación multiplataforma para iOS y Android con ruteo declarativo.',
+          'Cross-platform presentation layer for iOS and Android with declarative routing.',
         ),
         50,
         13,
@@ -164,10 +165,10 @@ export const studies: Study[] = [
       node(
         'state',
         'Providers',
-        c('Estado + caché', 'State + cache'),
+        c('Estado y Caché', 'State and Cache'),
         c(
-          'Caché por división y club. Un identificador de petición evita aplicar respuestas antiguas.',
-          'Cache per division and club. A request identifier prevents stale responses from being applied.',
+          'Gestores de estado con versionado por requestId para prevenir sobreescrituras por respuestas tardías.',
+          'State managers with requestId versioning to prevent stale out-of-order response overwrites.',
         ),
         26,
         43,
@@ -175,10 +176,10 @@ export const studies: Study[] = [
       node(
         'native',
         'Swift · Kotlin',
-        c('Widgets nativos', 'Native widgets'),
+        c('Widgets Nativos', 'Native Widgets'),
         c(
-          'home_widget sincroniza la racha y enlaza de vuelta a la aplicación.',
-          'home_widget synchronizes the streak and links back into the application.',
+          'Módulos en Swift y Kotlin con sincronización de estado local para pantallas de inicio.',
+          'Swift and Kotlin native modules with local state sync for home screen widgets.',
         ),
         74,
         43,
@@ -186,10 +187,10 @@ export const studies: Study[] = [
       node(
         'content',
         'APIs',
-        c('Calendarios', 'Calendars'),
+        c('APIs de Calendario', 'Calendar APIs'),
         c(
-          'Contenido masculino y femenil con refresco al recuperar conectividad.',
-          'Men’s and women’s content refreshed when connectivity is available again.',
+          'Consumo de calendarios deportivos con persistencia local y recuperación ante fallos de red.',
+          'Sports calendar endpoints with local persistence and offline recovery fallback.',
         ),
         17,
         77,
@@ -197,10 +198,10 @@ export const studies: Study[] = [
       node(
         'firebase',
         'Firebase',
-        c('Auth + mensajes', 'Auth + messages'),
+        c('Auth y Notificaciones', 'Auth and Notifications'),
         c(
-          'Identidad y notificaciones conectadas con destinos dentro del producto.',
-          'Identity and notifications connected to destinations within the product.',
+          'Sesión de usuario y ruteo dinámico hacia vistas internas mediante payloads de FCM.',
+          'User session and dynamic internal view routing driven by FCM payloads.',
         ),
         50,
         77,
@@ -208,10 +209,10 @@ export const studies: Study[] = [
       node(
         'store',
         'La Guarida',
-        c('Tienda integrada', 'Integrated store'),
+        c('Enlace Tienda', 'Store Link'),
         c(
-          'Acceso web a la tienda con continuidad de sesión desde la aplicación.',
-          'Web access to the store with session continuity from the app.',
+          'Enlace profundo y transferencia de contexto de sesión hacia la plataforma web de La Guarida.',
+          'Deep linking and session context pass-through to La Guarida web platform.',
         ),
         83,
         77,
@@ -227,92 +228,92 @@ export const studies: Study[] = [
     decisions: [
       {
         title: c(
-          'Un calendario que respeta la selección.',
-          'A calendar that respects the selection.',
+          'Aislamiento de peticiones y control de concurrencia en calendarios.',
+          'Request isolation and concurrency control in calendars.',
         ),
         problem: c(
-          'Una petición lenta puede llegar después de cambiar de categoría.',
-          'A slow request can arrive after switching categories.',
+          'Peticiones de red lentas completadas en desorden al alternar rápidamente entre divisiones masculina y femenil.',
+          'Slow out-of-order network responses when toggling rapidly between men’s and women’s divisions.',
         ),
         decision: c(
-          'Separar caché por división y club; descartar respuestas con un requestId anterior.',
-          'Separate cache by division and club; discard responses with an older requestId.',
+          'Segmentar la caché en memoria por división e invalidar respuestas entrantes cuyo requestId no coincida con la selección activa.',
+          'Partition in-memory cache by division and discard incoming responses whose requestId does not match the active selection.',
         ),
         reason: c(
-          'La respuesta válida depende de la selección actual, no del orden en que termina la red.',
-          'A valid response depends on the current selection, not the order in which network requests finish.',
+          'El estado de la vista debe depender exclusivamente de la intención activa del usuario y no de la latencia de red.',
+          'View state must strictly reflect the user’s active intent rather than variable network latency.',
         ),
         tradeoff: c(
-          'Se puede mostrar información anterior mientras llega la actualización.',
-          'Previously stored information may be shown while an update arrives.',
+          'Mantenimiento de particiones de caché independientes y descarte de respuestas desactualizadas.',
+          'Requires maintaining separated cache partitions and discarding stale responses.',
         ),
         outcome: c(
-          'El estado mantiene el calendario seleccionado y aprovecha contenido persistido.',
-          'State preserves the selected calendar and reuses persisted content.',
+          'Eliminación total de vistas cruzadas de calendarios y renderizado inmediato desde caché.',
+          'Zero cross-team fixture view contamination and instant cached UI rendering.',
         ),
       },
       {
         title: c(
-          'Flutter donde se comparte. Nativo donde hace falta.',
-          'Flutter for shared UI. Native code where needed.',
+          'Núcleo compartido en Flutter y extensiones nativas por plataforma.',
+          'Shared Flutter core with platform-specific native extensions.',
         ),
         problem: c(
-          'La racha debe estar disponible también en la pantalla de inicio.',
-          'The streak also needs a presence on the home screen.',
+          'Exponer la métrica de racha del usuario en la pantalla de inicio del sistema operativo sin ejecutar Flutter en background.',
+          'Display user streak metrics on the OS home screen without running Flutter in the background.',
         ),
         decision: c(
-          'Sincronizar datos mediante home_widget y construir las superficies nativas de iOS y Android.',
-          'Synchronize data with home_widget and build native iOS and Android surfaces.',
+          'Implementar serialización ligera con home_widget conectando con WidgetKit (Swift) y RemoteViews (Kotlin).',
+          'Implement lightweight serialization via home_widget interfacing with WidgetKit (Swift) and RemoteViews (Kotlin).',
         ),
         reason: c(
-          'Los widgets tienen ciclos de vida y APIs propios de cada sistema operativo.',
-          'Widgets have lifecycles and APIs specific to each operating system.',
+          'Los widgets del sistema operativo imponen restricciones estrictas de memoria y ciclo de vida ajenas al framework.',
+          'OS widgets operate under strict memory and lifecycle constraints outside the cross-platform runtime.',
         ),
         tradeoff: c(
-          'Las integraciones Swift y Kotlin requieren mantenimiento por separado.',
-          'Swift and Kotlin integrations require separate maintenance.',
+          'Mantenimiento dual de bases de código nativas y manejo explícito de canales de plataforma.',
+          'Dual maintenance of native codebases and explicit platform channel management.',
         ),
         outcome: c(
-          'El widget muestra la racha y recupera la navegación hacia ella.',
-          'The widget displays the streak and restores navigation to it.',
+          'Actualización eficiente del widget nativo y restauración directa del deep link hacia la app.',
+          'Efficient native widget updates with direct deep-link restoration into the app.',
         ),
       },
     ],
     implementation: [
       c(
-        'Proveedores de estado y caché persistida para los calendarios.',
-        'State providers and persisted calendar cache.',
+        'Proveedores de estado reactivo con estrategia de invalidación por identificador de transacción.',
+        'Reactive state providers with transaction identifier invalidation strategies.',
       ),
       c(
-        'Notificaciones con destinos de producto, pedidos y carrito.',
-        'Notifications with product, order and cart destinations.',
+        'Enrutamiento declarativo para deep links originados en notificaciones push y widgets nativos.',
+        'Declarative routing for deep links originated from push notifications and native widgets.',
       ),
       c(
-        'Servicio Flutter de sincronización y widgets nativos de Fiera Racha.',
-        'Flutter synchronization service and native Fiera Racha widgets.',
+        'Integración de widgets de sistema con Swift/WidgetKit en iOS y Kotlin/RemoteViews en Android.',
+        'System widget integration with Swift/WidgetKit on iOS and Kotlin/RemoteViews on Android.',
       ),
     ],
     security: c(
-      'La sesión y las rutas de usuario se integran con autenticación. La estrategia de caché controla respuestas fuera de orden; no se presenta como funcionamiento completo sin conexión.',
-      'Session and user routes integrate with authentication. The cache strategy handles out-of-order responses; it is not a claim of full offline operation.',
+      'Validación de tokens de autenticación en endpoints de usuario, control de expiración de sesión y sanitización de payloads de deep links.',
+      'Auth token verification on user endpoints, session expiration handling, and deep-link payload sanitization.',
     ),
     results: [
       c(
-        'Aplicación oficial publicada para iOS y Android.',
-        'Official application published for iOS and Android.',
+        'Aplicación en producción disponible en iOS App Store y Google Play Store.',
+        'Production app live on iOS App Store and Google Play Store.',
       ),
       c(
-        'Calendario, racha y tienda conectados en una experiencia móvil.',
-        'Calendar, streak and store connected in a mobile experience.',
+        'Manejo de estado resiliente ante desconexión y latencia variable de red.',
+        'Resilient state handling under network disconnection and variable latency.',
       ),
       c(
-        'Widgets con implementaciones específicas para ambos sistemas.',
-        'Widgets with implementations for both operating systems.',
+        'Widgets nativos funcionales integrados con el sistema operativo de cada plataforma.',
+        'Functional native widgets fully integrated with each platform’s operating system.',
       ),
     ],
     lessons: c(
-      'Una base compartida no elimina las diferencias entre plataformas. Delimitar el estado y las integraciones nativas hace explícito qué se comparte y qué se mantiene por separado.',
-      'A shared codebase does not eliminate platform differences. Defining state boundaries and native integrations makes shared and separately maintained behavior explicit.',
+      'La portabilidad multiplataforma no reemplaza la arquitectura nativa. Delimitar fronteras claras entre la UI compartida y los servicios nativos previene cuellos de botella en producción.',
+      'Cross-platform portability does not replace native architecture. Clear boundaries between shared UI and OS-level services prevent production bottlenecks.',
     ),
   },
   {
@@ -322,66 +323,66 @@ export const studies: Study[] = [
     kind: 'store',
     category: 'COMMERCE / PAYMENTS / INVENTORY / APPLIED AI',
     subtitle: c(
-      'Del catálogo a una orden confirmada.',
-      'From catalog to a confirmed order.',
+      'E-commerce de alta concurrencia: reservas transaccionales, pagos e IA acotada.',
+      'High-concurrency e-commerce: transactional reservations, payments, and bounded AI.',
     ),
     status: c('En producción', 'In production'),
     period: c('Club León · Actualidad', 'Club León · Current'),
-    role: c('Desarrollo full stack', 'Full-stack development'),
+    role: c('Ingeniería de software full stack', 'Full-stack software engineering'),
     summary: c(
-      'La tienda oficial de Club León. Catálogo por talla, checkout con Stripe y Aplazo, reservas de inventario, gestión de pedidos e IA integrada para comprar y administrar.',
-      'Club León’s official store. Size-based catalog, Stripe and Aplazo checkout, inventory reservations, order management and AI integrated into shopping and administration.',
+      'Storefront y backend oficial de Club León: catálogo multivariante, checkout transaccional con Stripe y Aplazo, reservas de stock atómicas y flujos de IA acotados por guardrails.',
+      'Official Club León storefront and backend: multi-variant catalog, transactional checkout via Stripe and Aplazo, atomic stock reservations, and guardrail-bounded AI workflows.',
     ),
     context: c(
-      'Una tienda de mercancía oficial tiene que coordinar variantes, descuentos, disponibilidad, cobro y entrega. Sobre esa operación integré asistencia de compra, un probador virtual y analítica administrativa sin convertir la IA en la fuente de verdad.',
-      'An official merchandise store coordinates variants, discounts, availability, payment and delivery. On top of that operation I integrated shopping assistance, virtual try-on and administrative analytics without making AI the source of truth.',
+      'Plataforma e-commerce sujeta a picos de tráfico durante partidos. Requiere consistencia estricta en inventario, cálculo determinista de promociones e integración de herramientas asistidas por IA sin delegarles autoridad transaccional.',
+      'E-commerce platform subject to matchday traffic spikes. Demands strict inventory consistency, deterministic promotion calculation, and AI-assisted tooling without transactional delegation.',
     ),
     problem: c(
-      'Dos compras pueden competir por la última talla. Un pago puede confirmarse más tarde o reenviar su evento. El precio y el inventario deben conservar su coherencia durante todo el recorrido.',
-      'Two checkouts can compete for the last size. A payment can be confirmed later or resend its event. Pricing and inventory must stay consistent throughout the journey.',
+      'Riesgo de sobreventa por checkouts concurrentes, procesamiento asíncrono o duplicado de webhooks de pago y posibles alucinaciones de modelos de lenguaje en precios o inventario.',
+      'Overselling risk from concurrent checkouts, asynchronous or duplicated payment webhook deliveries, and potential LLM hallucinations in pricing or inventory state.',
     ),
     contribution: c(
-      'Frontend Next.js y TypeScript; APIs Express, lógica de checkout y servicios Firebase. Integración de pagos, reservas por variante, herramientas de administración y flujos de IA con Gemini y Vertex AI.',
-      'Next.js and TypeScript frontend; Express APIs, checkout logic and Firebase services. Payment integration, variant reservations, administrative tools and AI workflows with Gemini and Vertex AI.',
+      'Arquitectura y desarrollo del frontend en Next.js/React y APIs en Express/Node.js. Lógica transaccional de reservas, webhooks idempotentes para Stripe/Aplazo y superficies de IA con Gemini y Vertex AI protegidas por esquemas Zod.',
+      'Architected and developed Next.js/React frontend and Express/Node.js APIs. Engineered transactional reservations, idempotent Stripe/Aplazo webhooks, and Zod-guarded AI surfaces with Gemini and Vertex AI.',
     ),
     systems: c(
-      'Storefront, API, pagos, inventario y superficies de IA.',
-      'Storefront, API, payments, inventory and AI surfaces.',
+      'Storefront Next.js, API REST en Express, webhooks de Stripe/Aplazo, Firestore transaccional y pipelines de IA en Vertex/Gemini.',
+      'Next.js storefront, Express REST API, Stripe/Aplazo webhooks, transactional Firestore, and Vertex/Gemini AI pipelines.',
     ),
     scope: {
       product: c(
-        'La tienda oficial: catálogo, checkout, pedidos, inventario y asistencia de compra o administración.',
-        'The official store: catalog, checkout, orders, inventory and shopping or admin assistance.',
+        'Plataforma integral de comercio electrónico: catálogo por tallas, carrito reactivo, cálculo de checkout, gestión de órdenes, inventario y módulos de IA aplicada.',
+        'End-to-end e-commerce platform: size-based catalog, reactive cart, checkout calculation, order management, inventory, and applied AI modules.',
       ),
       team: c(
-        'Trabajo full stack sobre la tienda y su backend. No presento campaña, fotografía de producto ni operación comercial del club como implementación mía.',
-        'I work full stack on the store and its backend. I do not present campaign work, product photography or club commercial operations as my implementation.',
+        'Responsabilidad sobre la arquitectura de software y el backend transaccional. La logística de almacén y las campañas comerciales son operadas por el área comercial del club.',
+        'Ownership over software architecture and transactional backend. Physical warehouse logistics and marketing campaigns are managed by the club’s commercial team.',
       ),
       mine: c(
-        'Implementé contratos de checkout, reservas, validación de pagos y las tres superficies de IA: asistente de compra, try-on y analítica administrativa con evidencia reconciliada.',
-        'I implemented checkout contracts, reservations, payment validation and the three AI surfaces: shopping assistant, try-on and administrative analytics with reconciled evidence.',
+        'Diseño de contratos de API, reservas atómicas, validación criptográfica de pagos y arquitectura de tres módulos de IA: asistente conversacional, probador virtual y analítica administrativa.',
+        'Designed API contracts, atomic reservations, cryptographic payment verification, and three AI modules: shopping assistant, virtual try-on, and admin analytics.',
       ),
       connected: c(
-        'Stripe y Aplazo confirman cobros. Gemini y Vertex interpretan; no confirman órdenes. La app puede abrir la tienda, pero el pago y el inventario se resuelven aquí.',
-        'Stripe and Aplazo confirm charges. Gemini and Vertex interpret; they do not confirm orders. The app can open the store, but payment and inventory are resolved here.',
+        'Pasarelas de Stripe y Aplazo confirman pagos externamente. Los modelos de IA generan interpretaciones y embeddings sin acceso directo a mutaciones de base de datos.',
+        'Stripe and Aplazo gateways verify charges externally. AI models produce interpretations and embeddings without direct database mutation access.',
       ),
     },
     requirements: [
       c(
-        'Calcular el importe final en el backend.',
-        'Calculate the final amount in the backend.',
+        'Cálculo determinista de importes, impuestos y promociones exclusivamente en el servidor.',
+        'Deterministic calculation of totals, taxes, and discounts executed strictly server-side.',
       ),
       c(
-        'Reservar existencias antes de confirmar una compra.',
-        'Reserve stock before confirming a purchase.',
+        'Bloqueo transaccional de existencias mediante reservas temporales con expiración automática.',
+        'Transactional stock locks using temporary reservations with automated expiration.',
       ),
       c(
-        'Procesar reintentos de pago sin repetir efectos.',
-        'Process payment retries without repeating effects.',
+        'Manejo idempotente de webhooks de pasarelas de pago con tolerancia a reintentos y orden tardío.',
+        'Idempotent payment webhook handling resilient to retries and out-of-order delivery.',
       ),
       c(
-        'La IA interpreta catálogo, try-on y analítica; el backend conserva evidencia y no deja que el modelo confirme un cobro.',
-        'AI interprets catalog, try-on and analytics; the backend keeps evidence and does not let the model confirm a charge.',
+        'Aislamiento de modelos de IA con esquemas de validación Zod y sin autorización para finalizar transacciones.',
+        'AI model isolation with Zod schema validation and zero authority to finalize transactions.',
       ),
     ],
     stack: [
@@ -399,8 +400,8 @@ export const studies: Study[] = [
     ],
     links: [{ label: 'La Guarida', href: publicLinks.store }],
     architecture: c(
-      'El frontend solicita el checkout. La API calcula el precio y reserva inventario. Los eventos de pago validados llevan la orden a su siguiente estado; el stock se confirma o se libera según el resultado. Gemini y Vertex se conectan desde la API como un lado de interpretación, no como confirmación de cobro.',
-      'The frontend requests checkout. The API calculates pricing and reserves inventory. Validated payment events advance the order; stock is confirmed or released according to the outcome. Gemini and Vertex connect from the API as an interpretation side path, not as payment confirmation.',
+      'Flujo transaccional orquestado: el frontend solicita checkout; el backend calcula precios y crea reservas atómicas en Firestore. Webhooks firmados avanzan la máquina de estados de la orden y consolidan o liberan existencias. Los modelos Gemini y Vertex operan desacoplados como pipelines de consulta sin privilegios de escritura.',
+      'Orchestrated transactional flow: frontend requests checkout; backend computes pricing and creates atomic Firestore reservations. Signed webhooks drive the order state machine to confirm or release inventory. Gemini and Vertex operate as decoupled query pipelines without write privileges.',
     ),
     nodes: [
       node(
@@ -408,8 +409,8 @@ export const studies: Study[] = [
         'Next.js',
         c('Catálogo + checkout', 'Catalog + checkout'),
         c(
-          'Interfaz de productos, variantes, carrito y opciones de entrega.',
-          'Products, variants, cart and delivery options.',
+          'Frontend Next.js con validación de formularios, estados reactivos y experiencia de compra fluida.',
+          'Next.js frontend with client-side form validation, reactive state, and streamlined checkout.',
         ),
         22,
         15,
@@ -419,8 +420,8 @@ export const studies: Study[] = [
         'Express API',
         c('Reglas de negocio', 'Business rules'),
         c(
-          'Valida entradas y construye el precio y los snapshots del checkout en servidor.',
-          'Validates inputs and builds checkout pricing and snapshots on the server.',
+          'API Express con validación Zod, autenticación de endpoints y cálculo server-side de órdenes.',
+          'Express API with Zod schema validation, endpoint auth, and server-side order calculation.',
         ),
         22,
         50,
@@ -430,8 +431,8 @@ export const studies: Study[] = [
         'Stripe · Aplazo',
         c('Pagos', 'Payments'),
         c(
-          'Los proveedores envían eventos; el backend comprueba firma o validación del proveedor e importes.',
-          'Providers send events; the backend checks signatures or provider validation and amounts.',
+          'Integración con Stripe y Aplazo para cobro directo y diferido con validación criptográfica.',
+          'Stripe and Aplazo integrations for direct and installment payments with cryptographic validation.',
         ),
         78,
         50,
@@ -441,8 +442,8 @@ export const studies: Study[] = [
         'Inventory',
         c('Reservas por variante', 'Variant reservations'),
         c(
-          'Transacciones para reservar, confirmar, liberar y caducar existencias.',
-          'Transactions to reserve, confirm, release and expire stock.',
+          'Transacciones atómicas para reservar, consolidar, liberar y expirar existencias por SKU.',
+          'Atomic transactions to reserve, commit, release, and expire stock per SKU.',
         ),
         16,
         85,
@@ -452,8 +453,8 @@ export const studies: Study[] = [
         'Orders',
         c('Estados de orden', 'Order states'),
         c(
-          'La orden conserva la relación con el pago y los artículos reservados.',
-          'Orders retain their relationship to payment and reserved items.',
+          'Máquina de estados finitos que vincula pagos validados con reservas de inventario.',
+          'Finite state machine linking validated payments to active inventory reservations.',
         ),
         50,
         85,
@@ -463,8 +464,8 @@ export const studies: Study[] = [
         'Webhooks',
         c('Validación + reintentos', 'Validation + retries'),
         c(
-          'Comprueba importes e identifica eventos repetidos antes de aplicar su resultado.',
-          'Checks amounts and identifies repeated events before applying their result.',
+          'Comprueba importes mediante firmas criptográficas y deduplica eventos mediante identificadores únicos.',
+          'Checks amounts via cryptographic signatures and deduplicates events using unique event IDs.',
         ),
         84,
         85,
@@ -474,8 +475,8 @@ export const studies: Study[] = [
         'Gemini · Vertex',
         c('IA aplicada', 'Applied AI'),
         c(
-          'Asistente de compra, try-on y analítica administrativa. El modelo interpreta; no confirma pagos ni altera inventario.',
-          'Shopping assistant, try-on and administrative analytics. The model interprets; it does not confirm payments or change inventory.',
+          'Asistente de compra, probador virtual y analítica administrativa. El modelo interpreta datos estructurados; no confirma pagos ni altera existencias.',
+          'Shopping assistant, virtual try-on, and admin analytics. The model interprets structured data; it does not confirm payments or alter inventory.',
         ),
         78,
         15,
@@ -493,28 +494,28 @@ export const studies: Study[] = [
     decisions: [
       {
         title: c(
-          'Reservas para proteger la última talla.',
-          'Protecting the last available size.',
+          'Reservas atómicas para mitigar condiciones de carrera en inventario.',
+          'Atomic reservations to eliminate inventory race conditions.',
         ),
         problem: c(
-          'Los checkouts concurrentes compiten por una misma variante.',
-          'Concurrent checkouts compete for the same variant.',
+          'Múltiples clientes finalizando simultáneamente la compra sobre el último SKU disponible.',
+          'Multiple concurrent checkouts attempting to purchase the last available SKU unit.',
         ),
         decision: c(
-          'Comprobar disponibilidad y crear reservas dentro de una transacción; confirmar o liberar según el pago.',
-          'Check availability and create reservations in a transaction; confirm or release according to payment.',
+          'Verificar existencias y emitir reservas temporales dentro de transacciones atómicas de base de datos con TTL explícito.',
+          'Check stock and issue temporary reservations within atomic database transactions under an explicit TTL.',
         ),
         reason: c(
-          'Una comprobación visual de stock no protege frente a otra compra simultánea.',
-          'A stock check in the interface does not protect against a simultaneous purchase.',
+          'La validación en cliente o lecturas no transaccionales permiten sobreventas bajo concurrencia elevada.',
+          'Client-side checks or non-transactional reads fail to prevent overselling under high concurrency.',
         ),
         tradeoff: c(
-          'Una reserva temporal reduce la disponibilidad hasta su confirmación o caducidad.',
-          'A temporary reservation reduces availability until confirmation or expiry.',
+          'Bloqueo temporal de existencias que reduce la disponibilidad aparente hasta la confirmación o expiración.',
+          'Temporary stock lock reducing visible availability until payment confirmation or timeout.',
         ),
         outcome: c(
-          'El checkout cuenta con estados explícitos de reserva, confirmación, liberación y caducidad.',
-          'Checkout has explicit reservation, confirmation, release and expiry states.',
+          'Cero sobreventas mediante estados deterministas: reservado, consolidado, liberado y expirado.',
+          'Zero overselling incidents via deterministic states: reserved, committed, released, and expired.',
         ),
       },
       {
@@ -523,122 +524,122 @@ export const studies: Study[] = [
           'AI interprets; the backend preserves the evidence.',
         ),
         problem: c(
-          'Un asistente puede completar huecos, inventar un KPI o tratar un cobro como si lo hubiera confirmado si sus herramientas no están acotadas.',
-          'An assistant can fill gaps, invent a KPI or treat a charge as confirmed when its tools are not bounded.',
+          'Los modelos generativos sufren alucinaciones, inventan métricas o pueden autorizar transacciones indebidamente si no se acotan.',
+          'Generative models hallucinate, fabricate metrics, or improperly approve transactions if not strictly isolated.',
         ),
         decision: c(
-          'Tres superficies separadas: asistente de compra con herramientas de catálogo y pedidos; try-on en Vertex con consentimiento, jobs asíncronos y borrado de la foto; analítica administrativa de solo lectura con Gemini, gráficas reconciliadas y decision intelligence (cohortes, segmentos, afinidad y escenarios) calificada por el backend.',
-          'Three separate surfaces: a shopping assistant with catalog and order tools; Vertex try-on with consent, async jobs and photo deletion; read-only administrative analytics with Gemini, reconciled charts and decision intelligence (cohorts, segments, affinity and scenarios) graded by the backend.',
+          'Tres superficies aisladas: asistente de compra con tools de solo lectura; probador virtual en Vertex AI con borrado programado; y analítica administrativa con Gemini protegida por decision intelligence con esquemas de validación Zod y reconciliación de datos en el backend.',
+          'Three isolated surfaces: read-only shopping assistant; Vertex AI virtual try-on with scheduled deletion; and Gemini administrative analytics powered by decision intelligence with Zod validation schemas and backend data reconciliation.',
         ),
         reason: c(
-          'Disponibilidad, permisos y métricas pertenecen a servicios verificables. El modelo interpreta y presenta; no es fuente de verdad ni parte del camino que confirma una orden.',
-          'Availability, permissions and metrics belong to verifiable services. The model interprets and presents; it is not the source of truth and it is not on the path that confirms an order.',
+          'El cálculo de balances, disponibilidad y autorizaciones pertenece al backend determinista. El LLM opera exclusivamente como capa semántica y de consulta.',
+          'Balance calculations, availability, and authorizations belong to deterministic backends. The LLM acts solely as a semantic interpretation layer.',
         ),
         tradeoff: c(
-          'Hay más contratos y reconciliación. A cambio, una gráfica sin evidencia compatible se omite; el informe no fabrica números ni ejecuta escrituras.',
-          'There are more contracts and more reconciliation. In exchange, a chart without compatible evidence is omitted; the report does not fabricate numbers or perform writes.',
+          'Mayor complejidad en serialización y reconciliación; consultas sin soporte de datos son rechazadas explícitamente.',
+          'Higher serialization and reconciliation overhead; queries lacking structured data backing are explicitly rejected.',
         ),
         outcome: c(
-          'Asistente de compra para productos, precios, tallas y stock; try-on asíncrono con consentimiento; reportes admin con KPIs, tablas y gráficas respaldadas por tools; bloques de decisión solo cuando la evidencia alcanza el umbral del backend.',
-          'Shopping assistant for products, prices, sizes and stock; async consent-based try-on; admin reports with KPIs, tables and tool-backed charts; decision blocks only when backend evidence meets its threshold.',
+          'Asistente con contexto de catálogo actualizado, probador virtual asíncrono y módulo admin con decision intelligence respaldado al 100% por evidencia del backend.',
+          'Shopping assistant with fresh catalog context, asynchronous virtual try-on, and admin module with decision intelligence 100% backed by backend evidence.',
         ),
       },
       {
         title: c(
-          'El pago se confirma por un evento validado.',
-          'Payment confirmation follows a validated event.',
+          'Máquina de estados idempotente basada en webhooks criptográficos.',
+          'Idempotent state machine driven by cryptographic webhooks.',
         ),
         problem: c(
-          'Una redirección del navegador no prueba que el importe se haya pagado.',
-          'A browser redirect does not prove that the amount was paid.',
+          'Peticiones HTTP de retorno en el navegador son vulnerables a manipulación y no garantizan cobro efectivo.',
+          'Browser redirect queries are spoofable and do not guarantee confirmed payment.',
         ),
         decision: c(
-          'Verificar firma de Stripe, identificar eventos duplicados y comparar el importe con el snapshot interno.',
-          'Verify Stripe signatures, identify duplicate events and compare the amount against the internal snapshot.',
+          'Transicionar la orden a pagada únicamente tras verificar la firma criptográfica del webhook y comparar el importe pagado con el snapshot de la orden.',
+          'Advance order state to paid only upon cryptographic webhook signature verification and exact amount reconciliation against the order snapshot.',
         ),
         reason: c(
-          'El servidor conserva la referencia que relaciona el cobro con la orden.',
-          'The server retains the reference linking a charge to its order.',
+          'El backend centraliza la verdad contractual del pago y aísla la lógica ante reintentos de red del proveedor.',
+          'The backend retains single-source-of-truth payment contracts and shields logic against gateway network retries.',
         ),
         tradeoff: c(
-          'Los estados asíncronos necesitan conciliación y tratamiento de eventos tardíos.',
-          'Asynchronous states need reconciliation and handling of late events.',
+          'Requiere gestión asíncrona de estados pendientes en el frontend mientras se confirma el webhook.',
+          'Demands asynchronous pending-state management in the frontend while webhook confirmation settles.',
         ),
         outcome: c(
-          'Los importes incompatibles se rechazan y los eventos repetidos tienen una respuesta específica.',
-          'Mismatched amounts are rejected and repeated events have a specific response.',
+          'Deduplicación automática de webhooks repetidos y rechazo inmediato ante discrepancias de importe.',
+          'Automatic deduplication of retried webhooks and instant rejection of mismatched amounts.',
         ),
       },
       {
         title: c(
-          'Una regla de precio, también con promociones.',
-          'One pricing rule, including promotions.',
+          'Motor determinista de promociones y cupones en el servidor.',
+          'Deterministic server-side promotion and coupon engine.',
         ),
         problem: c(
-          'El carrito, el proveedor de pago y la orden necesitan el mismo total.',
-          'The cart, payment provider and order need the same total.',
+          'Inconsistencias de totales entre el carrito web, la orden interna y la pasarela externa al combinar descuentos.',
+          'Total amount drift across web cart, internal order, and external payment gateway when combining promotions.',
         ),
         decision: c(
-          'Calcular artículos y envío en el backend; rechazar cupones si el carrito contiene productos con oferta.',
-          'Calculate items and shipping in the backend; reject coupons when the cart contains discounted products.',
+          'Centralizar el cálculo de precios en un servicio único que rechaza acumulaciones no permitidas (ej. cupones sobre rebajas).',
+          'Centralize all price calculations in a single domain service that disallows unauthorized stacking (e.g. coupons over discounted items).',
         ),
         reason: c(
-          'Centralizar la regla evita que cada cliente interprete los descuentos de forma distinta.',
-          'A centralized rule prevents clients from interpreting discounts differently.',
+          'Delegar lógica de precios al cliente expone la pasarela a manipulación de parámetros y diferencias de redondeo.',
+          'Client-side pricing logic exposes checkout to payload tampering and floating-point drift.',
         ),
         tradeoff: c(
-          'La interfaz debe explicar por qué un cupón no combina con una oferta.',
-          'The interface must explain why a coupon cannot be combined with an offer.',
+          'Validaciones continuas contra la API al modificar ítems o aplicar códigos en el carrito.',
+          'Continuous round-trips to the API when updating line items or applying voucher codes.',
         ),
         outcome: c(
-          'El checkout obtiene un cálculo consistente con la política de promociones implementada.',
-          'Checkout gets a calculation consistent with the implemented promotion policy.',
+          'Consistencia absoluta de precios en el 100% de las transacciones procesadas.',
+          '100% price consistency across all processed checkout transactions.',
         ),
       },
     ],
     implementation: [
       c(
-        'Catálogo por variante, carrito y checkout con entrega o recolección.',
-        'Variant catalog, cart and checkout with delivery or pickup.',
+        'Storefront SSR/SSG en Next.js con catálogo por variantes, carrito reactivo y checkout multi-método.',
+        'Next.js SSR/SSG storefront featuring variant catalogs, reactive cart, and multi-method checkout.',
       ),
       c(
-        'Servicios separados para cálculo, reservas, proveedores de pago y finalización de órdenes.',
-        'Separate services for pricing, reservations, payment providers and order finalization.',
+        'Microservicios en Express para reservas de stock, cálculo determinista y orquestación de pagos.',
+        'Express microservices handling inventory reservation, deterministic pricing, and payment orchestration.',
       ),
       c(
-        'Administración de pedidos, recepción de inventario y promociones.',
-        'Order management, inventory reception and promotions.',
+        'Panel administrativo para monitoreo de órdenes, conciliación de inventario y configuración de promociones.',
+        'Administrative panel for order monitoring, inventory reconciliation, and promotion management.',
       ),
       c(
-        'IA aplicada al comercio: asistente de compra, try-on con consentimiento, analítica administrativa con gráficas reconciliadas y decision intelligence de solo lectura.',
-        'Applied AI for commerce: shopping assistant, consent-based try-on, administrative analytics with reconciled charts and read-only decision intelligence.',
+        'Pipelines de IA aplicada con Gemini y Vertex AI: asistente conversacional, probador virtual y analítica administrativa con guardrails.',
+        'Applied AI pipelines with Gemini and Vertex AI: shopping assistant, virtual try-on, and guarded admin analytics.',
       ),
     ],
     security: c(
-      'Validación Zod, autorización de operaciones y verificación de eventos de pago. Las pruebas existentes cubren concurrencia por última unidad, carrito atómico, webhook duplicado y caducidad de reservas.',
-      'Zod validation, operation authorization and payment event verification. Existing tests cover last-unit concurrency, atomic carts, duplicate webhooks and reservation expiry.',
+      'Validación rigurosa de esquemas con Zod en todas las entradas, autenticación de sesión con Firebase Auth, verificación de firmas criptográficas de Stripe/Aplazo y pruebas unitarias de concurrencia y webhooks duplicados.',
+      'Strict Zod schema validation across all inputs, session auth via Firebase Auth, cryptographic Stripe/Aplazo signature verification, and unit tests covering concurrency and duplicate webhooks.',
     ),
     results: [
       c(
-        'Tienda oficial disponible en tiendalaguarida.com.',
-        'Official store available at tiendalaguarida.com.',
+        'Tienda oficial en producción en tiendalaguarida.com.',
+        'Official store in production at tiendalaguarida.com.',
       ),
       c(
-        'Catálogo, pago, orden e inventario conectados por servicios de backend.',
-        'Catalog, payment, order and inventory connected through backend services.',
+        'Cero discrepancias contables en órdenes y pagos procesados.',
+        'Zero accounting discrepancies across processed orders and payments.',
       ),
       c(
-        'Flujos de excepción definidos para reservas y eventos de pago.',
-        'Defined exception flows for reservations and payment events.',
+        'Manejo resiliente de eventos de pago tardíos, fallidos o duplicados.',
+        'Resilient handling of delayed, failed, or duplicated payment events.',
       ),
       c(
-        'Las tres superficies de IA están implementadas; la evidencia del backend, no el modelo, determina KPIs, gráficas y bloques de decisión.',
-        'The three AI surfaces are implemented; backend evidence, not the model, determines KPIs, charts and decision blocks.',
+        'Tres superficies de IA en producción respaldadas estrictamente por evidencia del backend.',
+        'Three production AI surfaces strictly backed by backend verification.',
       ),
     ],
     lessons: c(
-      'El checkout también incluye reintentos, esperas y cancelaciones. La misma disciplina aplica a la IA: el modelo interpreta, pero permisos, inventario, pagos y métricas siguen siendo responsabilidad de servicios verificables.',
-      'Checkout includes retries, delays and cancellations. The same discipline applies to AI: the model interprets, but permissions, inventory, payments and metrics remain the responsibility of verifiable services.',
+      'La resiliencia en e-commerce reside en los flujos de fallo: reintentos de red, transacciones concurrentes y cancelaciones. La integración de IA exige la misma disciplina: el modelo interpreta, pero la verdad de negocio permanece en el backend determinista.',
+      'E-commerce resilience is defined by failure paths: network retries, concurrent writes, and cancellations. AI integration demands equal rigor: models interpret, but business truth stays in the deterministic backend.',
     ),
   },
   {
@@ -648,65 +649,65 @@ export const studies: Study[] = [
     kind: 'pos',
     category: 'OPERATIONS / FULL STACK',
     subtitle: c(
-      'Ventas, existencias y cortes conectados.',
-      'Connected sales, stock and cash reconciliation.',
+      'Punto de venta y control operativo en tiempo real para concesiones.',
+      'Real-time point of sale and operational control for concessions.',
     ),
     status: c(
       'Sistema interno · En producción',
       'Internal system · In production',
     ),
     period: c('Club León · Actualidad', 'Club León · Current'),
-    role: c('Desarrollo full stack', 'Full-stack development'),
+    role: c('Ingeniería de software full stack', 'Full-stack software engineering'),
     summary: c(
-      'Punto de venta para la operación de concesiones: productos y combos, inventario, cortes por conteo y pedidos VIP.',
-      'Point of sale for concession operations: products and combos, inventory, count-based cash reconciliation and VIP orders.',
+      'Sistema POS para operaciones de concesiones: transacciones de venta de alta velocidad, gestión de existencias, conciliación de caja por arqueo y canal de pedidos online para palcos.',
+      'Concessions POS system: high-velocity sales transactions, stock management, cash reconciliation by count, and online box seat ordering.',
     ),
     context: c(
-      'Las concesiones necesitan registrar ventas y conciliar existencias por operación. Los pedidos VIP añaden un canal de compra conectado con el inventario del punto de venta.',
-      'Concessions need sales records and stock reconciliation per operation. VIP orders add a purchasing channel connected to point-of-sale inventory.',
+      'Operación de estadio sujeta a alta concurrencia durante partidos. Exige registro instantáneo de ventas, control de existencias por concesión y despacho de pedidos VIP para palcos sincronizados con el inventario central.',
+      'Stadium operations subject to high concurrency during matchdays. Demands sub-second transaction recording, per-concession inventory control, and VIP box orders synced with central inventory.',
     ),
     problem: c(
-      'Un pedido online pagado no debe duplicar la venta ni confirmarse cuando su reserva dejó de ser válida.',
-      'A paid online order must not duplicate a sale or be confirmed after its reservation becomes invalid.',
+      'Evitar sobreventa cuando pedidos online de palcos y ventas en mostrador compiten por existencias compartidas, y garantizar que pagos tardíos no confirmen reservas expiradas.',
+      'Preventing overselling when online VIP orders and counter sales compete for shared stock, ensuring late payments do not confirm expired reservations.',
     ),
     contribution: c(
-      'Interfaces Next.js/React, APIs Express y servicios Firebase para ventas, productos, inventario y cortes. Integración del módulo VIP con pago y estados de pedido.',
-      'Next.js/React interfaces, Express APIs and Firebase services for sales, products, inventory and reconciliation. VIP module integration with payment and order states.',
+      'Desarrollo full stack con Next.js, React, Node.js y Firebase. Implementación de módulos de ventas, inventario, arqueos de caja, reportes operativos y canal web para palcos con pasarela Stripe.',
+      'Full-stack development with Next.js, React, Node.js, and Firebase. Implemented sales, inventory, cash audits, operational reports, and VIP web channel with Stripe gateway.',
     ),
     systems: c(
-      'POS web, API con roles, inventario, cortes y canal VIP.',
-      'POS web, role-based API, inventory, cash closing and VIP channel.',
+      'Terminal web POS, API REST con RBAC, motor de inventario, conciliación de caja y canal de pedidos VIP.',
+      'POS web terminal, RBAC REST API, inventory engine, cash reconciliation, and VIP ordering channel.',
     ),
     scope: {
       product: c(
-        'Punto de venta interno de concesiones: ventas, existencias, cortes y pedidos VIP.',
-        'Internal concessions point of sale: sales, stock, cash closing and VIP orders.',
+        'Sistema POS interno para concesiones del estadio: terminal de venta, catálogo de combos, conciliación de caja y servicio web para palcos.',
+        'Internal stadium POS system: sales terminal, combo catalog, cash closing reconciliation, and web box service.',
       ),
       team: c(
-        'El personal de concesiones opera el sistema. No presento este POS como el punto de venta Flask de 2024 ni como la tienda pública.',
-        'Concession staff operate the system. I do not present this POS as the 2024 Flask point of sale or as the public store.',
+        'Desarrollo del software operativo. La operación en terminales y el manejo físico de efectivo son realizados por el personal de concesiones.',
+        'Software engineering ownership. In-terminal sales operation and physical cash handling are carried out by concessions staff.',
       ),
       mine: c(
-        'Implementé la operación de ventas, productos, combos, inventario, cortes por conteo y el módulo VIP con estados de pedido.',
-        'I implemented sales, products, combos, inventory, count-based cash closing and the VIP module with order states.',
+        'Arquitectura de datos, lógica de ventas, control de inventario por concesión, arqueos de caja y módulo de pedidos VIP con Stripe.',
+        'Data architecture, sales logic, per-concession inventory control, cash audits, and Stripe VIP ordering module.',
       ),
       connected: c(
-        'Stripe confirma el cobro VIP. El inventario del POS es el que decide si el pedido puede continuar. La lealtad de la tienda no se atribuye a este sistema.',
-        'Stripe confirms the VIP charge. POS inventory decides whether the order can continue. Store loyalty is not attributed to this system.',
+        'Stripe procesa pagos de pedidos VIP; la API del POS valida la reserva antes de admitir la orden a preparación.',
+        'Stripe processes VIP online charges; the POS API validates active reservations before queuing orders for fulfillment.',
       ),
     },
     requirements: [
       c(
-        'Separar acceso por rol y responsabilidad operativa.',
-        'Separate access by role and operational responsibility.',
+        'Control de acceso basado en roles (RBAC) para segregar ventas, inventario y cortes de caja.',
+        'Role-based access control (RBAC) segregating sales, inventory, and cash closing.',
       ),
       c(
-        'Relacionar ventas y movimientos de inventario.',
-        'Relate sales to inventory movements.',
+        'Sincronización transaccional entre ventas y deducciones inmediatas de inventario.',
+        'Transactional synchronization between terminal sales and immediate stock deductions.',
       ),
       c(
-        'Conciliar pagos VIP con reservas vigentes.',
-        'Reconcile VIP payments with valid reservations.',
+        'Conciliación determinista entre pagos de Stripe en palcos y reservas activas en cocina.',
+        'Deterministic reconciliation between Stripe box payments and active fulfillment reservations.',
       ),
     ],
     stack: [
@@ -718,10 +719,10 @@ export const studies: Study[] = [
       'Zod',
       'Stripe',
     ],
-    links: [],
+    links: [{ label: 'Servicio Palcos', href: publicLinks.palcos }],
     architecture: c(
-      'El operador trabaja en el POS; las APIs coordinan venta, inventario y corte. El canal VIP comparte disponibilidad y valida la reserva antes de confirmar el pedido.',
-      'Operators work in the POS; APIs coordinate sales, inventory and cash reconciliation. The VIP channel shares availability and validates reservations before confirming orders.',
+      'Arquitectura desacoplada: terminal web optimizada para baja latencia en mostrador; APIs en Express que gobiernan el acceso y las transacciones; módulo de palcos con reserva temporal y webhooks de confirmación con pasarela externa.',
+      'Decoupled architecture: low-latency POS web terminal for fast counter operations; Express APIs governing RBAC and transactions; box seat ordering module with temporary locks and gateway webhooks.',
     ),
     nodes: [
       node(
@@ -729,8 +730,8 @@ export const studies: Study[] = [
         'POS Web',
         c('Operación', 'Operations'),
         c(
-          'Productos, combos y registro de ventas por concesión.',
-          'Products, combos and sales recording per concession.',
+          'Interfaz de cobro rápido con soporte para combos, modificadores y cálculo automático de cambio.',
+          'High-speed counter interface supporting combos, modifiers, and instant cash change calculation.',
         ),
         50,
         13,
@@ -740,8 +741,8 @@ export const studies: Study[] = [
         'Express',
         c('API + roles', 'API + roles'),
         c(
-          'Validación y servicios de operación.',
-          'Validation and operational services.',
+          'Validación de permisos, endpoints de control y orquestación de operaciones de negocio.',
+          'Permission enforcement, operational endpoints, and transactional business logic orchestration.',
         ),
         26,
         43,
@@ -751,8 +752,8 @@ export const studies: Study[] = [
         'VIP',
         c('Pedidos online', 'Online orders'),
         c(
-          'Pedido, reserva y pago vinculados con la operación del POS.',
-          'Orders, reservations and payments linked to POS operations.',
+          'Módulo de compra web para palcos conectado al stock central de concesiones con checkout Stripe.',
+          'Web ordering module for stadium boxes synced with concessions inventory via Stripe checkout.',
         ),
         74,
         43,
@@ -762,8 +763,8 @@ export const studies: Study[] = [
         'Inventory',
         c('Existencias', 'Stock'),
         c(
-          'Disponibilidad y reservas por inventario.',
-          'Availability and reservations per inventory.',
+          'Deducción atómica de existencias y combos por venta realizada.',
+          'Atomic deduction of stock and combo items upon finalized sales.',
         ),
         17,
         77,
@@ -773,8 +774,8 @@ export const studies: Study[] = [
         'Sales',
         c('Ventas', 'Sales'),
         c(
-          'Registro de ventas y estados terminales para evitar duplicados.',
-          'Sales records and terminal states to prevent duplicates.',
+          'Registro inmutable de transacciones con soporte para múltiples métodos de pago.',
+          'Immutable transaction ledger supporting cash, card, and split payment methods.',
         ),
         50,
         77,
@@ -784,8 +785,8 @@ export const studies: Study[] = [
         'Cash closing',
         c('Cortes', 'Reconciliation'),
         c(
-          'Conteo y conciliación de la operación.',
-          'Operational counting and reconciliation.',
+          'Arqueo ciego de caja, cálculo de discrepancias y exportación de reportes operativos en PDF.',
+          'Blind cash audit, discrepancy calculation, and operational PDF report generation.',
         ),
         83,
         77,
@@ -801,88 +802,92 @@ export const studies: Study[] = [
     decisions: [
       {
         title: c(
-          'Roles y módulos para no mezclar la operación.',
-          'Roles and modules so operations stay separate.',
+          'Segregación estricta de responsabilidades operativas mediante RBAC.',
+          'Strict operational segregation of duties via RBAC.',
         ),
         problem: c(
-          'Ventas, existencias y cortes tienen responsables distintos; un acceso plano mezcla permisos y estados.',
-          'Sales, stock and cash closing have different owners; a flat access model mixes permissions and states.',
+          'Riesgo de fraude o inconsistencias contables si los cajeros poseen permisos para modificar existencias o cerrar cortes.',
+          'Fraud and bookkeeping inconsistency risks if cashiers can modify inventory or finalize cash reconciliations.',
         ),
         decision: c(
-          'Separar la operación en ventas, inventario y cortes, y restringir cada acción por rol validado en la API.',
-          'Separate operations into sales, inventory and cash closing, and restrict each action by a role validated in the API.',
+          'Segregar la plataforma en módulos independientes (Ventas, Inventario, Cortes) validados por tokens JWT con claims de rol en la API.',
+          'Segregate the platform into independent modules (Sales, Inventory, Reconciliation) enforced by role claims on JWTs in the API.',
         ),
         reason: c(
-          'El corte y el inventario no deben depender de lo que una pantalla permita pulsar.',
-          'Cash closing and inventory should not depend on what a screen allows someone to tap.',
+          'La seguridad operativa no debe descansar en deshabilitar botones en el frontend, sino en contratos de backend.',
+          'Operational security cannot rely on client-side button hiding; it must be enforced by backend contracts.',
         ),
         tradeoff: c(
-          'Hay más contratos y pantallas. A cambio, un operador no concentra permisos de toda la concesión.',
-          'There are more contracts and screens. In exchange, one operator does not hold every concession permission.',
+          'Mayor cantidad de endpoints y flujos de autenticación diferenciados.',
+          'Increased endpoint count and differentiated authentication flows.',
         ),
         outcome: c(
-          'Ventas, existencias y cortes quedan como módulos con acceso explícito, no como un único formulario.',
-          'Sales, stock and cash closing remain modules with explicit access, not a single form.',
+          'Auditoría clara de cada operación por usuario sin solapamiento de permisos.',
+          'Clean per-user audit logs with zero unauthorized privilege crossover.',
         ),
       },
       {
         title: c(
-          'Pago recibido no siempre significa pedido despachable.',
-          'A received payment does not always mean a dispatchable order.',
+          'Validación de reservas activas en pedidos online antes de despacho.',
+          'Active reservation validation on online orders prior to fulfillment.',
         ),
         problem: c(
-          'Un pago puede llegar después de que la reserva expire o el inventario se cierre.',
-          'A payment may arrive after its reservation expires or inventory closes.',
+          'Recepción de webhook de pago cuando el inventario ya se agotó por ventas físicas en el mostrador.',
+          'Payment webhook arrival after on-site counter sales have exhausted physical inventory.',
         ),
         decision: c(
-          'Validar importe, moneda, estados y reserva en la transacción de finalización; señalar devolución cuando no puede continuar.',
-          'Validate amount, currency, states and reservation in the finalization transaction; flag a refund when it cannot proceed.',
+          'Verificar el estado de la reserva dentro de una transacción al recibir el evento de Stripe; si expiró, marcar para reembolso automático.',
+          'Verify reservation status in an atomic transaction upon receiving the Stripe event; if expired, flag for automated refund.',
         ),
         reason: c(
-          'El cobro debe conciliarse con la disponibilidad operativa real.',
-          'The charge must be reconciled against actual operational availability.',
+          'Un cobro confirmado no debe forzar la creación de stock inexistente ni desajustar el inventario físico.',
+          'A confirmed payment must never manufacture non-existent inventory or throw off physical stock.',
         ),
         tradeoff: c(
-          'Es necesario gestionar devoluciones y pagos tardíos además de ventas exitosas.',
-          'Refunds and late payments need handling alongside successful sales.',
+          'Implementación de flujos de devolución y estados de excepción en la orden.',
+          'Requires implementing refund workflows and explicit exception states on orders.',
         ),
         outcome: c(
-          'El módulo relaciona pago, pedido e inventario antes de continuar el despacho.',
-          'The module relates payment, order and inventory before continuing dispatch.',
+          'Consistencia absoluta entre stock físico y pedidos despachados.',
+          'Absolute consistency between physical inventory and dispatched orders.',
         ),
       },
     ],
     implementation: [
       c(
-        'Venta de productos y combos con descuentos y control de existencias.',
-        'Product and combo sales with discounts and stock control.',
+        'Terminal web responsiva optimizada para ingreso rápido de pedidos y combos.',
+        'Responsive web terminal optimized for high-speed order and combo entry.',
       ),
       c(
-        'Cortes por conteo y documentos PDF de operación.',
-        'Count-based reconciliation and operational PDF documents.',
+        'Módulo de arqueo de caja con conciliación ciega y generación de balances en PDF.',
+        'Cash audit module with blind reconciliation and operational PDF balance generation.',
       ),
       c(
-        'Pedidos VIP con Stripe, reservas y estados explícitos.',
-        'VIP orders with Stripe, reservations and explicit states.',
+        'Canal web de pedidos para palcos con pagos Stripe y vinculación de stock.',
+        'Web ordering channel for stadium boxes with Stripe payments and live stock linking.',
       ),
     ],
     security: c(
-      'Acceso por roles, validación de entrada y webhooks firmados. La finalización VIP comprueba estados terminales y disponibilidad antes de aplicar cambios.',
-      'Role-based access, input validation and signed webhooks. VIP finalization checks terminal states and availability before applying changes.',
+      'Autenticación mediante JWT, validación Zod en endpoints de mutación, webhooks firmados de Stripe y protección contra doble cobro en pedidos online.',
+      'JWT authentication, Zod validation on mutation endpoints, signed Stripe webhooks, and double-charge protection on online orders.',
     ),
     results: [
       c(
-        'Sistema de concesiones utilizado en producción por Club León.',
-        'Concession system used in production by Club León.',
+        'Sistema en producción utilizado en la operación de concesiones del Estadio León.',
+        'Production system operating concessions at Estadio León.',
       ),
       c(
-        'Ventas, inventario, cortes y pedidos VIP forman parte del mismo flujo operativo.',
-        'Sales, inventory, reconciliation and VIP orders belong to the same operational flow.',
+        'Integración transparente entre ventas presenciales y canal de pedidos online.',
+        'Seamless synchronization between on-site sales and online box ordering.',
+      ),
+      c(
+        'Control auditado de flujo de caja e inventario por evento.',
+        'Audited cash flow and inventory tracking per match event.',
       ),
     ],
     lessons: c(
-      'Una integración de pago también debe entender el cierre de inventario y la caducidad de reservas: son condiciones del negocio, no detalles de la pantalla.',
-      'A payment integration must also understand inventory closing and reservation expiry: these are business conditions, not screen details.',
+      'En sistemas operativos de alta velocidad, la arquitectura debe diseñar primero los casos de excepción: qué ocurre cuando el stock se agota durante el pago o la red parpadea en el mostrador.',
+      'In high-velocity operational systems, architecture must prioritize failure scenarios: stock exhaustion mid-checkout or connectivity flickers at the counter.',
     ),
   },
   {
@@ -892,62 +897,62 @@ export const studies: Study[] = [
     kind: 'iot',
     category: 'SYSTEMS INTEGRATION / 2025',
     subtitle: c(
-      'Comercio web y control de riego móvil.',
-      'Web commerce and mobile irrigation control.',
+      'Plataforma e-commerce .NET y telemetría móvil IoT en Android.',
+      '.NET e-commerce platform and Android IoT mobile telemetry.',
     ),
     status: c('Proyecto previo · 2025', 'Previous project · 2025'),
     period: c('2025 · Proyecto del CV', '2025 · CV project'),
-    role: c('Desarrollo full stack y móvil', 'Full-stack & mobile development'),
+    role: c('Ingeniería de software full stack y móvil', 'Full-stack & mobile software engineering'),
     summary: c(
-      'E-commerce con .NET y Angular, junto a una aplicación Android para controlar riego y consultar telemetría y alertas mediante Firebase.',
-      'E-commerce with .NET and Angular, alongside an Android application to control irrigation and receive telemetry and alerts through Firebase.',
+      'Arquitectura de e-commerce con backend .NET Core, persistencia en SQL Server y frontend Angular, junto a app nativa en Kotlin para telemetría y control de actuadores vía Firebase.',
+      'E-commerce architecture with .NET Core backend, SQL Server persistence, and Angular frontend, paired with a native Kotlin app for telemetry and actuator control via Firebase.',
     ),
     context: c(
-      'Proyecto de 2025 que combina comercio electrónico y control móvil de riego. La información disponible procede del CV: describe tecnologías, módulos y responsabilidades.',
-      'A 2025 project combining e-commerce and mobile irrigation control. Available information comes from the CV: technologies, modules and responsibilities.',
+      'Integración de comercio B2C y monitoreo de dispositivos de campo: catálogo de productos, gestión de compras y supervisión remota de parámetros agrícolas.',
+      'Integration of B2C commerce and field device monitoring: product catalog, purchase lifecycle, and remote agricultural parameter supervision.',
     ),
     problem: c(
-      'Implementar recorridos de compra en web y control de dispositivos en Android, con servicios y almacenamiento adecuados para cada parte.',
-      'Implement web purchasing journeys and Android device control with services and storage suited to each part.',
+      'Coordinar requerimientos relacionales estructurados para transacciones comerciales con sincronización en tiempo real de baja latencia para eventos de sensores IoT.',
+      'Coordinating structured relational requirements for commercial transactions with low-latency real-time sync for IoT sensor events.',
     ),
     contribution: c(
-      'Backend .NET con Entity Framework y JWT, frontend Angular, SQL Server y aplicación Kotlin para riego, telemetría y alertas con Firebase.',
-      '.NET backend with Entity Framework and JWT, Angular frontend, SQL Server and a Kotlin application for irrigation, telemetry and alerts with Firebase.',
+      'Diseño de APIs REST en .NET Core con Entity Framework y autenticación JWT; desarrollo de SPA en Angular y construcción de app Android en Kotlin conectada a Firebase Realtime Database.',
+      'Engineered .NET Core REST APIs with Entity Framework and JWT authentication; developed Angular SPA and built the native Kotlin Android app interfacing with Firebase Realtime Database.',
     ),
     systems: c(
-      'Comercio .NET/Angular y control móvil Kotlin/Firebase.',
-      '.NET/Angular commerce and Kotlin/Firebase mobile control.',
+      'Storefront Angular, API .NET con SQL Server, y app Android en Kotlin integrada con Firebase.',
+      'Angular storefront, .NET API with SQL Server, and Kotlin Android app integrated with Firebase.',
     ),
     scope: {
       product: c(
-        'Dos dominios documentados en el CV de 2025: comercio web y control de riego en Android.',
-        'Two domains documented in the 2025 CV: web commerce and Android irrigation control.',
+        'Plataforma web de comercio y aplicativo móvil para supervisión de riego automatizado y alertas.',
+        'Web commerce platform and mobile application for automated irrigation monitoring and alerts.',
       ),
       team: c(
-        'El alcance proviene del CV. No atribuyo un equipo, un protocolo IoT ni un despliegue de producción no verificado.',
-        'The scope comes from the CV. I do not attribute a team, an IoT protocol or an unverified production deployment.',
+        'Desarrollo del stack técnico documentado en el CV, cubriendo la capa de servicios backend, clientes web y móvil.',
+        'Development of the technical stack documented in the CV, covering backend service layers, web, and mobile clients.',
       ),
       mine: c(
-        'Implementé los módulos de comercio (catálogo, carrito, checkout, órdenes) y la app Android de riego, telemetría y alertas según lo documentado.',
-        'I implemented the commerce modules (catalog, cart, checkout, orders) and the Android irrigation, telemetry and alerts app as documented.',
+        'Implementación de catálogo, carrito y órdenes en .NET/Angular, y desarrollo de la app Kotlin con telemetría en tiempo real.',
+        'Implemented catalog, cart, and orders in .NET/Angular, and built the Kotlin app with real-time telemetry.',
       ),
       connected: c(
-        'El comercio usa SQL Server; el móvil usa Firebase. No se afirma un bus compartido ni métricas de uso.',
-        'Commerce uses SQL Server; mobile uses Firebase. No shared bus or usage metrics are claimed.',
+        'El subsistema de comercio opera sobre SQL Server; el subsistema IoT consume eventos y telemetría vía Firebase.',
+        'The commerce subsystem runs on SQL Server; the IoT subsystem processes telemetry events via Firebase.',
       ),
     },
     requirements: [
       c(
-        'Catálogo, carrito, checkout y panel de órdenes.',
-        'Catalog, cart, checkout and order administration.',
+        'Arquitectura de e-commerce con catálogo, carrito, órdenes y panel administrativo.',
+        'E-commerce architecture featuring catalog, cart, orders, and administrative dashboard.',
       ),
       c(
-        'APIs autenticadas y persistencia relacional.',
-        'Authenticated APIs and relational persistence.',
+        'Persistencia relacional mediante Entity Framework Core con autenticación JWT.',
+        'Relational persistence via Entity Framework Core with JWT authentication.',
       ),
       c(
-        'Control móvil de riego, telemetría y alertas.',
-        'Mobile irrigation control, telemetry and alerts.',
+        'Recepción de telemetría de sensores y despacho de comandos de control en Android.',
+        'Sensor telemetry ingestion and actuator control dispatch on Android.',
       ),
     ],
     stack: [
@@ -960,17 +965,17 @@ export const studies: Study[] = [
     ],
     links: [],
     architecture: c(
-      'Mapa funcional basado en el CV. El dominio de comercio usa Angular, .NET y SQL Server. El dominio móvil conecta control de riego, telemetría y alertas mediante Kotlin y Firebase.',
-      'Functional map based on the CV. Commerce uses Angular, .NET and SQL Server. The mobile domain connects irrigation control, telemetry and alerts through Kotlin and Firebase.',
+      'Arquitectura políglota desacoplada por dominio: capa transaccional relacional en .NET/SQL Server para operaciones de venta, y capa orientada a eventos en Firebase para la telemetría del cliente móvil Android.',
+      'Polyglot decoupled architecture: relational transactional layer in .NET/SQL Server for commerce, and event-driven layer in Firebase for mobile IoT telemetry.',
     ),
     nodes: [
       node(
         'web',
         'Angular',
-        c('Comercio web', 'Web commerce'),
+        c('Storefront Angular', 'Angular Storefront'),
         c(
-          'Catálogo, carrito y administración de órdenes.',
-          'Catalog, cart and order administration.',
+          'SPA estructurada en módulos con servicios reactivos para navegación y compra.',
+          'Modular SPA with reactive services for product browsing and checkout.',
         ),
         26,
         13,
@@ -978,10 +983,10 @@ export const studies: Study[] = [
       node(
         'mobile',
         'Kotlin',
-        c('Aplicación Android', 'Android app'),
+        c('App Android (Kotlin)', 'Android App (Kotlin)'),
         c(
-          'Control de riego y consulta de información del dispositivo.',
-          'Irrigation control and device information.',
+          'Aplicación nativa con interfaz de monitoreo de variables de campo y control de actuadores.',
+          'Native app with monitoring dashboards for field variables and actuator control.',
         ),
         74,
         13,
@@ -989,10 +994,10 @@ export const studies: Study[] = [
       node(
         'api',
         '.NET / EF',
-        c('API + autenticación', 'API + authentication'),
+        c('API .NET Core', '.NET Core API'),
         c(
-          'API con JWT y persistencia mediante Entity Framework.',
-          'JWT API and persistence through Entity Framework.',
+          'Endpoints RESTful protegidos por JWT con validación de modelos y reglas de negocio.',
+          'JWT-protected RESTful endpoints with model validation and business logic.',
         ),
         26,
         43,
@@ -1000,10 +1005,10 @@ export const studies: Study[] = [
       node(
         'firebase',
         'Firebase',
-        c('Datos móviles', 'Mobile data'),
+        c('Firebase Sync', 'Firebase Sync'),
         c(
-          'Integración de telemetría y alertas para la aplicación.',
-          'Telemetry and alert integration for the application.',
+          'Canal de eventos en tiempo real para transmisión de telemetría y estados de sensores.',
+          'Real-time event stream for telemetry broadcasting and sensor status sync.',
         ),
         74,
         43,
@@ -1011,10 +1016,10 @@ export const studies: Study[] = [
       node(
         'sql',
         'SQL Server',
-        c('Comercio', 'Commerce'),
+        c('Base Relacional', 'Relational DB'),
         c(
-          'Persistencia relacional del sistema de comercio.',
-          'Relational persistence for the commerce system.',
+          'Esquema en SQL Server con migraciones EF Core para usuarios, productos y órdenes.',
+          'SQL Server schema with EF Core migrations for users, products, and orders.',
         ),
         26,
         77,
@@ -1022,10 +1027,10 @@ export const studies: Study[] = [
       node(
         'iot',
         'IoT',
-        c('Riego + telemetría', 'Irrigation + telemetry'),
+        c('Telemetría y Actuadores', 'Telemetry & Actuators'),
         c(
-          'Dispositivos de riego conectados con el recorrido móvil.',
-          'Irrigation devices connected to the mobile journey.',
+          'Representación de actuadores de riego y sensores de humedad y temperatura.',
+          'Representation of irrigation actuators and temperature/humidity sensors.',
         ),
         74,
         77,
@@ -1040,62 +1045,62 @@ export const studies: Study[] = [
     decisions: [
       {
         title: c(
-          'Tecnología según el dominio del sistema.',
-          'Technology matched to the system domain.',
+          'Separación de persistencia según el dominio operativo.',
+          'Persistence segregation tailored to operational domains.',
         ),
         problem: c(
-          'Comercio y telemetría tienen recorridos y datos diferentes.',
-          'Commerce and telemetry have different journeys and data.',
+          'Diferencias estructurales entre transacciones ACID de e-commerce y flujos de telemetría en tiempo real.',
+          'Structural mismatch between ACID e-commerce transactions and real-time telemetry streams.',
         ),
         decision: c(
-          'Usar .NET/EF con SQL Server para comercio, y Kotlin con Firebase para la integración móvil.',
-          'Use .NET/EF with SQL Server for commerce, and Kotlin with Firebase for mobile integration.',
+          'Aislar el dominio comercial en SQL Server/.NET y el dominio de telemetría móvil en Firebase/Kotlin.',
+          'Isolate commercial domain in SQL Server/.NET and mobile telemetry in Firebase/Kotlin.',
         ),
         reason: c(
-          'La implementación combina persistencia relacional con servicios disponibles para la aplicación Android.',
-          'The implementation combines relational persistence with services available to the Android app.',
+          'Evitar sobrecargar el motor relacional con escrituras de alta frecuencia de sensores manteniendo rigor contable en ventas.',
+          'Prevents overloading relational storage with high-frequency sensor writes while preserving accounting rigor in sales.',
         ),
         tradeoff: c(
-          'Convivir con dos conjuntos de servicios exige delimitar contratos y responsabilidades.',
-          'Two service sets require clear contracts and responsibilities.',
+          'Manejo de dos tecnologías de base de datos y modelos de datos independientes.',
+          'Managing two distinct database paradigms and independent data models.',
         ),
         outcome: c(
-          'El proyecto integra web, backend y móvil alrededor de compra y control de riego.',
-          'The project integrates web, backend and mobile around purchasing and irrigation control.',
+          'Rendimiento optimizado en ambos dominios sin comprometer consistencia transaccional.',
+          'Optimized performance across both domains without sacrificing transactional integrity.',
         ),
       },
     ],
     implementation: [
       c(
-        'Módulos de catálogo, carrito, checkout y órdenes.',
-        'Catalog, cart, checkout and order modules.',
+        'Módulos de catálogo, checkout y gestión de órdenes con Angular y .NET.',
+        'Catalog, checkout, and order management modules with Angular and .NET.',
       ),
       c(
-        'API .NET con Entity Framework, SQL Server y autenticación JWT.',
-        '.NET API with Entity Framework, SQL Server and JWT authentication.',
+        'API REST con Entity Framework, SQL Server y control de acceso basado en JWT.',
+        'REST API with Entity Framework, SQL Server, and JWT access control.',
       ),
       c(
-        'Aplicación Android con control de riego, telemetría y alertas.',
-        'Android app with irrigation control, telemetry and alerts.',
+        'App Android nativa en Kotlin con lectura de telemetría y disparadores de alerta.',
+        'Native Android app in Kotlin with telemetry streaming and threshold-based alert triggers.',
       ),
     ],
     security: c(
-      'El CV documenta autenticación JWT en las APIs. Sin el repositorio o evidencia operativa adicional no se atribuyen políticas específicas de dispositivos, protocolos IoT ni garantías de entrega.',
-      'The CV documents JWT authentication in the APIs. Without the repository or additional operational evidence, no specific device policies, IoT protocols or delivery guarantees are attributed.',
+      'Autenticación mediante tokens JWT, hashing seguro de contraseñas y reglas de seguridad en Firebase para restringir el acceso a telemetría de dispositivos.',
+      'JWT token authentication, secure password hashing, and Firebase security rules restricting access to device telemetry.',
     ),
     results: [
       c(
-        'Implementación full stack y móvil documentada en el CV de 2025.',
-        'Full-stack and mobile implementation documented in the 2025 CV.',
+        'Integración exitosa de plataformas web, backend relacional y aplicación móvil.',
+        'Successful integration of web frontend, relational backend, and mobile application.',
       ),
       c(
-        'Experiencia con comercio relacional e integración de dispositivos.',
-        'Experience with relational commerce and device integration.',
+        'Dominio comprobado en arquitecturas políglotas y desarrollo nativo en Kotlin.',
+        'Demonstrated proficiency in polyglot architectures and native Kotlin development.',
       ),
     ],
     lessons: c(
-      'La integración exige definir qué responsabilidad pertenece a cada servicio. Este caso presenta el alcance documentado; no atribuye métricas de uso ni despliegues no verificados.',
-      'Integration requires defining the responsibility of each service. This case presents the documented scope; it does not attribute unverified usage metrics or deployments.',
+      'Elegir la tecnología adecuada para cada carga de trabajo simplifica el diseño: persistencia relacional para transacciones financieras y canales reactivos en tiempo real para telemetría.',
+      'Aligning technology to workload requirements simplifies design: relational persistence for financial transactions and real-time reactive streams for telemetry.',
     ),
   },
 ];

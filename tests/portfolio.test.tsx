@@ -149,6 +149,10 @@ describe('Portfolio journeys', () => {
         'Google Play',
         'https://play.google.com/store/apps/details?id=mx.clubleon.oficial&hl=es_MX',
       ],
+      [
+        'Servicio Palcos',
+        'https://foodmarket.clubleon.mx/servicio-palcos/inicio/',
+      ],
     ]) {
       const a = screen.getAllByRole('link', { name })[0];
       expect(a.getAttribute('href')).toBe(url);

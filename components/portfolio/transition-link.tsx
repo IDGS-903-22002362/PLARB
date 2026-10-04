@@ -6,8 +6,9 @@ import { navigateWithTransition } from '@/lib/view-transition';
 export default function TransitionLink({
   href,
   onClick,
+  internal = false,
   ...props
-}: ComponentProps<typeof Link>) {
+}: ComponentProps<typeof Link> & { internal?: boolean }) {
   const router = useRouter();
   const path = typeof href === 'string' ? href : href.pathname || '/';
   const handle = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -18,6 +19,10 @@ export default function TransitionLink({
     if (event.button !== 0) return;
     if (path.startsWith('http') || path.startsWith('mailto:')) return;
     event.preventDefault();
+    if (internal) {
+      router.push(path);
+      return;
+    }
     navigateWithTransition(() => router.push(path));
   };
   return <Link href={href} onClick={handle} {...props} />;

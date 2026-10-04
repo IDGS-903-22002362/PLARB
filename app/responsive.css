@@ -1460,59 +1460,6 @@
     transform: none !important;
   }
 }
-.graph-node > strong {
-  font-size: 14px;
-}
-.graph-node > span {
-  font-size: 12px;
-}
-.graph-detail strong {
-  font-size: 14px;
-}
-.graph-detail p {
-  font-size: 14px;
-}
-.status {
-  font-size: 12px;
-}
-.project-role {
-  font-size: 14px;
-}
-.tags > span {
-  font-size: 12px;
-}
-.case-toc {
-  font-size: 14px;
-}
-.case-meta dt {
-  font-size: 12px;
-}
-.case-meta dd {
-  font-size: 15px;
-}
-.project-copy > p:not(.project-subtitle),
-.capability-grid p {
-  font-size: 16px;
-}
-.capability-grid a {
-  font-size: 12px;
-}
-.timeline-links > a {
-  font-size: 13px;
-}
-.public-work p {
-  font-size: 16px;
-}
-.about-facts p,
-.about-secondary p {
-  font-size: 15px;
-}
-.about-facts small {
-  font-size: 12px;
-}
-.contact-links > div > a {
-  font-size: 14px;
-}
 @media (max-width: 600px) {
   .graph-surface,
   .case-architecture .graph-surface {

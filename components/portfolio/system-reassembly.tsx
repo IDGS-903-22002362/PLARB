@@ -27,8 +27,8 @@ export default function SystemReassembly() {
         <p>
           {t(
             c(
-              'El mismo sistema vuelve a unirse: interfaz, servicios y datos. El producto es la recomposición, no la capa de arriba.',
-              'The same system comes back together: interface, services and data. The product is the recomposition, not the top layer.',
+              'Arquitectura integral: la resiliencia del producto proviene de la cohesión entre interfaces reactivas, servicios desacoplados y persistencia transaccional.',
+              'Integral architecture: product resilience stems from cohesion between reactive interfaces, decoupled services, and transactional persistence.',
             ),
           )}
         </p>

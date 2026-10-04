@@ -12,21 +12,21 @@ export function Contact() {
         <span className="eyebrow">
           {t(
             c(
-              'CONTACTO / SIGUIENTE CONVERSACIÓN',
-              'CONTACT / NEXT CONVERSATION',
+              'CONTACTO / DISPONIBILIDAD',
+              'CONTACT / AVAILABILITY',
             ),
           )}
         </span>
         <h2>
           {t(
-            c('Si el sistema tiene que cerrar.', 'If the system has to close.'),
+            c('Construyamos software resiliente y escalable.', 'Let’s build resilient and scalable software.'),
           )}
         </h2>
         <p>
           {t(
             c(
-              'Interfaces, servicios y datos que tienen que coincidir. Si eso es el problema, escríbeme.',
-              'Interfaces, services and data that have to agree. If that is the problem, write to me.',
+              'Disponible para roles y proyectos en ingeniería full stack, móvil y arquitecturas de datos en producción.',
+              'Open to full-stack, mobile, and production data architecture roles and projects.',
             ),
           )}
         </p>
